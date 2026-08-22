@@ -1,16 +1,24 @@
 # Dino
 
+[![CI](https://github.com/DinoDevCli/dino/actions/workflows/ci.yml/badge.svg)](https://github.com/DinoDevCli/dino/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
+
 **Deterministic Proof for Python Decision Pipelines**
 
 Proof CLI for Python decision logic — research pipelines, backtests, risk systems.
 Seals execution, detects ML leakage, classifies drift, emits content-addressed [`proof.json`](docs/PROOF_CONTRACT.md).
 
-Not a secret scanner. Not image provenance.
+**Scope (intentional):** sealed runs + replay + `proof_hash` for decision pipelines.
+Not a general SAST/DAST suite, secret scanner, SBOM tool, or container/image provenance product.
 
 ```bash
-dino proof run --command "echo ok" --repo . --scan ./src --output-dir ./proof_out
+dino proof run --command echo ok --repo . --scan ./path/to/pipeline.py --output-dir ./proof_out
 dino proof verify --proof ./proof_out/proof.json
 ```
+
+`--command` takes argv tokens (`echo ok`). A single quoted string (`"echo ok"`) is also accepted — required when the program itself takes `--flags` (e.g. `--command "python3 train.py --seed 0"`).
+`--scan` must resolve to at least one `.py` file or the scan fails.
 
 ---
 
@@ -39,9 +47,9 @@ Requires Python ≥ 3.10.
 
 ```bash
 dino proof run \
-  --command "echo ok" \
+  --command echo ok \
   --repo . \
-  --scan ./src \
+  --scan ./path/to/pipeline.py \
   --output-dir ./proof_out
 
 dino proof verify --proof ./proof_out/proof.json
@@ -96,12 +104,15 @@ Schemas and limits: [`docs/PROOF_CONTRACT.md`](docs/PROOF_CONTRACT.md)
 - Team pricing applies up to **20 seats**
 - Above 20 seats → contact us
 - No Enterprise tier, no subscriptions, no lock-in
+- Proof Pack unlock is **local** today (`dino upgrade --pack proof`); pay via contact — key enforcement ships with the storefront
 
 Unlock:
 
 ```bash
 dino upgrade --pack proof
 ```
+
+> Not on PyPI under `dino` (name collision). Install only via the GitHub URL above.
 
 Contact: [noahpeitz95@gmail.com](mailto:noahpeitz95@gmail.com)
 

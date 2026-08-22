@@ -44,6 +44,7 @@ RULE_IDS = [
     "CONVOLVE_MODE_SAME_AST",
     "SEEDLESS_SPLIT",
     "TARGET_IN_FEATURES",
+    "EMPTY_SCAN_ROOTS",
 ]
 
 FUTURE_INDEX = re.compile(r"(close|closes|label|y_true|target|y)\s*\[\s*i\s*\+\s*1\s*\]")
@@ -144,7 +145,26 @@ def _scan_tree(path: str, tree: ast.AST, text: str, findings: list[ScanFinding])
 
 def scan_paths(roots: list[Path]) -> ScanReport:
     findings: list[ScanFinding] = []
-    files = _iter_py(roots)
+    resolved = [Path(r) for r in roots]
+    missing = [str(r) for r in resolved if not r.exists()]
+    files = _iter_py(resolved)
+    if not files:
+        detail = "no .py files under scan roots"
+        if missing:
+            detail += f" (missing paths: {', '.join(missing)})"
+        findings.append(
+            ScanFinding(
+                path=str(resolved[0]) if resolved else ".",
+                rule="EMPTY_SCAN_ROOTS",
+                detail=detail,
+            )
+        )
+        return ScanReport(
+            ok=False,
+            findings=findings,
+            files_scanned=0,
+            rules=list(RULE_IDS),
+        )
     for path in files:
         text = path.read_text(encoding="utf-8", errors="replace")
         display = str(path)

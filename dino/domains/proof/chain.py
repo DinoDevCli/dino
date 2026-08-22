@@ -60,13 +60,12 @@ def build_proof(
     scan_roots: list[Path] | None = None,
     stdin: str = "",
 ) -> dict[str, Any]:
-    from dino.domains.capsule.execute import execute
+    from dino.domains.capsule.execute import execute, normalize_command
     from dino.domains.map.verify import verify_repo
     from dino.domains.scan.leakage import scan_paths as run_scan
     from dino.domains.verify.drift_classifier import classify_drift
 
-    if not command:
-        raise ValueError("command must be non-empty")
+    command = normalize_command(command)
 
     output_dir = output_dir.resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -189,7 +188,7 @@ def verify_proof(proof_path: Path) -> dict[str, Any]:
 
 
 def run_proof_doctor(*, output_dir: Path | None = None) -> dict[str, Any]:
-    """Enterprise health check for the full proof stack."""
+    """Health check for the full proof stack (capsule + scan + map)."""
     import sys
     import tempfile
 

@@ -1,3 +1,3 @@
-"""Dino CLI — Deterministic Proof & Governance Platform."""
+"""Dino CLI — Deterministic Proof for Python Decision Pipelines."""
 
 __version__ = "0.3.0"

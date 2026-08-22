@@ -28,6 +28,37 @@ def test_capsule_run_captures_stdout_and_reexec() -> None:
     twice(["capsule", "run", "--output-dir", str(outdir), "--command", "echo", "gap_seal"])
 
 
+def test_capsule_run_accepts_quoted_command_string() -> None:
+    """Users often pass --command \"echo ok\"; that must still seal as argv."""
+    outdir = WORK / "capsule_quoted"
+    code, out, _ = run(
+        ["capsule", "run", "--output-dir", str(outdir), "--command", "echo quoted_ok"]
+    )
+    assert code == 0
+    cap = json.loads((outdir / "capsule.json").read_text(encoding="utf-8"))
+    assert cap["command"] == ["echo", "quoted_ok"]
+    assert "quoted_ok" in cap["output"]
+
+
+def test_capsule_missing_binary_returns_clear_error() -> None:
+    outdir = WORK / "capsule_missing_bin"
+    code, out, _ = run(
+        [
+            "capsule",
+            "run",
+            "--output-dir",
+            str(outdir),
+            "--command",
+            "dino_no_such_binary_xyz",
+        ]
+    )
+    assert code == 2
+    err = json.loads(out)
+    assert err["type"] == "invalid_args"
+    assert "command not found" in err["detail"]
+    assert "dino_no_such_binary_xyz" in err["detail"]
+
+
 def test_capsule_replay_detects_tamper() -> None:
     outdir = WORK / "capsule_tamper"
     run(["capsule", "run", "--output-dir", str(outdir), "--command", "echo", "orig"])
@@ -112,6 +143,15 @@ def test_map_plan_and_drift() -> None:
     drift = json.loads(out)
     assert drift["distance"] >= 1
     assert drift["bucket"] in {"controlled_drift", "severe_drift", "aligned"}
+
+
+def test_scan_missing_path_fails_closed() -> None:
+    code, out, _ = run(["scan", "leakage", "/tmp/dino_no_such_scan_root_xyz"])
+    assert code == 1
+    report = json.loads(out)
+    assert report["ok"] is False
+    assert report["files_scanned"] == 0
+    assert any(f["rule"] == "EMPTY_SCAN_ROOTS" for f in report["findings"])
 
 
 def test_proof_run_and_verify() -> None:

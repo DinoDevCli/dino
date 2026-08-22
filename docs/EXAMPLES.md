@@ -8,7 +8,7 @@ Short commands for Dino 0.3.0. Live outputs: [`CLI_E2E_REFERENCE.md`](CLI_E2E_RE
 dino upgrade --pack proof
 
 dino proof run \
-  --command "echo ok" \
+  --command echo ok \
   --repo . \
   --scan ./tests/dino/fixtures/scan/clean_code.py \
   --output-dir ./proof_out
@@ -16,6 +16,8 @@ dino proof run \
 dino proof verify --proof ./proof_out/proof.json
 dino proof doctor
 ```
+
+`--command` is argv (`echo ok`). One quoted string (`"echo ok"`) also works.
 
 ## Leakage (Free pack)
 
@@ -30,7 +32,7 @@ dino scan leakage ./tests/dino/fixtures/scan/clean_code.py
 ## Capsule
 
 ```bash
-dino capsule run --command "echo sealed" --output-dir ./cap
+dino capsule run --command echo sealed --output-dir ./cap
 dino capsule replay --capsule ./cap/capsule.json
 dino capsule doctor
 ```
@@ -61,6 +63,8 @@ dino flight summary \
 ```bash
 dino verify drift --distance 0
 dino verify supersede \
+  --runtime-verdict REJECTED \
+  --release-verdict APPROVED \
   --contract ./tests/dino/fixtures/verify/contract_release.json \
   --previous ./tests/dino/fixtures/verify/contract_previous.json
 dino verify attest ./tests/dino/fixtures/verify/valid_attest.json \

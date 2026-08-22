@@ -17,7 +17,7 @@ export const NAV = [
 export const ABOUT = [
   "Dino is a proof CLI for Python decision logic — research pipelines, backtests, risk systems.",
   "It seals runs, detects ML leakage, and produces reproducible audit artifacts.",
-  "Not a secret scanner. Not image provenance. Proof for sealed decision logic.",
+  "Narrow by design: deterministic seal → replay → proof_hash. Not a general SAST suite, secret scanner, SBOM tool, or image provenance product.",
 ];
 
 export const ICPS = [
@@ -82,26 +82,26 @@ export const MODULES = [
 ];
 
 export const GUARANTEES = [
-  "deterministic execution",
+  "deterministic sealed execution",
   "deterministic replay",
-  "content-addressed artifacts",
-  "research leakage rules",
+  "content-addressed proof_hash",
+  "research leakage rules (not complete AppSec)",
   "drift classification",
-  "regression proof",
-  "governance contracts",
+  "regression signals (bundle)",
+  "governance checks (verify)",
   "PROOF_PASSED / PROOF_VERIFY_PASSED",
 ];
 
 export const CONTRACT_FOOTNOTE =
-  "Dino guarantees deterministic execution, not bit-identical runs across OS boundaries or complete leakage coverage.";
+  "Dino guarantees deterministic execution within a sealed environment — not bit-identical runs across OS boundaries, not complete leakage coverage, and not a replacement for broad AppSec scanners.";
 
 export const CLI_EXAMPLES = [
   {
     label: "proof run",
     code: `dino proof run \\
-  --command "echo ok" \\
+  --command echo ok \\
   --repo . \\
-  --scan ./src \\
+  --scan ./path/to/pipeline.py \\
   --output-dir ./proof_out`,
   },
   {
@@ -151,6 +151,7 @@ export const PRICING_RULES = [
   "Team pricing applies up to 20 seats",
   "Above 20 seats → contact us",
   "No Enterprise tier, no subscriptions, no lock-in",
+  "Unlock is local today (dino upgrade --pack proof); pay via contact until storefront ships",
 ];
 
 export const PRICING_UNLOCK = "dino upgrade --pack proof";
@@ -158,7 +159,11 @@ export const PRICING_UNLOCK = "dino upgrade --pack proof";
 export const FAQ = [
   {
     q: "Is Dino open source?",
-    a: "No — deterministic proof artifacts require controlled releases.",
+    a: "Yes — MIT on GitHub. Paid packs are optional commercial unlocks (local license file), not a closed core.",
+  },
+  {
+    q: "How is Dino different from Semgrep / Trivy / secret scanners?",
+    a: "Those cover broad AppSec surface. Dino is a sealed proof chain for decision pipelines: capsule → scan → map → proof.json with verify and tamper checks.",
   },
   {
     q: "What languages does Dino support?",
@@ -170,7 +175,15 @@ export const FAQ = [
   },
   {
     q: "Is Dino deterministic?",
-    a: "Yes — capsule + replay + proof_hash.",
+    a: "Yes — capsule + replay + proof_hash. Same inputs → same proof_hash within a sealed environment.",
+  },
+  {
+    q: "How do I pass --command?",
+    a: "Prefer argv tokens: --command echo ok. Use one quoted string when the program takes flags: --command \"python3 train.py --seed 0\".",
+  },
+  {
+    q: "Is Dino on PyPI?",
+    a: "No — the name dino is taken. Install from GitHub: pip install \"git+https://github.com/DinoDevCli/dino.git\".",
   },
 ];
 
@@ -192,4 +205,6 @@ export const SECTIONS = {
   faq: { label: "FAQ", title: "FAQ" },
   docsHint: "Full docs",
   cliRef: "CLI reference ↗",
+  cliHint:
+    "--command takes argv tokens (echo ok). Quote the whole string when the program itself needs --flags.",
 };

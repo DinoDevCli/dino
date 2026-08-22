@@ -1,4 +1,4 @@
-"""Unified CLI output — Deterministic Proof & Governance Platform."""
+"""Unified CLI output — Deterministic Proof for Python Decision Pipelines."""
 
 from __future__ import annotations
 

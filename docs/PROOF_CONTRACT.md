@@ -327,11 +327,13 @@ A failed regression means: **the evidence baseline is no longer met**, not that 
 dino upgrade --pack proof
 dino proof doctor
 dino proof run \
-  --command python train.py --seed 0 \
+  --command "python3 train.py --seed 0" \
   --repo . \
   --scan ./src \
   --output-dir ./proof_out
 # exit 0 + audit.verdict PROOF_PASSED|PROOF_PARTIAL
+# Note: put flags inside one --command string (or argv tokens without leading --).
+# If --scan paths resolve to zero .py files, scan fails (EMPTY_SCAN_ROOTS).
 dino proof verify --proof ./proof_out/proof.json
 # exit 0 + PROOF_VERIFY_PASSED
 ```

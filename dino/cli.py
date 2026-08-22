@@ -1,4 +1,4 @@
-"""Dino CLI — Deterministic Proof & Governance Platform."""
+"""Dino CLI — Deterministic Proof for Python Decision Pipelines."""
 
 from __future__ import annotations
 
@@ -20,9 +20,19 @@ def _pop_json_flag(argv: list[str]) -> tuple[list[str], bool]:
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="dino",
-        description="Deterministic Proof & Governance Platform",
+        description="Deterministic Proof for Python Decision Pipelines",
+        epilog=(
+            "Meta: dino version | packs | status | upgrade --pack proof|free [--key KEY] | "
+            "init-license. Global: --json for machine-readable envelopes."
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     p.add_argument("--version", action="version", version=f"dino {__version__}")
+    p.add_argument(
+        "--json",
+        action="store_true",
+        help="Emit JSON envelopes (also accepted before the domain)",
+    )
     sub = p.add_subparsers(dest="domain", required=True)
 
     # Kept product surface only (see packs.py / README)
@@ -116,7 +126,12 @@ def _capsule(sub: argparse._SubParsersAction) -> None:
     s = g.add_subparsers(dest="cmd", required=True)
     run = s.add_parser("run", help="Execute command into capsule")
     run.add_argument("--output-dir", default="./capsule_output/run")
-    run.add_argument("--command", nargs="+", default=["echo", "ok"])
+    run.add_argument(
+        "--command",
+        nargs="+",
+        default=["echo", "ok"],
+        help='Argv to seal, e.g. echo ok (or one string: "echo ok")',
+    )
     rep = s.add_parser("replay", help="Replay capsule")
     rep.add_argument("--capsule", required=True)
     rep.add_argument("--output-dir", default="./capsule_output/replay")
@@ -129,7 +144,12 @@ def _proof(sub: argparse._SubParsersAction) -> None:
     s = g.add_subparsers(dest="cmd", required=True)
     run = s.add_parser("run", help="Seal command + optional scan/map into proof.json")
     run.add_argument("--output-dir", default="./proof_output")
-    run.add_argument("--command", nargs="+", default=["echo", "ok"])
+    run.add_argument(
+        "--command",
+        nargs="+",
+        default=["echo", "ok"],
+        help='Argv to seal, e.g. echo ok (or one string: "echo ok")',
+    )
     run.add_argument("--repo", default="", help="Optional repo for map verify")
     run.add_argument("--scan", nargs="*", default=[], help="Optional paths for leakage scan")
     run.add_argument("--stdin", default="")
@@ -414,7 +434,10 @@ def _run_capsule(args: argparse.Namespace, cmd: str, json_mode: bool) -> int:
     if cmd == "run":
         from dino.domains.capsule.execute import execute
 
-        result = execute(list(args.command), output_dir=outdir)
+        try:
+            result = execute(list(args.command), output_dir=outdir)
+        except ValueError as exc:
+            return _fail(out, "invalid_args", str(exc), 2)
         out.emit_success(result)
         return 0 if result.get("replay_ok") else 1
     if cmd == "replay":
@@ -423,7 +446,10 @@ def _run_capsule(args: argparse.Namespace, cmd: str, json_mode: bool) -> int:
         cap = Path(args.capsule)
         if not cap.is_file():
             return _fail(out, "missing_file", f"capsule missing: {cap}", 1)
-        report = replay(read_json(cap))
+        try:
+            report = replay(read_json(cap))
+        except ValueError as exc:
+            return _fail(out, "invalid_args", str(exc), 2)
         out.emit_success(report)
         return 0 if report.get("replay_ok") else 1
     return _fail(out, "unknown_command", f"unknown capsule command: {cmd}", 2)

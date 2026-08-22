@@ -35,7 +35,7 @@ Dino packs (free + proof)
     Free — research integrity scanners (grammar smoke + causal leakage). Worth downloading because generic SAST/secret tools do not cover this.
     domains: scan
 
-[*] proof      paid   €49 once / €12/mo (hint)
+[*] proof      paid   €49 once / €39 per seat (team)
     Paid flagship — sealed execution capsules, structural map/verify, evidence bundles, canary flight, attestation drift/supersession, and the unique proof chain CLI.
     domains: capsule, map, bundle, flight, verify, proof
 

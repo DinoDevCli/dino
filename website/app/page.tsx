@@ -266,6 +266,9 @@ export default function Home() {
             ))}
           </div>
           <p className="text-muted-foreground text-sm leading-relaxed">
+            {SECTIONS.cliHint}
+          </p>
+          <p className="text-muted-foreground text-sm leading-relaxed">
             <Link
               href="/docs"
               className="text-foreground underline underline-offset-4"
@@ -363,7 +366,10 @@ export default function Home() {
       <footer className="border-border border-t px-6 py-12 md:px-10">
         <div className="mx-auto flex max-w-6xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <span className="font-mono text-sm tracking-[0.3em] uppercase">
-            dino
+            dino{" "}
+            <span className="text-muted-foreground tracking-normal normal-case">
+              v{SITE.version}
+            </span>
           </span>
           <nav aria-label="Footer">
             <ul className="text-muted-foreground flex flex-wrap gap-x-6 gap-y-3 font-mono text-xs tracking-[0.15em] uppercase">
@@ -385,6 +391,16 @@ export default function Home() {
               <li>
                 <a
                   className="hover:text-foreground"
+                  href={`${GITHUB.base}/blob/main/LICENSE`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  MIT
+                </a>
+              </li>
+              <li>
+                <a
+                  className="hover:text-foreground"
                   href={GITHUB.base}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -398,12 +414,7 @@ export default function Home() {
                 </a>
               </li>
               <li>
-                <a
-                  className="hover:text-foreground"
-                  href={contactHref()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a className="hover:text-foreground" href={contactHref()}>
                   Contact
                 </a>
               </li>
