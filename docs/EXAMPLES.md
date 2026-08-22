@@ -1,6 +1,6 @@
 # Examples
 
-Kurze, aktuelle Befehle für Dino 0.3.0. Vollständige Outputs: [`CLI_E2E_REFERENCE.md`](CLI_E2E_REFERENCE.md).
+Short commands for Dino 0.3.0. Live outputs: [`CLI_E2E_REFERENCE.md`](CLI_E2E_REFERENCE.md).
 
 ## Proof chain
 
@@ -17,7 +17,7 @@ dino proof verify --proof ./proof_out/proof.json
 dino proof doctor
 ```
 
-## Leakage (Free Pack)
+## Leakage (Free pack)
 
 ```bash
 dino scan leakage ./tests/dino/fixtures/scan/forbidden_import.py
