@@ -1,0 +1,8 @@
+{
+  "name": "scale_perf",
+  "description": "Enterprise E2E artifact/replay-baseline :: scale_perf",
+  "input": "fixtures/artifact/",
+  "expected_output": "non-crash; scored by matrix runner",
+  "expected_artifacts": [],
+  "deterministic": false
+}

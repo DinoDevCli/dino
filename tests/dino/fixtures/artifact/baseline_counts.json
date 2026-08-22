@@ -1,0 +1,9 @@
+{
+  "target_id": "lab",
+  "true_count": 3,
+  "verified_count": 5,
+  "endpoint_count": 2,
+  "xhr_count": 1,
+  "dual_session_diffs": 0,
+  "mutation_count": 0
+}

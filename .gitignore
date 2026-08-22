@@ -1,0 +1,33 @@
+.venv/
+__pycache__/
+*.egg-info/
+build/
+dist/
+*.spec
+.pytest_cache/
+.env
+.env.*
+!.env.example
+
+# Test / recorder scratch
+docs/_record_workdir/
+tests/dino/_work*/
+tests/dino/_work_*.json
+tests/dino/_gap_work/
+tests/dino/_matrix_work/
+tests/dino/_fixture_work/
+tests/dino/_new_domains_work/
+tests/dino/_proof_e2e/
+tests/dino/_regression_work/
+tests/e2e/matrix/_workdir/
+dino/domains/proof/_self_test_out/
+
+# Website
+website/node_modules/
+website/.next/
+website/out/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store

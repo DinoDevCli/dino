@@ -1,0 +1,8 @@
+{
+  "name": "empty",
+  "description": "E2E scenario empty for canary/summary",
+  "input": "fixtures/canary/",
+  "expected_output": "see matrix_runner",
+  "expected_artifacts": [],
+  "deterministic": true
+}

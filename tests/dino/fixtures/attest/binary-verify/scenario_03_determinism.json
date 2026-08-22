@@ -1,0 +1,8 @@
+{
+  "name": "determinism",
+  "description": "Enterprise E2E attest/binary-verify :: determinism",
+  "input": "fixtures/attest/",
+  "expected_output": "non-crash; scored by matrix runner",
+  "expected_artifacts": [],
+  "deterministic": true
+}

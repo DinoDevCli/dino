@@ -1,0 +1,8 @@
+{
+  "name": "determinism",
+  "description": "Enterprise E2E artifact/config-paths :: determinism",
+  "input": "fixtures/artifact/",
+  "expected_output": "non-crash; scored by matrix runner",
+  "expected_artifacts": [],
+  "deterministic": true
+}

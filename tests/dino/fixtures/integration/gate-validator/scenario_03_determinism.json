@@ -1,0 +1,8 @@
+{
+  "name": "determinism",
+  "description": "Enterprise E2E integration/gate-validator :: determinism",
+  "input": "fixtures/integration/",
+  "expected_output": "non-crash; scored by matrix runner",
+  "expected_artifacts": [],
+  "deterministic": true
+}

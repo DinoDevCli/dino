@@ -1,0 +1,8 @@
+{
+  "name": "error_handling",
+  "description": "Enterprise E2E attest/supersession :: error_handling",
+  "input": "fixtures/attest/",
+  "expected_output": "non-crash; scored by matrix runner",
+  "expected_artifacts": [],
+  "deterministic": false
+}

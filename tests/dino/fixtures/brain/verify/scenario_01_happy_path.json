@@ -1,0 +1,8 @@
+{
+  "name": "happy_path",
+  "description": "Enterprise E2E brain/verify :: happy_path",
+  "input": "fixtures/brain/",
+  "expected_output": "non-crash; scored by matrix runner",
+  "expected_artifacts": [],
+  "deterministic": false
+}

@@ -1,0 +1,8 @@
+{
+  "name": "happy_path",
+  "description": "Enterprise E2E jsonl/quality-eval :: happy_path",
+  "input": "fixtures/jsonl/",
+  "expected_output": "non-crash; scored by matrix runner",
+  "expected_artifacts": [],
+  "deterministic": false
+}

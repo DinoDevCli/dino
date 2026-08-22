@@ -1,0 +1,8 @@
+{
+  "name": "invalid",
+  "description": "E2E scenario invalid for jsonl/quality",
+  "input": "fixtures/jsonl/",
+  "expected_output": "see matrix_runner",
+  "expected_artifacts": [],
+  "deterministic": true
+}

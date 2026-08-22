@@ -1,0 +1,8 @@
+{
+  "name": "valid",
+  "description": "E2E scenario valid for integration/gate",
+  "input": "fixtures/integration/",
+  "expected_output": "see matrix_runner",
+  "expected_artifacts": [],
+  "deterministic": true
+}

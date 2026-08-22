@@ -1,0 +1,26 @@
+{
+  "envelope_version": "1.1.0",
+  "artifact_type": "run_artifact",
+  "artifact_version": "1.1.0",
+  "hash_sha256": "fca769573f458acfa8c750e2612b8ae1b1bb0339bef5268f23d75a27c885c00d",
+  "payload": {
+    "schema_version": "1.1.0",
+    "core_version": "0.1.0",
+    "execution_graph": [
+      "brain",
+      "vault",
+      "kernel",
+      "governance"
+    ],
+    "signals": {
+      "risk_score": 1
+    },
+    "decision": "pass",
+    "explainability": {
+      "reason": "demo roundtrip"
+    },
+    "evidence": {
+      "files_checked": 1
+    }
+  }
+}

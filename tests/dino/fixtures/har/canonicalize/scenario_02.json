@@ -1,0 +1,8 @@
+{
+  "name": "scenario_02",
+  "description": "POST method prefix",
+  "input": "url+POST",
+  "expected_output": "POST: prefix",
+  "expected_artifacts": [],
+  "deterministic": true
+}

@@ -1,0 +1,261 @@
+{
+  "runs": [
+    {
+      "tier": "enterprise",
+      "integration_dispatch": {
+        "integrations": [
+          {
+            "target": "0",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "1",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "2",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "3",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "4",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "5",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "6",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "7",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "8",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "9",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "10",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "11",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "12",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "13",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "14",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "15",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "16",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "17",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "18",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "19",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "20",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "21",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "22",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "23",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "24",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "25",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "26",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "27",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "28",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "29",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "30",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "31",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "32",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "33",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "34",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "35",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "36",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "37",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "38",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "39",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "40",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "41",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "42",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "43",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "44",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "45",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "46",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "47",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "48",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "49",
+            "action": "send",
+            "status": "sent"
+          }
+        ]
+      }
+    }
+  ]
+}

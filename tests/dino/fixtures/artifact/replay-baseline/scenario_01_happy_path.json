@@ -1,0 +1,8 @@
+{
+  "name": "happy_path",
+  "description": "Enterprise E2E artifact/replay-baseline :: happy_path",
+  "input": "fixtures/artifact/",
+  "expected_output": "non-crash; scored by matrix runner",
+  "expected_artifacts": [],
+  "deterministic": false
+}

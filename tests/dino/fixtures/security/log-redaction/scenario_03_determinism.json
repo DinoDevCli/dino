@@ -1,0 +1,8 @@
+{
+  "name": "determinism",
+  "description": "Enterprise E2E security/log-redaction :: determinism",
+  "input": "fixtures/security/",
+  "expected_output": "non-crash; scored by matrix runner",
+  "expected_artifacts": [],
+  "deterministic": true
+}

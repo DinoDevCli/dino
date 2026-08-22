@@ -1,0 +1,8 @@
+{
+  "name": "decode_vault",
+  "description": "E2E scenario decode_vault for artifact/vault-bundle",
+  "input": "fixtures/artifact/",
+  "expected_output": "see matrix_runner",
+  "expected_artifacts": [],
+  "deterministic": true
+}

@@ -1,0 +1,8 @@
+{
+  "name": "analyze_small",
+  "description": "E2E scenario analyze_small for brain/analyze",
+  "input": "fixtures/brain/",
+  "expected_output": "see matrix_runner",
+  "expected_artifacts": [],
+  "deterministic": true
+}

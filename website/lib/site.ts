@@ -1,0 +1,36 @@
+const owner = process.env.NEXT_PUBLIC_GITHUB_OWNER ?? "noahp";
+const repo = process.env.NEXT_PUBLIC_GITHUB_REPO ?? "dino";
+
+const base = `https://github.com/${owner}/${repo}`;
+const blob = (path: string) => `${base}/blob/main/${path}`;
+
+export const GITHUB = {
+  owner,
+  repo,
+  base,
+  readme: `${base}#installation`,
+  releases: `${base}/releases/latest`,
+  issuesNew: `${base}/issues/new`,
+  teamIssue: `${base}/issues/new?title=Team%20Pack%20Anfrage&labels=sales`,
+  docs: {
+    proofContract: blob("docs/PROOF_CONTRACT.md"),
+    cliReference: blob("docs/CLI_E2E_REFERENCE.md"),
+    techStatus: blob("docs/TECH_STATUS_NOW.md"),
+    evaluation: blob("docs/EVALUATION_E2E.md"),
+    icpTest: blob("docs/ICP_TEST.md"),
+    examples: blob("docs/EXAMPLES.md"),
+    readme: blob("README.md"),
+  },
+  install: {
+    free: `pip install "git+${base}.git"`,
+    proof: `pip install "git+${base}.git[dev]" && dino upgrade --pack proof`,
+  },
+  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "",
+};
+
+export function contactHref(): string {
+  if (GITHUB.contactEmail) {
+    return `mailto:${GITHUB.contactEmail}?subject=Dino%20Team%20Pack`;
+  }
+  return GITHUB.teamIssue;
+}

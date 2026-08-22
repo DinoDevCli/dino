@@ -1,0 +1,8 @@
+{
+  "name": "determinism",
+  "description": "Enterprise E2E tenant/isolation-check :: determinism",
+  "input": "fixtures/tenant/",
+  "expected_output": "non-crash; scored by matrix runner",
+  "expected_artifacts": [],
+  "deterministic": true
+}

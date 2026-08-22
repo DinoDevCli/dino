@@ -1,0 +1,15 @@
+{
+  "algorithm": "ed25519",
+  "schema_version": "archovive_trust_anchor_v1",
+  "trust_anchor_version": "1.0.0",
+  "pipeline_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "public_key_id": "dino-demo-v1",
+  "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA9ZxQyN+19Q84QO+Rt7BNCTBl2LRDhvNQmjGLw9kXyYs=\n-----END PUBLIC KEY-----\n",
+  "golden_repos": [
+    {
+      "golden_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "repo_id": "demo",
+      "path": "demo"
+    }
+  ]
+}

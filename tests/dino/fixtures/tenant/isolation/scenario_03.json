@@ -1,0 +1,8 @@
+{
+  "name": "missing_skip",
+  "description": "E2E scenario missing_skip for tenant/isolation",
+  "input": "fixtures/tenant/",
+  "expected_output": "see matrix_runner",
+  "expected_artifacts": [],
+  "deterministic": true
+}

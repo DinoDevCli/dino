@@ -1,0 +1,3 @@
+date,contact,org,icp,role,pain_confirmed,pain_cost_eur,tools_gap_confirmed,demo_score_1_5,price_t1,price_t2,price_t3_pilot,champion,score_0_10,next_step,notes
+# Example:
+# 2026-08-21,A. Example,Example Capital,1,Quant Researcher,y,50000,y,5,maybe,yes,maybe,y,9,pilot repo,lookahead incident 2025

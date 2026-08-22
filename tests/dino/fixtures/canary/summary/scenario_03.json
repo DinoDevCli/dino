@@ -1,0 +1,8 @@
+{
+  "name": "repeat",
+  "description": "E2E scenario repeat for canary/summary",
+  "input": "fixtures/canary/",
+  "expected_output": "see matrix_runner",
+  "expected_artifacts": [],
+  "deterministic": true
+}

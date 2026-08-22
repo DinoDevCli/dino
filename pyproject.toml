@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dino"
+version = "0.3.0"
+description = "Dino CLI — Deterministic Proof & Governance Platform"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "DevKit Collected" }]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+dino = "dino.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["dino*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/dino"]
+addopts = "-q"
+filterwarnings = ["ignore::DeprecationWarning"]
+

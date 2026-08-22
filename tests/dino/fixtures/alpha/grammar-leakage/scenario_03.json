@@ -1,0 +1,8 @@
+{
+  "name": "forbidden",
+  "description": "E2E scenario forbidden for alpha/grammar-leakage",
+  "input": "fixtures/alpha/",
+  "expected_output": "see matrix_runner",
+  "expected_artifacts": [],
+  "deterministic": true
+}

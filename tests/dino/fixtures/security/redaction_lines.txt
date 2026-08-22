@@ -1,0 +1,5 @@
+Authorization: Bearer sk-test-aaaaaaaaaaaaaaaa
+password=supersecret123
+normal log line without secrets
+api_key=AKIAIOSFODNN7EXAMPLE
+token=ghp_abcdefghijklmnopqrstuvwxyz0123456789

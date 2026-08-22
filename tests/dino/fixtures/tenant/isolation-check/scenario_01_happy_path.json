@@ -1,0 +1,8 @@
+{
+  "name": "happy_path",
+  "description": "Enterprise E2E tenant/isolation-check :: happy_path",
+  "input": "fixtures/tenant/",
+  "expected_output": "non-crash; scored by matrix runner",
+  "expected_artifacts": [],
+  "deterministic": false
+}

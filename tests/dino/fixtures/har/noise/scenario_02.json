@@ -1,0 +1,8 @@
+{
+  "name": "scenario_02",
+  "description": "API signal",
+  "input": "api.example.com",
+  "expected_output": "is_noise false",
+  "expected_artifacts": [],
+  "deterministic": true
+}

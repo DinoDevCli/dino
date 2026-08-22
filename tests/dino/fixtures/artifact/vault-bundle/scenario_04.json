@@ -1,0 +1,8 @@
+{
+  "name": "run_artifact",
+  "description": "E2E scenario run_artifact for artifact/vault-bundle",
+  "input": "fixtures/artifact/",
+  "expected_output": "see matrix_runner",
+  "expected_artifacts": [],
+  "deterministic": true
+}

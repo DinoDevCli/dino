@@ -1,0 +1,8 @@
+{
+  "name": "clean",
+  "description": "E2E scenario clean for alpha/grammar-leakage",
+  "input": "fixtures/alpha/",
+  "expected_output": "see matrix_runner",
+  "expected_artifacts": [],
+  "deterministic": true
+}

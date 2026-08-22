@@ -1,0 +1,8 @@
+{
+  "name": "valid",
+  "description": "E2E scenario valid for attest/verify",
+  "input": "fixtures/attest/",
+  "expected_output": "see matrix_runner",
+  "expected_artifacts": [],
+  "deterministic": true
+}

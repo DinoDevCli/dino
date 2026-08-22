@@ -1,0 +1,8 @@
+{
+  "name": "invalid_input",
+  "description": "Enterprise E2E canary/engine-j-summary :: invalid_input",
+  "input": "fixtures/canary/",
+  "expected_output": "non-crash; scored by matrix runner",
+  "expected_artifacts": [],
+  "deterministic": false
+}

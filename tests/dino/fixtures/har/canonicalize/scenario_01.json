@@ -1,0 +1,8 @@
+{
+  "name": "scenario_01",
+  "description": "Canonicalize user URL",
+  "input": "https://Example.com/users/42?utm_source=x",
+  "expected_output": "contains {id}, strips utm",
+  "expected_artifacts": [],
+  "deterministic": true
+}

@@ -1,0 +1,8 @@
+{
+  "name": "scenario_04",
+  "description": "Root path",
+  "input": "example.com/",
+  "expected_output": "classified",
+  "expected_artifacts": [],
+  "deterministic": true
+}

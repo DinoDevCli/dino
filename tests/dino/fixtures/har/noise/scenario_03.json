@@ -1,0 +1,8 @@
+{
+  "name": "scenario_03",
+  "description": "Tracker host",
+  "input": "google-analytics",
+  "expected_output": "is_noise true",
+  "expected_artifacts": [],
+  "deterministic": true
+}

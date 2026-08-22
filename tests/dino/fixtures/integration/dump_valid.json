@@ -1,0 +1,31 @@
+{
+  "runs": [
+    {
+      "tier": "enterprise",
+      "integration_dispatch": {
+        "integrations": [
+          {
+            "target": "a",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "b",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "c",
+            "action": "send",
+            "status": "sent"
+          },
+          {
+            "target": "d",
+            "action": "plan",
+            "status": "planned"
+          }
+        ]
+      }
+    }
+  ]
+}

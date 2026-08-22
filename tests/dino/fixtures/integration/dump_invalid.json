@@ -1,0 +1,10 @@
+{
+  "runs": [
+    {
+      "tier": "enterprise",
+      "integration_dispatch": {
+        "integrations": []
+      }
+    }
+  ]
+}

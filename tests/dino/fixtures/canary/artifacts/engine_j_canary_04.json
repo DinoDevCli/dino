@@ -1,0 +1,36 @@
+{
+  "timestamp": "2024-01-05T00:00:00Z",
+  "strict_mode": false,
+  "run_count": 2,
+  "flakiness_score": 0.7,
+  "payload_equal_first_second": true,
+  "hash_equal_first_second": true,
+  "runtime_delta_ratio_first_second": 0.04,
+  "mismatch_indices_vs_first": [],
+  "snapshots": [
+    {
+      "payload": [
+        [
+          "a",
+          "1"
+        ],
+        [
+          "b",
+          "2"
+        ]
+      ]
+    },
+    {
+      "payload": [
+        [
+          "a",
+          "1"
+        ],
+        [
+          "b",
+          "2"
+        ]
+      ]
+    }
+  ]
+}

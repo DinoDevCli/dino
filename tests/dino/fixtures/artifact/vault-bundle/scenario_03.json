@@ -1,0 +1,8 @@
+{
+  "name": "complete_bundle",
+  "description": "E2E scenario complete_bundle for artifact/vault-bundle",
+  "input": "fixtures/artifact/",
+  "expected_output": "see matrix_runner",
+  "expected_artifacts": [],
+  "deterministic": true
+}

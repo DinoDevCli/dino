@@ -1,0 +1,7 @@
+{
+  "false_approve_rate_max": 0.002,
+  "approve_precision_min": 0.995,
+  "betrag_exact_match_rate_min": 0.99,
+  "rechnungsnummer_exact_match_rate_min": 0.98,
+  "max_critical_regression_pp": 0.5
+}
