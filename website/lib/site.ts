@@ -4,6 +4,9 @@ const repo = process.env.NEXT_PUBLIC_GITHUB_REPO ?? "dino";
 const base = `https://github.com/${owner}/${repo}`;
 const blob = (path: string) => `${base}/blob/main/${path}`;
 
+/** Interim contact — override via NEXT_PUBLIC_CONTACT_EMAIL */
+const DEFAULT_CONTACT = "noahpeitz95@gmail.com";
+
 export const GITHUB = {
   owner,
   repo,
@@ -21,12 +24,11 @@ export const GITHUB = {
     techStatus: blob("docs/TECH_STATUS_NOW.md"),
     readme: blob("README.md"),
   },
-  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "",
+  contactEmail:
+    process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || DEFAULT_CONTACT,
 };
 
-export function contactHref(): string {
-  if (GITHUB.contactEmail) {
-    return `mailto:${GITHUB.contactEmail}?subject=Dino%20Team%20Pack`;
-  }
-  return GITHUB.teamIssue;
+export function contactHref(subject = "Dino — Team / Large Teams"): string {
+  const email = GITHUB.contactEmail;
+  return `mailto:${email}?subject=${encodeURIComponent(subject)}`;
 }

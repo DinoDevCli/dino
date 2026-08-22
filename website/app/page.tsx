@@ -11,6 +11,8 @@ import {
   NAV,
   PACKS,
   PAINPOINTS,
+  PRICING_RULES,
+  PRICING_UNLOCK,
   SECTIONS,
   SITE,
 } from "@/lib/content";
@@ -126,8 +128,8 @@ function ExternalLink({
   );
 }
 
-function packHref(tier: "free" | "indie" | "team"): string {
-  if (tier === "team") return contactHref();
+function packHref(tier: "free" | "indie" | "team" | "large"): string {
+  if (tier === "team" || tier === "large") return contactHref();
   if (tier === "indie") return GITHUB.downloadZip;
   return GITHUB.readme;
 }
@@ -287,7 +289,7 @@ export default function Home() {
             label={SECTIONS.pricing.label}
             title={SECTIONS.pricing.title}
           />
-          <div className="border-border grid border-t border-l md:grid-cols-3">
+          <div className="border-border grid border-t border-l sm:grid-cols-2 lg:grid-cols-4">
             {PACKS.map((pack) => (
               <div
                 key={pack.name}
@@ -313,6 +315,28 @@ export default function Home() {
               </div>
             ))}
           </div>
+          <ul className="text-muted-foreground max-w-3xl space-y-2 font-mono text-sm leading-relaxed">
+            {PRICING_RULES.map((rule) => (
+              <li key={rule} className="flex gap-3">
+                <span aria-hidden="true">—</span>
+                <span>{rule}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="font-mono text-sm leading-relaxed">
+            Unlock:{" "}
+            <code className="text-foreground">{PRICING_UNLOCK}</code>
+            <br />
+            <span className="text-muted-foreground">
+              Contact:{" "}
+              <a
+                href={contactHref()}
+                className="text-foreground underline underline-offset-4"
+              >
+                {GITHUB.contactEmail}
+              </a>
+            </span>
+          </p>
         </SectionShell>
 
         <SectionShell id="faq" compact>

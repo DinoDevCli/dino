@@ -85,11 +85,25 @@ Schemas and limits: [`docs/PROOF_CONTRACT.md`](docs/PROOF_CONTRACT.md)
 
 | Pack | Price | Includes |
 |------|-------|----------|
-| **Free** | €0 | `scan` |
-| **Indie** | €49 once | Proof pack |
-| **Team** | 20% off (5–10 seats) | Proof pack |
+| **Free** | €0 | Leakage Scan |
+| **Indie** | €49 one-time | Full Proof Pack |
+| **Team** | €39 per seat (20% off) | Full Proof Pack |
+| **Large Teams** | Custom | 20+ seats, invoicing on request |
 
-Unlock: `dino upgrade --pack proof`
+**Rules**
+
+- Team pricing starts at **3 seats**
+- Team pricing applies up to **20 seats**
+- Above 20 seats → contact us
+- No Enterprise tier, no subscriptions, no lock-in
+
+Unlock:
+
+```bash
+dino upgrade --pack proof
+```
+
+Contact: [noahpeitz95@gmail.com](mailto:noahpeitz95@gmail.com)
 
 ---
 

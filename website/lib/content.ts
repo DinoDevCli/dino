@@ -118,26 +118,42 @@ export const PACKS = [
   {
     name: "Free",
     price: "€0",
-    hint: "Leakage scan",
+    hint: "Leakage Scan",
     cta: "Get started",
     tier: "free" as const,
   },
   {
     name: "Indie",
     price: "€49",
-    hint: "One-time — Proof pack",
+    hint: "One-time — Full Proof Pack",
     cta: "Download",
     tier: "indie" as const,
     featured: true,
   },
   {
     name: "Team",
-    price: "20%",
-    hint: "Off — 5–10 seats",
+    price: "€39",
+    hint: "Per seat (20% off) — Full Proof Pack",
     cta: "Contact",
     tier: "team" as const,
   },
+  {
+    name: "Large Teams",
+    price: "Custom",
+    hint: "20+ seats, invoicing on request",
+    cta: "Contact",
+    tier: "large" as const,
+  },
 ];
+
+export const PRICING_RULES = [
+  "Team pricing starts at 3 seats",
+  "Team pricing applies up to 20 seats",
+  "Above 20 seats → contact us",
+  "No Enterprise tier, no subscriptions, no lock-in",
+];
+
+export const PRICING_UNLOCK = "dino upgrade --pack proof";
 
 export const FAQ = [
   {

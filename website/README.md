@@ -19,7 +19,7 @@ NEXT_PUBLIC_GITHUB_OWNER=DinoDevCli
 NEXT_PUBLIC_GITHUB_REPO=dino
 ```
 
-Optional: `NEXT_PUBLIC_CONTACT_EMAIL` for Team/Contact (else GitHub Issues).
+Optional: `NEXT_PUBLIC_CONTACT_EMAIL` (default `noahpeitz95@gmail.com`).
 
 ## Deploy (Vercel)
 

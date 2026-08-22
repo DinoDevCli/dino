@@ -21,7 +21,7 @@ PACKS: dict[str, dict[str, Any]] = {
     },
     "proof": {
         "tier": "paid",
-        "price_hint": "€49 once",
+        "price_hint": "€49 once / €39 per seat (team)",
         "domains": ["capsule", "map", "bundle", "flight", "verify", "proof"],
         "description": (
             "Proof Pack — capsule, map, bundle, flight, verify, and proof chain."
