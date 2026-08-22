@@ -1,8 +1,0 @@
-{
-  "name": "invalid_input",
-  "description": "Enterprise E2E attest/drift-classify :: invalid_input",
-  "input": "fixtures/attest/",
-  "expected_output": "non-crash; scored by matrix runner",
-  "expected_artifacts": [],
-  "deterministic": false
-}

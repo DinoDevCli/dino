@@ -1,8 +1,0 @@
-{
-  "name": "determinism",
-  "description": "Enterprise E2E artifact/replay-baseline :: determinism",
-  "input": "fixtures/artifact/",
-  "expected_output": "non-crash; scored by matrix runner",
-  "expected_artifacts": [],
-  "deterministic": true
-}

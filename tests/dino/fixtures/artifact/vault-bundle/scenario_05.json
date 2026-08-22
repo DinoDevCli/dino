@@ -1,8 +1,0 @@
-{
-  "name": "replay_baseline",
-  "description": "E2E scenario replay_baseline for artifact/vault-bundle",
-  "input": "fixtures/artifact/",
-  "expected_output": "see matrix_runner",
-  "expected_artifacts": [],
-  "deterministic": true
-}

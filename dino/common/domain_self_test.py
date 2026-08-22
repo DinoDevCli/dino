@@ -44,7 +44,7 @@ def _bundle() -> dict:
 
 
 def _flight() -> dict:
-    arts = _fixtures() / "canary" / "artifacts"
+    arts = _fixtures() / "flight" / "artifacts"
     n = len(list(arts.glob("engine_j_canary_*.json"))) if arts.is_dir() else 0
     return {"domain": "flight", "ok": n > 0, "records": n}
 
@@ -103,7 +103,7 @@ def _scan() -> dict:
     from dino.domains.scan.leakage import scan_paths
 
     g = smoke()
-    clean = _fixtures() / "alpha" / "clean_code.py"
+    clean = _fixtures() / "scan" / "clean_code.py"
     leak = scan_paths([clean]) if clean.is_file() else None
     return {
         "domain": "scan",

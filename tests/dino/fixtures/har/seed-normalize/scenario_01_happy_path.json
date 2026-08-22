@@ -1,8 +1,0 @@
-{
-  "name": "happy_path",
-  "description": "Enterprise E2E har/seed-normalize :: happy_path",
-  "input": "fixtures/har/",
-  "expected_output": "non-crash; scored by matrix runner",
-  "expected_artifacts": [],
-  "deterministic": false
-}

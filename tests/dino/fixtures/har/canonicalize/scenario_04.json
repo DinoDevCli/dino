@@ -1,8 +1,0 @@
-{
-  "name": "scenario_04",
-  "description": "Determinism",
-  "input": "same url thrice",
-  "expected_output": "identical stdout",
-  "expected_artifacts": [],
-  "deterministic": true
-}

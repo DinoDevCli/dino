@@ -8,7 +8,7 @@ from tests.dino.conftest import FIXTURES, run, twice
 
 
 def test_binary_no_importerror() -> None:
-    att = FIXTURES / "attest" / "valid_attest.json"
+    att = FIXTURES / "verify" / "valid_attest.json"
     code, out, err = run(["verify", "binary", str(att)])
     assert "ImportError" not in out + err
     json.loads(out)

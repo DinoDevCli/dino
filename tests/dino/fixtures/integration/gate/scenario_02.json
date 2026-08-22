@@ -1,8 +1,0 @@
-{
-  "name": "gate_pass",
-  "description": "E2E scenario gate_pass for integration/gate",
-  "input": "fixtures/integration/",
-  "expected_output": "see matrix_runner",
-  "expected_artifacts": [],
-  "deterministic": true
-}

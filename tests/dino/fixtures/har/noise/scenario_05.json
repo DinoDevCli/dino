@@ -1,8 +1,0 @@
-{
-  "name": "scenario_05",
-  "description": "Scale 40",
-  "input": "40 CDN urls",
-  "expected_output": "completes",
-  "expected_artifacts": [],
-  "deterministic": true
-}

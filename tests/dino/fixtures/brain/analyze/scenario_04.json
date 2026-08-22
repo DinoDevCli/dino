@@ -1,8 +1,0 @@
-{
-  "name": "errors",
-  "description": "E2E scenario errors for brain/analyze",
-  "input": "fixtures/brain/",
-  "expected_output": "see matrix_runner",
-  "expected_artifacts": [],
-  "deterministic": true
-}

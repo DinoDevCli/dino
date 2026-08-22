@@ -1,8 +1,0 @@
-{
-  "name": "scenario_01",
-  "description": "CDN static noise",
-  "input": "cloudfront js",
-  "expected_output": "is_noise true",
-  "expected_artifacts": [],
-  "deterministic": true
-}

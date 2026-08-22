@@ -18,7 +18,7 @@ def _ensure_work_dir() -> None:
 
 
 def _cmd_map_verify() -> str:
-    repo = FIXTURES / "brain" / "repo_small"
+    repo = FIXTURES / "map" / "repo_small"
     if not repo.is_dir():
         repo = ROOT / "dino" / "common"
     return run(["map", "verify", "--repo", str(repo)])[1]

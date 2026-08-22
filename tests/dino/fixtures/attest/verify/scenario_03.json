@@ -1,8 +1,0 @@
-{
-  "name": "invalid",
-  "description": "E2E scenario invalid for attest/verify",
-  "input": "fixtures/attest/",
-  "expected_output": "see matrix_runner",
-  "expected_artifacts": [],
-  "deterministic": true
-}

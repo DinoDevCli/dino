@@ -1,8 +1,0 @@
-{
-  "name": "secret_scan",
-  "description": "E2E scenario secret_scan for security/repo-checks",
-  "input": "fixtures/security/",
-  "expected_output": "see matrix_runner",
-  "expected_artifacts": [],
-  "deterministic": true
-}

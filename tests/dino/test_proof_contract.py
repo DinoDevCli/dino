@@ -26,7 +26,7 @@ def test_proof_run_end_to_end() -> None:
             "--repo",
             str(ROOT / "dino" / "common"),
             "--scan",
-            str(FIXTURES / "alpha" / "clean_code.py"),
+            str(FIXTURES / "scan" / "clean_code.py"),
         ]
     )
     assert code == 0
@@ -127,7 +127,7 @@ def test_proof_run_fails_on_scan() -> None:
             "echo",
             "x",
             "--scan",
-            str(FIXTURES / "alpha" / "forbidden_import.py"),
+            str(FIXTURES / "scan" / "forbidden_import.py"),
         ]
     )
     assert code == 1

@@ -1,8 +1,0 @@
-{
-  "name": "scenario_05",
-  "description": "Scale 50 URLs",
-  "input": "50 urls",
-  "expected_output": "completes <30s",
-  "expected_artifacts": [],
-  "deterministic": true
-}

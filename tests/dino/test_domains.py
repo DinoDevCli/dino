@@ -26,8 +26,8 @@ def run(argv: list[str]) -> tuple[int, str, str]:
 
 class VerifyTests(unittest.TestCase):
     def test_attest_and_binary(self) -> None:
-        att = FIXTURES / "attest" / "valid_attest.json"
-        anchor = FIXTURES / "attest" / "trust_anchor.json"
+        att = FIXTURES / "verify" / "valid_attest.json"
+        anchor = FIXTURES / "verify" / "trust_anchor.json"
         code, out, _ = run(["verify", "attest", str(att), "--trust-anchor", str(anchor)])
         self.assertIn(code, (0, 1))
         json.loads(out)
@@ -45,7 +45,7 @@ class VerifyTests(unittest.TestCase):
 
 class MapTests(unittest.TestCase):
     def test_verify_deterministic(self) -> None:
-        repo = FIXTURES / "brain" / "repo_small"
+        repo = FIXTURES / "map" / "repo_small"
         if not repo.is_dir():
             repo = ROOT / "dino"
         argv = ["map", "verify", "--repo", str(repo)]
@@ -90,7 +90,7 @@ class ScanTests(unittest.TestCase):
         twice(["scan", "grammar"])
 
     def test_leakage_forbidden(self) -> None:
-        path = FIXTURES / "alpha" / "forbidden_import.py"
+        path = FIXTURES / "scan" / "forbidden_import.py"
         code, out, _ = run(["scan", "leakage", str(path)])
         self.assertEqual(code, 1)
         payload = json.loads(out)
@@ -100,7 +100,7 @@ class ScanTests(unittest.TestCase):
 
 class ProofCompanionTests(unittest.TestCase):
     def test_flight_summary(self) -> None:
-        arts = FIXTURES / "canary" / "artifacts"
+        arts = FIXTURES / "flight" / "artifacts"
         if not arts.is_dir():
             self.skipTest("fixture missing")
         work = Path(__file__).resolve().parent / "_work_flight.json"
@@ -111,7 +111,7 @@ class ProofCompanionTests(unittest.TestCase):
         twice(argv)
 
     def test_bundle_create(self) -> None:
-        rundata = FIXTURES / "artifact" / "rundata.json"
+        rundata = FIXTURES / "bundle" / "rundata.json"
         if not rundata.is_file():
             self.skipTest("fixture missing")
         work = Path(__file__).resolve().parent / "_work_bundle.json"

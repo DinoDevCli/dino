@@ -1,8 +1,0 @@
-{
-  "name": "scenario_03",
-  "description": "Invalid URL no crash",
-  "input": "garbage",
-  "expected_output": "non-timeout exit",
-  "expected_artifacts": [],
-  "deterministic": true
-}

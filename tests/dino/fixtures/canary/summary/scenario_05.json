@@ -1,8 +1,0 @@
-{
-  "name": "help",
-  "description": "E2E scenario help for canary/summary",
-  "input": "fixtures/canary/",
-  "expected_output": "see matrix_runner",
-  "expected_artifacts": [],
-  "deterministic": true
-}

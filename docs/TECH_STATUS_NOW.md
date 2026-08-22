@@ -15,7 +15,7 @@ Dino ist ein **verkaufbares Proof-CLI**: es versiegelt Ausführung, prüft Logic
 | Was ist das Produkt? | `dino proof run` → Capsule + optional Scan + Map → `proof.json` |
 | Was ist neu am Markt? | Eine CLI, die **Execution-Seal + Causal Leakage + Structural Drift** in einem Audit-Objekt bindet |
 | Technischer Stand | Capsule sealed (re-exec), Bundle-Regression, Supersession-Verträge, Proof-Doctor, Contract-Doku |
-| Nächster Engpass | **Markt-Validierung** — offizieller ICP-Test [`ICP_TEST.md`](ICP_TEST.md) (Quant + Fraud) |
+| Nächster Engpass | **Markt-Validierung** — offizieller ICP-Test [`internal/ICP_TEST.md`](internal/ICP_TEST.md) (Quant + Fraud) |
 
 ---
 
@@ -152,12 +152,12 @@ dino proof doctor
 dino proof run \
   --command echo market_unique \
   --repo dino/common \
-  --scan tests/dino/fixtures/alpha/clean_code.py \
+  --scan tests/dino/fixtures/scan/clean_code.py \
   --output-dir ./proof_out
 dino proof verify --proof ./proof_out/proof.json
 dino bundle verify \
-  --baseline tests/dino/fixtures/artifact/baseline_counts.json \
-  --current tests/dino/fixtures/artifact/current_counts.json
+  --baseline tests/dino/fixtures/bundle/baseline_counts.json \
+  --current tests/dino/fixtures/bundle/current_counts.json
 pytest tests/dino -q
 ```
 
@@ -171,16 +171,15 @@ pytest tests/dino -q
 | [`PROOF_CONTRACT.md`](PROOF_CONTRACT.md) | Normative Guarantees / Schemas |
 | [`CLI_E2E_REFERENCE.md`](CLI_E2E_REFERENCE.md) | CLI + Live-Outputs |
 | [`EXAMPLES.md`](EXAMPLES.md) | Kurzbeispiele |
-| [`EVALUATION_E2E.md`](EVALUATION_E2E.md) | E2E-Evaluation |
-| [`ICP_TEST.md`](ICP_TEST.md) | Intern: ICP-/Pricing-Test |
+| [`internal/`](internal/) | ICP, Evaluation, Publish |
 | [`../website/`](../website/) | Landing Page |
 
 ---
 
 ## 9. Verbleibende Launch-Engpässe
 
-1. **ICP-Test ausführen** — 10 Gespräche laut [`ICP_TEST.md`](ICP_TEST.md)  
-2. Evidence-Backlog füllen (`docs/evidence/`)  
+1. **ICP-Test ausführen** — 10 Gespräche laut [`internal/ICP_TEST.md`](internal/ICP_TEST.md)  
+2. Evidence-Backlog füllen (`docs/internal/evidence/`)  
 3. Pricing an Gesprächsdaten kalibrieren  
 4. Repo auf GitHub pushen (`DinoDevCli/dino`)
 

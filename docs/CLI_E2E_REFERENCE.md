@@ -144,10 +144,10 @@ dino scan grammar
 
 **exit:** 0
 
-### `dino scan leakage /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alpha/clean_code.py`
+### `dino scan leakage tests/dino/fixtures/scan/clean_code.py`
 
 ```bash
-dino scan leakage /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alpha/clean_code.py
+dino scan leakage tests/dino/fixtures/scan/clean_code.py
 ```
 
 ```json
@@ -176,10 +176,10 @@ dino scan leakage /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alp
 
 **exit:** 0
 
-### `dino scan leakage /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alpha/forbidden_import.py`
+### `dino scan leakage tests/dino/fixtures/scan/forbidden_import.py`
 
 ```bash
-dino scan leakage /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alpha/forbidden_import.py
+dino scan leakage tests/dino/fixtures/scan/forbidden_import.py
 ```
 
 ```json
@@ -192,7 +192,7 @@ dino scan leakage /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alp
       {
         "detail": "forbidden economics import",
         "line": null,
-        "path": "/home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alpha/forbidden_import.py",
+        "path": "tests/dino/fixtures/scan/forbidden_import.py",
         "rule": "LEAKY_IMPORT",
         "severity": "FAIL"
       }
@@ -216,10 +216,10 @@ dino scan leakage /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alp
 
 **exit:** 1
 
-### `dino scan leakage /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alpha/shift_and_seedless.py`
+### `dino scan leakage tests/dino/fixtures/scan/shift_and_seedless.py`
 
 ```bash
-dino scan leakage /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alpha/shift_and_seedless.py
+dino scan leakage tests/dino/fixtures/scan/shift_and_seedless.py
 ```
 
 ```json
@@ -232,14 +232,14 @@ dino scan leakage /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alp
       {
         "detail": "train_test_split without random_state",
         "line": 11,
-        "path": "/home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alpha/shift_and_seedless.py",
+        "path": "tests/dino/fixtures/scan/shift_and_seedless.py",
         "rule": "SEEDLESS_SPLIT",
         "severity": "FAIL"
       },
       {
         "detail": "negative shift (future peek)",
         "line": null,
-        "path": "/home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alpha/shift_and_seedless.py",
+        "path": "tests/dino/fixtures/scan/shift_and_seedless.py",
         "rule": "SHIFT_NEGATIVE",
         "severity": "FAIL"
       }
@@ -263,10 +263,10 @@ dino scan leakage /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alp
 
 **exit:** 1
 
-### `dino scan leakage /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alpha/target_in_features.py`
+### `dino scan leakage tests/dino/fixtures/scan/target_in_features.py`
 
 ```bash
-dino scan leakage /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alpha/target_in_features.py
+dino scan leakage tests/dino/fixtures/scan/target_in_features.py
 ```
 
 ```json
@@ -279,7 +279,7 @@ dino scan leakage /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alp
       {
         "detail": "feature matrix appears to include label/target columns",
         "line": 4,
-        "path": "/home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alpha/target_in_features.py",
+        "path": "tests/dino/fixtures/scan/target_in_features.py",
         "rule": "TARGET_IN_FEATURES",
         "severity": "FAIL"
       }
@@ -544,7 +544,7 @@ dino map analyze dino/common
           "path": "utils.py"
         }
       ],
-      "root": "/home/noahp/DevKit_Collected/devsecops/dino/common",
+      "root": "dino/common",
       "schema": "dino.map.graph.v1"
     },
     "plan": {
@@ -653,10 +653,10 @@ dino map plan dino/common
 
 **exit:** 0
 
-### `dino map drift /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/brain/repo_small --baseline /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/brain/repo_clean`
+### `dino map drift tests/dino/fixtures/map/repo_small --baseline tests/dino/fixtures/map/repo_clean`
 
 ```bash
-dino map drift /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/brain/repo_small --baseline /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/brain/repo_clean
+dino map drift tests/dino/fixtures/map/repo_small --baseline tests/dino/fixtures/map/repo_clean
 ```
 
 ```json
@@ -693,10 +693,10 @@ dino map drift /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/brain/
 
 ## bundle (pack: proof)
 
-### `dino bundle create --rundata /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/artifact/rundata.json --output /tmp/dino_cli_e2e/bundle.json`
+### `dino bundle create --rundata tests/dino/fixtures/bundle/rundata.json --output /tmp/dino_cli_e2e/bundle.json`
 
 ```bash
-dino bundle create --rundata /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/artifact/rundata.json --output /tmp/dino_cli_e2e/bundle.json
+dino bundle create --rundata tests/dino/fixtures/bundle/rundata.json --output /tmp/dino_cli_e2e/bundle.json
 ```
 
 ```json
@@ -715,10 +715,10 @@ dino bundle create --rundata /home/noahp/DevKit_Collected/devsecops/tests/dino/f
 
 **exit:** 0
 
-### `dino bundle verify --baseline /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/artifact/baseline_counts.json --current /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/artifact/current_counts.json`
+### `dino bundle verify --baseline tests/dino/fixtures/bundle/baseline_counts.json --current tests/dino/fixtures/bundle/current_counts.json`
 
 ```bash
-dino bundle verify --baseline /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/artifact/baseline_counts.json --current /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/artifact/current_counts.json
+dino bundle verify --baseline tests/dino/fixtures/bundle/baseline_counts.json --current tests/dino/fixtures/bundle/current_counts.json
 ```
 
 ```json
@@ -771,10 +771,10 @@ dino bundle verify --baseline /home/noahp/DevKit_Collected/devsecops/tests/dino/
 
 **exit:** 0
 
-### `dino bundle verify --baseline /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/artifact/baseline_counts.json --current /tmp/dino_cli_e2e/bad.json`
+### `dino bundle verify --baseline tests/dino/fixtures/bundle/baseline_counts.json --current /tmp/dino_cli_e2e/bad.json`
 
 ```bash
-dino bundle verify --baseline /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/artifact/baseline_counts.json --current /tmp/dino_cli_e2e/bad.json
+dino bundle verify --baseline tests/dino/fixtures/bundle/baseline_counts.json --current /tmp/dino_cli_e2e/bad.json
 ```
 
 ```json
@@ -827,10 +827,10 @@ dino bundle verify --baseline /home/noahp/DevKit_Collected/devsecops/tests/dino/
 
 **exit:** 1
 
-### `dino bundle diff --baseline /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/artifact/baseline_counts.json --current /tmp/dino_cli_e2e/bad.json`
+### `dino bundle diff --baseline tests/dino/fixtures/bundle/baseline_counts.json --current /tmp/dino_cli_e2e/bad.json`
 
 ```bash
-dino bundle diff --baseline /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/artifact/baseline_counts.json --current /tmp/dino_cli_e2e/bad.json
+dino bundle diff --baseline tests/dino/fixtures/bundle/baseline_counts.json --current /tmp/dino_cli_e2e/bad.json
 ```
 
 ```json
@@ -927,10 +927,10 @@ dino bundle dedup --path /tmp/dino_cli_e2e/dedup.json
 
 **exit:** 0
 
-### `dino bundle replay --baseline /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/artifact/baseline_counts.json --current /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/artifact/current_counts.json`
+### `dino bundle replay --baseline tests/dino/fixtures/bundle/baseline_counts.json --current tests/dino/fixtures/bundle/current_counts.json`
 
 ```bash
-dino bundle replay --baseline /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/artifact/baseline_counts.json --current /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/artifact/current_counts.json
+dino bundle replay --baseline tests/dino/fixtures/bundle/baseline_counts.json --current tests/dino/fixtures/bundle/current_counts.json
 ```
 
 ```json
@@ -987,10 +987,10 @@ dino bundle replay --baseline /home/noahp/DevKit_Collected/devsecops/tests/dino/
 
 ## flight (pack: proof)
 
-### `dino flight summary --artifacts-dir /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/canary/artifacts --output /tmp/dino_cli_e2e/flight.json`
+### `dino flight summary --artifacts-dir tests/dino/fixtures/flight/artifacts --output /tmp/dino_cli_e2e/flight.json`
 
 ```bash
-dino flight summary --artifacts-dir /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/canary/artifacts --output /tmp/dino_cli_e2e/flight.json
+dino flight summary --artifacts-dir tests/dino/fixtures/flight/artifacts --output /tmp/dino_cli_e2e/flight.json
 ```
 
 ```json
@@ -1193,10 +1193,10 @@ dino verify drift --distance 0 --graph-truth engine_synthetic
 
 **exit:** 0
 
-### `dino verify supersede --runtime-verdict REJECTED --release-verdict APPROVED --contract /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/attest/contract_release.json --previous /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/attest/contract_previous.json`
+### `dino verify supersede --runtime-verdict REJECTED --release-verdict APPROVED --contract tests/dino/fixtures/verify/contract_release.json --previous tests/dino/fixtures/verify/contract_previous.json`
 
 ```bash
-dino verify supersede --runtime-verdict REJECTED --release-verdict APPROVED --contract /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/attest/contract_release.json --previous /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/attest/contract_previous.json
+dino verify supersede --runtime-verdict REJECTED --release-verdict APPROVED --contract tests/dino/fixtures/verify/contract_release.json --previous tests/dino/fixtures/verify/contract_previous.json
 ```
 
 ```json
@@ -1224,10 +1224,10 @@ dino verify supersede --runtime-verdict REJECTED --release-verdict APPROVED --co
 
 **exit:** 0
 
-### `dino verify attest /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/attest/valid_attest.json --trust-anchor /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/attest/trust_anchor.json`
+### `dino verify attest tests/dino/fixtures/verify/valid_attest.json --trust-anchor tests/dino/fixtures/verify/trust_anchor.json`
 
 ```bash
-dino verify attest /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/attest/valid_attest.json --trust-anchor /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/attest/trust_anchor.json
+dino verify attest tests/dino/fixtures/verify/valid_attest.json --trust-anchor tests/dino/fixtures/verify/trust_anchor.json
 ```
 
 ```json
@@ -1257,10 +1257,10 @@ dino verify attest /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/at
 
 **exit:** 0
 
-### `dino verify binary /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/attest/valid_attest.json`
+### `dino verify binary tests/dino/fixtures/verify/valid_attest.json`
 
 ```bash
-dino verify binary /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/attest/valid_attest.json
+dino verify binary tests/dino/fixtures/verify/valid_attest.json
 ```
 
 ```json
@@ -1424,10 +1424,10 @@ dino proof doctor --output-dir /tmp/dino_cli_e2e/proof_doctor
 
 **exit:** 0
 
-### `dino proof run --command echo proof_e2e --repo dino/common --scan /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alpha/clean_code.py --output-dir /tmp/dino_cli_e2e/proof`
+### `dino proof run --command echo proof_e2e --repo dino/common --scan tests/dino/fixtures/scan/clean_code.py --output-dir /tmp/dino_cli_e2e/proof`
 
 ```bash
-dino proof run --command echo proof_e2e --repo dino/common --scan /home/noahp/DevKit_Collected/devsecops/tests/dino/fixtures/alpha/clean_code.py --output-dir /tmp/dino_cli_e2e/proof
+dino proof run --command echo proof_e2e --repo dino/common --scan tests/dino/fixtures/scan/clean_code.py --output-dir /tmp/dino_cli_e2e/proof
 ```
 
 ```json

@@ -1,8 +1,0 @@
-{
-  "name": "repo_large",
-  "description": "E2E scenario repo_large for security/repo-checks",
-  "input": "fixtures/security/",
-  "expected_output": "see matrix_runner",
-  "expected_artifacts": [],
-  "deterministic": true
-}

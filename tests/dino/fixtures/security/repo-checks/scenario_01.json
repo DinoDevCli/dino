@@ -1,8 +1,0 @@
-{
-  "name": "repo_clean",
-  "description": "E2E scenario repo_clean for security/repo-checks",
-  "input": "fixtures/security/",
-  "expected_output": "see matrix_runner",
-  "expected_artifacts": [],
-  "deterministic": true
-}

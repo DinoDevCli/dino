@@ -1,8 +1,0 @@
-{
-  "name": "determinism",
-  "description": "Enterprise E2E brain/cli :: determinism",
-  "input": "fixtures/brain/",
-  "expected_output": "non-crash; scored by matrix runner",
-  "expected_artifacts": [],
-  "deterministic": true
-}

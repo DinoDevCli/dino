@@ -1,8 +1,0 @@
-{
-  "name": "error_handling",
-  "description": "Enterprise E2E artifact/decode-vault :: error_handling",
-  "input": "fixtures/artifact/",
-  "expected_output": "non-crash; scored by matrix runner",
-  "expected_artifacts": [],
-  "deterministic": false
-}

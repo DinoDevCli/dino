@@ -45,8 +45,8 @@ def test_capsule_replay_detects_tamper() -> None:
 
 
 def test_bundle_replay_regression() -> None:
-    base = FIXTURES / "artifact" / "baseline_counts.json"
-    cur = FIXTURES / "artifact" / "current_counts.json"
+    base = FIXTURES / "bundle" / "baseline_counts.json"
+    cur = FIXTURES / "bundle" / "current_counts.json"
     code, out, _ = run(
         ["bundle", "replay", "--baseline", str(base), "--current", str(cur)]
     )
@@ -58,8 +58,8 @@ def test_bundle_replay_regression() -> None:
 
 
 def test_verify_supersede_with_files() -> None:
-    contract = FIXTURES / "attest" / "contract_release.json"
-    previous = FIXTURES / "attest" / "contract_previous.json"
+    contract = FIXTURES / "verify" / "contract_release.json"
+    previous = FIXTURES / "verify" / "contract_previous.json"
     code, out, _ = run(
         [
             "verify",
@@ -82,7 +82,7 @@ def test_verify_supersede_with_files() -> None:
 
 
 def test_scan_shift_and_seedless() -> None:
-    path = FIXTURES / "alpha" / "shift_and_seedless.py"
+    path = FIXTURES / "scan" / "shift_and_seedless.py"
     code, out, _ = run(["scan", "leakage", str(path)])
     assert code == 1
     payload = json.loads(out)
@@ -92,7 +92,7 @@ def test_scan_shift_and_seedless() -> None:
 
 
 def test_scan_target_in_features() -> None:
-    path = FIXTURES / "alpha" / "target_in_features.py"
+    path = FIXTURES / "scan" / "target_in_features.py"
     code, out, _ = run(["scan", "leakage", str(path)])
     assert code == 1
     rules = {f["rule"] for f in json.loads(out)["findings"]}
@@ -100,8 +100,8 @@ def test_scan_target_in_features() -> None:
 
 
 def test_map_plan_and_drift() -> None:
-    small = FIXTURES / "brain" / "repo_small"
-    clean = FIXTURES / "brain" / "repo_clean"
+    small = FIXTURES / "map" / "repo_small"
+    clean = FIXTURES / "map" / "repo_clean"
     code, out, _ = run(["map", "plan", str(small)])
     assert code == 0
     plan = json.loads(out)
@@ -117,7 +117,7 @@ def test_map_plan_and_drift() -> None:
 def test_proof_run_and_verify() -> None:
     outdir = WORK / "proof_chain"
     repo = ROOT / "dino" / "common"
-    scan = FIXTURES / "alpha" / "clean_code.py"
+    scan = FIXTURES / "scan" / "clean_code.py"
     code, out, _ = run(
         [
             "proof",

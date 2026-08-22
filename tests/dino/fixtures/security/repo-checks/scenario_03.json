@@ -1,8 +1,0 @@
-{
-  "name": "log_redaction",
-  "description": "E2E scenario log_redaction for security/repo-checks",
-  "input": "fixtures/security/",
-  "expected_output": "see matrix_runner",
-  "expected_artifacts": [],
-  "deterministic": true
-}

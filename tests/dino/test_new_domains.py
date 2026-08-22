@@ -17,7 +17,7 @@ def _work() -> None:
 
 
 def test_map_verify_deterministic() -> None:
-    repo = FIXTURES / "brain" / "repo_small"
+    repo = FIXTURES / "map" / "repo_small"
     if not repo.is_dir():
         repo = ROOT / "dino" / "common"
     argv = ["map", "verify", "--repo", str(repo)]

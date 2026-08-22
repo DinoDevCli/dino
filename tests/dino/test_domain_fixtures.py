@@ -21,19 +21,19 @@ def _register(domain: str, *cases: tuple[str, Callable[[], tuple[int, str, str]]
 _register(
     "verify",
     ("drift", lambda: run(["verify", "drift", "--distance", "0"])),
-    ("binary", lambda: run(["verify", "binary", str(FIXTURES / "attest" / "valid_attest.json")])),
+    ("binary", lambda: run(["verify", "binary", str(FIXTURES / "verify" / "valid_attest.json")])),
 )
 
 _register(
     "scan",
     ("grammar", lambda: run(["scan", "grammar"])),
-    ("leakage_forbidden", lambda: run(["scan", "leakage", str(FIXTURES / "alpha" / "forbidden_import.py")])),
-    ("leakage_clean", lambda: run(["scan", "leakage", str(FIXTURES / "alpha" / "clean_code.py")])),
+    ("leakage_forbidden", lambda: run(["scan", "leakage", str(FIXTURES / "scan" / "forbidden_import.py")])),
+    ("leakage_clean", lambda: run(["scan", "leakage", str(FIXTURES / "scan" / "clean_code.py")])),
 )
 
 _register(
     "map",
-    ("analyze", lambda: run(["map", "analyze", str(FIXTURES / "brain" / "repo_small")])),
+    ("analyze", lambda: run(["map", "analyze", str(FIXTURES / "map" / "repo_small")])),
 )
 
 
@@ -45,12 +45,13 @@ def _work() -> None:
 @pytest.mark.parametrize("domain", sorted(DOMAIN_COMMANDS))
 def test_domain_has_fixture_tree(domain: str) -> None:
     alt = FIXTURES / {
-        "scan": "alpha",
-        "verify": "attest",
-        "map": "brain",
-        "flight": "canary",
-        "bundle": "artifact",
-        "capsule": "brain",
+        "scan": "scan",
+        "verify": "verify",
+        "map": "map",
+        "flight": "flight",
+        "bundle": "bundle",
+        "capsule": "map",
+        "proof": "scan",
     }.get(domain, domain)
     assert alt.exists(), f"missing fixtures for {domain}"
 
