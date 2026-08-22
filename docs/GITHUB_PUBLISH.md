@@ -1,6 +1,8 @@
 # Publish to GitHub
 
-## 1. Authenticate
+Organisation: **[DinoDevCli](https://github.com/DinoDevCli)** · Repo: **`dino`**
+
+## 1. Authenticate (once)
 
 ```bash
 gh auth login
@@ -8,30 +10,32 @@ gh auth login
 
 ## 2. Create repo and push
 
-From `devsecops/` (project root):
+From project root (`devsecops/`):
 
 ```bash
-git remote add origin https://github.com/noahp/dino.git   # or gh repo create
+gh repo create DinoDevCli/dino --public --source=. --remote=origin --push
+```
+
+If the repo already exists:
+
+```bash
+git remote add origin https://github.com/DinoDevCli/dino.git
 git push -u origin main
 ```
 
-If the repo does not exist yet:
-
-```bash
-gh repo create dino --public --source=. --remote=origin --push
-```
-
-Update `website/.env.local` (or Vercel env) with your GitHub owner/repo:
+## 3. Website env (Vercel / local)
 
 ```
-NEXT_PUBLIC_GITHUB_OWNER=your-username
+NEXT_PUBLIC_GITHUB_OWNER=DinoDevCli
 NEXT_PUBLIC_GITHUB_REPO=dino
 ```
 
-## 3. Vercel (optional)
+Copy `website/.env.example` → `website/.env.local` for local dev.
 
-- Import GitHub repo
+## 4. Vercel
+
+- Import `DinoDevCli/dino`
 - Root directory: `website`
-- Framework: Next.js
+- Set env vars above
 
-Buttons on the landing page link to GitHub releases, docs, and issues.
+Landing-page buttons link to `github.com/DinoDevCli/dino` (releases, docs, issues).

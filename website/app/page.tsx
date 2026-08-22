@@ -127,7 +127,7 @@ function ExternalLink({
 
 function packHref(tier: "free" | "indie" | "team"): string {
   if (tier === "team") return contactHref();
-  if (tier === "indie") return GITHUB.releases;
+  if (tier === "indie") return GITHUB.downloadZip;
   return GITHUB.readme;
 }
 
@@ -169,7 +169,7 @@ export default function Home() {
               <span className="text-foreground font-mono">proof.json</span>.
             </p>
             <div className="flex flex-wrap gap-3">
-              <ExternalLink href={GITHUB.releases} primary>
+              <ExternalLink href={GITHUB.downloadZip} primary>
                 Download
               </ExternalLink>
               <ExternalLink href={GITHUB.base}>GitHub</ExternalLink>

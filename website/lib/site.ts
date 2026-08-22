@@ -1,4 +1,4 @@
-const owner = process.env.NEXT_PUBLIC_GITHUB_OWNER ?? "noahp";
+const owner = process.env.NEXT_PUBLIC_GITHUB_OWNER ?? "DinoDevCli";
 const repo = process.env.NEXT_PUBLIC_GITHUB_REPO ?? "dino";
 
 const base = `https://github.com/${owner}/${repo}`;
@@ -9,6 +9,8 @@ export const GITHUB = {
   repo,
   base,
   readme: `${base}#installation`,
+  /** Works as soon as main is pushed; replace with /releases/latest after first GitHub Release. */
+  downloadZip: `${base}/archive/refs/heads/main.zip`,
   releases: `${base}/releases/latest`,
   issuesNew: `${base}/issues/new`,
   teamIssue: `${base}/issues/new?title=Team%20Pack%20Anfrage&labels=sales`,

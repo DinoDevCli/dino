@@ -2,6 +2,8 @@
 
 **Deterministic Proof & Governance Platform** — seals *logic & data integrity*, not images or secrets.
 
+**GitHub:** [github.com/DinoDevCli/dino](https://github.com/DinoDevCli/dino)
+
 | Doc | Role |
 |-----|------|
 | [`docs/PROOF_CONTRACT.md`](docs/PROOF_CONTRACT.md) | What we guarantee |
@@ -24,14 +26,14 @@
 From GitHub (Free Pack — `scan`):
 
 ```bash
-pip install "git+https://github.com/noahp/dino.git"
+pip install "git+https://github.com/DinoDevCli/dino.git"
 dino scan leakage ./my_pipeline.py
 ```
 
 Proof Pack (all domains):
 
 ```bash
-pip install "git+https://github.com/noahp/dino.git[dev]"
+pip install "git+https://github.com/DinoDevCli/dino.git[dev]"
 dino upgrade --pack proof
 dino proof doctor
 dino proof run --command "echo ok" --repo . --scan ./src --output-dir ./proof_out
@@ -41,7 +43,7 @@ dino proof verify --proof ./proof_out/proof.json
 Local development:
 
 ```bash
-git clone https://github.com/noahp/dino.git
+git clone https://github.com/DinoDevCli/dino.git
 cd dino
 python -m venv .venv && source .venv/bin/activate
 pip install -e '.[dev]'
