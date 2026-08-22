@@ -1,25 +1,35 @@
-# Dino Website
+# Website
 
-Marketing landing page — same layout as [dino-sooty.vercel.app](https://dino-sooty.vercel.app/), with full product content from `docs/`.
+Landing Page für Dino — schlicht, technisch, aligned mit dem CLI und dem [README](../README.md).
 
-## Develop
+## Lokal
 
 ```bash
-cd website
+cp .env.example .env.local
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+→ http://localhost:3000
+
+## Env
+
+```
+NEXT_PUBLIC_GITHUB_OWNER=DinoDevCli
+NEXT_PUBLIC_GITHUB_REPO=dino
+```
+
+Optional: `NEXT_PUBLIC_CONTACT_EMAIL` für Team/Contact (sonst GitHub Issues).
 
 ## Deploy (Vercel)
 
-Root directory: `website` · Framework: Next.js · static export to `out/`.
+- Root: `website`
+- Framework: Next.js (static export)
+- Env wie oben
 
-```bash
-npm run build
-```
+## Copy
 
-## Content
-
-Edit `lib/content.ts` for copy, CLI examples, pricing, FAQ.
+| Datei | Inhalt |
+|-------|--------|
+| `lib/content.ts` | Texte, Module, Pricing, FAQ |
+| `lib/site.ts` | GitHub-URLs, CTAs |

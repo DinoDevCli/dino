@@ -1,45 +1,68 @@
 # Examples
 
-## HAR
+Kurze, aktuelle Befehle für Dino 0.3.0. Vollständige Outputs: [`CLI_E2E_REFERENCE.md`](CLI_E2E_REFERENCE.md).
+
+## Proof chain
 
 ```bash
-dino har canonicalize 'https://cdn.example.com/users/99?utm_source=x' --method POST
-# POST:https://cdn.example.com/users/{id}
+dino upgrade --pack proof
 
-dino har noise 'https://foo.cloudfront.net/app.js'
-# is_noise true (cdn + static)
+dino proof run \
+  --command "echo ok" \
+  --repo . \
+  --scan ./tests/dino/fixtures/alpha/clean_code.py \
+  --output-dir ./proof_out
+
+dino proof verify --proof ./proof_out/proof.json
+dino proof doctor
 ```
 
-## Brain graph verify
+## Leakage (Free Pack)
 
 ```bash
-dino brain analyze ./dino/common
-dino brain verify --repo ./dino
+dino scan leakage ./tests/dino/fixtures/alpha/forbidden_import.py
+# exit 1 — LEAKY_IMPORT
+
+dino scan leakage ./tests/dino/fixtures/alpha/clean_code.py
+# exit 0 — no findings
 ```
 
-Same repo, same `overall_quality_score` and `graph_hash` on every run.
-
-## SealRun capsule
+## Capsule
 
 ```bash
-dino sealrun run execute --output-dir ./out/exec --command echo ok
-dino sealrun run replay --capsule ./out/exec/capsule.json --output-dir ./out/exec
-dino sealrun run doctor --output-dir ./out/doctor
+dino capsule run --command "echo sealed" --output-dir ./cap
+dino capsule replay --capsule ./cap/capsule.json
+dino capsule doctor
 ```
 
-`./out/doctor/result.json` is overwritten in place. No `run_0001` directories.
-
-## Leakage
+## Map & drift
 
 ```bash
-echo 'from intelligence.alpha_evolution.engine_v13.economics import x' > /tmp/leak.py
-dino alpha leakage-scan /tmp/leak.py
-# exit 1, rule LEAKY_IMPORT
+dino map analyze ./dino/common
+dino map verify --repo ./dino/common
+dino map drift ./tests/dino/fixtures/brain/repo_small \
+  --baseline ./tests/dino/fixtures/brain/repo_clean
 ```
 
-## Compliance
+## Bundle & flight
 
 ```bash
-dino compliance sbom --root . --output /tmp/sbom.json
-dino compliance dashboard /tmp/dash --root ./dino
+dino bundle verify \
+  --baseline ./tests/dino/fixtures/artifact/baseline_counts.json \
+  --current ./tests/dino/fixtures/artifact/current_counts.json
+
+dino flight summary \
+  --artifacts-dir ./tests/dino/fixtures/canary/artifacts \
+  --output ./flight.json
+```
+
+## Verify
+
+```bash
+dino verify drift --distance 0
+dino verify supersede \
+  --contract ./tests/dino/fixtures/attest/contract_release.json \
+  --previous ./tests/dino/fixtures/attest/contract_previous.json
+dino verify attest ./tests/dino/fixtures/attest/valid_attest.json \
+  --trust-anchor ./tests/dino/fixtures/attest/trust_anchor.json
 ```

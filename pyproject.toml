@@ -5,11 +5,11 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "dino"
 version = "0.3.0"
-description = "Dino CLI — Deterministic Proof & Governance Platform"
+description = "Deterministic Proof for Python Decision Pipelines"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
-authors = [{ name = "DevKit Collected" }]
+authors = [{ name = "DinoDevCli" }]
 dependencies = []
 
 [project.optional-dependencies]

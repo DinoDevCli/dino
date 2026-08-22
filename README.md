@@ -1,46 +1,112 @@
-# Dino CLI
+# Dino
 
-**Deterministic Proof & Governance Platform** — seals *logic & data integrity*, not images or secrets.
+**Deterministic Proof for Python Decision Pipelines**
 
-**GitHub:** [github.com/DinoDevCli/dino](https://github.com/DinoDevCli/dino)
+Dino ist ein Proof-CLI für Python-Entscheidungslogik — Research-Pipelines, Backtests und Risk-Systeme. Es versiegelt Ausführung, erkennt ML-Leakage, klassifiziert Drift und erzeugt ein auditierbares [`proof.json`](docs/PROOF_CONTRACT.md).
 
-| Doc | Role |
-|-----|------|
-| [`docs/PROOF_CONTRACT.md`](docs/PROOF_CONTRACT.md) | What we guarantee |
-| [`docs/TECH_STATUS_NOW.md`](docs/TECH_STATUS_NOW.md) | Technical status |
-| [`docs/CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md) | CLI + live E2E outputs |
-| [`docs/ICP_TEST.md`](docs/ICP_TEST.md) | **Official ICP / pricing market test** |
-| [`website/`](website/) | Marketing landing page (Vercel-ready) |
+Dino ist kein Secret-Scanner und kein Image-Provenance-Tool.
 
-## Primary ICPs (under test)
+```bash
+dino proof run --command "echo ok" --repo . --scan ./src --output-dir ./proof_out
+dino proof verify --proof ./proof_out/proof.json
+```
 
-1. **Quant Research** (banks / funds) — lookahead, non-repro backtests  
-2. **Fraud / Scoring FinTech** — audit-ready decision evidence  
-
-## Unique product
-
-`dino proof run` → sealed execution + leakage scan + structural map → content-addressed `proof.json`.
+---
 
 ## Installation
 
-From GitHub (Free Pack — `scan`):
+**Free Pack** (Leakage-Scan):
 
 ```bash
 pip install "git+https://github.com/DinoDevCli/dino.git"
 dino scan leakage ./my_pipeline.py
 ```
 
-Proof Pack (all domains):
+**Proof Pack** (Capsule, Map, Bundle, Flight, Verify, Proof):
 
 ```bash
-pip install "git+https://github.com/DinoDevCli/dino.git[dev]"
+pip install "git+https://github.com/DinoDevCli/dino.git"
 dino upgrade --pack proof
 dino proof doctor
-dino proof run --command "echo ok" --repo . --scan ./src --output-dir ./proof_out
-dino proof verify --proof ./proof_out/proof.json
 ```
 
-Local development:
+Voraussetzung: Python ≥ 3.10
+
+---
+
+## CLI
+
+```bash
+# Proof-Kette
+dino proof run \
+  --command "echo ok" \
+  --repo . \
+  --scan ./src \
+  --output-dir ./proof_out
+
+dino proof verify --proof ./proof_out/proof.json
+
+# Leakage (Free)
+dino scan leakage my_pipeline.py
+```
+
+Vollständige Referenz: [`docs/CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md)
+
+---
+
+## Module
+
+| Modul | Pack | Rolle |
+|-------|------|--------|
+| **Scan** | Free | 7 ML-Leakage-Regeln + Grammar |
+| **Capsule** | Proof | Deterministische Ausführung + Replay |
+| **Map** | Proof | AST-Graph, Drift, Plan |
+| **Bundle** | Proof | Regression (`true_delta`, `endpoint_ratio`) |
+| **Flight** | Proof | Canary-Summary |
+| **Verify** | Proof | Drift, Supersession, Attest, Binary |
+| **Proof** | Proof | `proof.json` · `PROOF_PASSED` / `PROOF_VERIFY_PASSED` |
+
+---
+
+## Proof-Contract
+
+Wenn ein Proof `passed` / `partial` ist und Verify gelingt, garantiert Dino:
+
+- deterministische Ausführung und Wiederholung
+- content-addressed Artefakte (`proof_hash`)
+- Leakage-Regeln für Research-Code
+- Drift-Klassifikation
+- Regression- und Governance-Signale
+
+Grenzen und Schemas: [`docs/PROOF_CONTRACT.md`](docs/PROOF_CONTRACT.md)
+
+---
+
+## Pricing
+
+| Pack | Preis | Inhalt |
+|------|-------|--------|
+| **Free** | 0 € | `scan` |
+| **Indie** | 49 € einmalig | Proof Pack |
+| **Team** | 20 % Rabatt (5–10 Sitze) | Proof Pack |
+
+Unlock: `dino upgrade --pack proof`
+
+---
+
+## Dokumentation
+
+| Doc | Inhalt |
+|-----|--------|
+| [`PROOF_CONTRACT.md`](docs/PROOF_CONTRACT.md) | Normative Garantien |
+| [`CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md) | CLI + Live-Outputs |
+| [`EXAMPLES.md`](docs/EXAMPLES.md) | Kurzbeispiele |
+| [`TECH_STATUS_NOW.md`](docs/TECH_STATUS_NOW.md) | Technischer Stand |
+| [`website/`](website/) | Landing Page |
+
+---
+
+## Entwicklung
 
 ```bash
 git clone https://github.com/DinoDevCli/dino.git
@@ -50,26 +116,16 @@ pip install -e '.[dev]'
 pytest tests/dino -q
 ```
 
-## Website
+Website lokal:
 
 ```bash
 cd website
-cp .env.example .env.local   # set NEXT_PUBLIC_GITHUB_OWNER/REPO
+cp .env.example .env.local
 npm install && npm run dev
 ```
 
-Deploy on Vercel with root directory `website`.
+---
 
-## Packs
+## Lizenz
 
-| Tier | Price | Domains |
-|------|-------|---------|
-| Free | €0 | `scan` |
-| Indie | €49 once | proof pack |
-| Team | 20% off (5–10 seats) | proof pack |
-
-## Tests
-
-```bash
-pytest tests/dino -q
-```
+MIT · [DinoDevCli](https://github.com/DinoDevCli)

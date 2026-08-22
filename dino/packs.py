@@ -16,17 +16,15 @@ PACKS: dict[str, dict[str, Any]] = {
         "price_hint": "€0",
         "domains": ["scan"],
         "description": (
-            "Free — research integrity scanners (grammar smoke + causal leakage). "
-            "Worth downloading because generic SAST/secret tools do not cover this."
+            "Free — grammar smoke + causal leakage scan for research pipelines."
         ),
     },
     "proof": {
         "tier": "paid",
-        "price_hint": "€49 once / €12/mo (hint)",
+        "price_hint": "€49 once",
         "domains": ["capsule", "map", "bundle", "flight", "verify", "proof"],
         "description": (
-            "Paid flagship — sealed execution capsules, structural map/verify, evidence bundles, "
-            "canary flight, attestation drift/supersession, and the unique proof chain CLI."
+            "Proof Pack — capsule, map, bundle, flight, verify, and proof chain."
         ),
     },
 }

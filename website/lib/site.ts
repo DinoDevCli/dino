@@ -17,15 +17,9 @@ export const GITHUB = {
   docs: {
     proofContract: blob("docs/PROOF_CONTRACT.md"),
     cliReference: blob("docs/CLI_E2E_REFERENCE.md"),
-    techStatus: blob("docs/TECH_STATUS_NOW.md"),
-    evaluation: blob("docs/EVALUATION_E2E.md"),
-    icpTest: blob("docs/ICP_TEST.md"),
     examples: blob("docs/EXAMPLES.md"),
+    techStatus: blob("docs/TECH_STATUS_NOW.md"),
     readme: blob("README.md"),
-  },
-  install: {
-    free: `pip install "git+${base}.git"`,
-    proof: `pip install "git+${base}.git[dev]" && dino upgrade --pack proof`,
   },
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "",
 };

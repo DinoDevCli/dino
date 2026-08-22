@@ -11,7 +11,7 @@ export const NAV = [
   { href: "#cli", label: "CLI" },
   { href: "#pricing", label: "Pricing" },
   { href: "#faq", label: "FAQ" },
-  { href: "/docs", label: "Docs", external: false },
+  { href: "/docs", label: "Docs" },
 ];
 
 export const ABOUT = [
@@ -90,7 +90,6 @@ export const GUARANTEES = [
   "Regression-Proof",
   "Governance-Verträge",
   "PROOF_PASSED / PROOF_VERIFY_PASSED",
-  "94/94 Tests grün",
 ];
 
 export const CONTRACT_FOOTNOTE =
@@ -101,8 +100,8 @@ export const CLI_EXAMPLES = [
     label: "proof run",
     code: `dino proof run \\
   --command "echo ok" \\
-  --repo dino/common \\
-  --scan tests/clean_code.py \\
+  --repo . \\
+  --scan ./src \\
   --output-dir ./proof_out`,
   },
   {
@@ -134,7 +133,7 @@ export const PACKS = [
   {
     name: "Team",
     price: "20 %",
-    hint: "Rabatt — 5–10 Personen",
+    hint: "Rabatt — 5–10 Sitze",
     cta: "Anfragen",
     tier: "team" as const,
   },
@@ -159,11 +158,10 @@ export const FAQ = [
   },
 ];
 
+/** Public docs — same set as README */
 export const DOC_LINKS = [
   { label: "Proof-Contract", path: "docs/PROOF_CONTRACT.md" },
   { label: "CLI-Referenz", path: "docs/CLI_E2E_REFERENCE.md" },
-  { label: "Tech Status", path: "docs/TECH_STATUS_NOW.md" },
-  { label: "E2E Evaluation", path: "docs/EVALUATION_E2E.md" },
-  { label: "ICP Test", path: "docs/ICP_TEST.md" },
   { label: "Examples", path: "docs/EXAMPLES.md" },
+  { label: "Tech Status", path: "docs/TECH_STATUS_NOW.md" },
 ];

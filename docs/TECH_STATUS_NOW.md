@@ -167,21 +167,21 @@ pytest tests/dino -q
 
 | Doc | Rolle |
 |-----|--------|
-| [`PROOF_CONTRACT.md`](PROOF_CONTRACT.md) | Normative Guarantees / Schemas / Vokabular |
-| [`ICP_TEST.md`](ICP_TEST.md) | Offizieller ICP-/Pricing-/Markt-Test (Quant + Fraud) |
-| [`CLI_E2E_REFERENCE.md`](CLI_E2E_REFERENCE.md) | Alle Befehle + live E2E-JSON-Outputs |
-| [`EVALUATION_E2E.md`](EVALUATION_E2E.md) | Vollständige technische E2E-Evaluation (2026-08-22) |
-| [`TECH_STATUS_NOW.md`](TECH_STATUS_NOW.md) | Dieser technische Stand |
-| [`TOOLS_LIVE.md`](TOOLS_LIVE.md) | Frühere Live-Command-Doku (teilweise vor Seal-Upgrade) |
-| `README.md` | Produkt-Einstieg |
+| [`../README.md`](../README.md) | Produkt-Einstieg (aligned mit Website) |
+| [`PROOF_CONTRACT.md`](PROOF_CONTRACT.md) | Normative Guarantees / Schemas |
+| [`CLI_E2E_REFERENCE.md`](CLI_E2E_REFERENCE.md) | CLI + Live-Outputs |
+| [`EXAMPLES.md`](EXAMPLES.md) | Kurzbeispiele |
+| [`EVALUATION_E2E.md`](EVALUATION_E2E.md) | E2E-Evaluation |
+| [`ICP_TEST.md`](ICP_TEST.md) | Intern: ICP-/Pricing-Test |
+| [`../website/`](../website/) | Landing Page |
 
 ---
 
-## 9. Verbleibende Launch-Engpässe (nicht Kernlücken)
+## 9. Verbleibende Launch-Engpässe
 
-1. **ICP-Test ausführen** — 10 Gespräche, Scorecard, PASS/FAIL laut [`ICP_TEST.md`](ICP_TEST.md)  
+1. **ICP-Test ausführen** — 10 Gespräche laut [`ICP_TEST.md`](ICP_TEST.md)  
 2. Evidence-Backlog füllen (`docs/evidence/`)  
-3. Pricing an Gesprächsdaten kalibrieren (T1/T2/T3 Hypothesen)  
-4. Optional: Cut-Domain-Ordner physisch archivieren  
+3. Pricing an Gesprächsdaten kalibrieren  
+4. Repo auf GitHub pushen (`DinoDevCli/dino`)
 
 **Fazit:** Technisch verkaufbar. Marktentscheidung = ICP-Test, nicht mehr Code.

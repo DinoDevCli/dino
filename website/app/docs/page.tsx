@@ -35,11 +35,11 @@ export default function DocsPage() {
           <div className="flex flex-col gap-4">
             <SectionLabel>Documentation</SectionLabel>
             <h1 className="text-3xl leading-tight tracking-tight md:text-4xl">
-              Docs auf GitHub
+              Docs
             </h1>
             <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-              Vollständige technische Referenz — Leakage-Regeln, Drift-Buckets,
-              CLI-E2E-Outputs und Proof-Contract.
+              Gleiche Dokumente wie im Repository — Proof-Contract, CLI und
+              Examples.
             </p>
           </div>
 
@@ -47,7 +47,7 @@ export default function DocsPage() {
             {DOC_LINKS.map((doc) => (
               <li key={doc.path} className="border-border border-b">
                 <a
-                  href={`https://github.com/${GITHUB.owner}/${GITHUB.repo}/blob/main/${doc.path}`}
+                  href={`${GITHUB.base}/blob/main/${doc.path}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-muted-foreground flex items-baseline justify-between gap-4 py-6 font-mono text-sm"
@@ -57,6 +57,17 @@ export default function DocsPage() {
                 </a>
               </li>
             ))}
+            <li className="border-border border-b">
+              <a
+                href={GITHUB.readme}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-muted-foreground flex items-baseline justify-between gap-4 py-6 font-mono text-sm"
+              >
+                <span>README</span>
+                <span className="text-muted-foreground text-xs">↗</span>
+              </a>
+            </li>
           </ul>
 
           <div className="flex flex-wrap gap-3">
@@ -66,10 +77,10 @@ export default function DocsPage() {
               rel="noopener noreferrer"
               className="border-foreground bg-foreground text-background hover:bg-foreground/90 border px-6 py-3 font-mono text-xs tracking-[0.15em] uppercase"
             >
-              GitHub Repository
+              GitHub
             </a>
             <a
-              href={GITHUB.readme}
+              href={`${GITHUB.base}#installation`}
               target="_blank"
               rel="noopener noreferrer"
               className="border-border hover:border-foreground border px-6 py-3 font-mono text-xs tracking-[0.15em] uppercase"
