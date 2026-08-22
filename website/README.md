@@ -15,7 +15,7 @@ npm run dev
 ## Env
 
 ```
-NEXT_PUBLIC_GITHUB_OWNER=DinoDevCli
+NEXT_PUBLIC_GITHUB_OWNER=ArdentCrab
 NEXT_PUBLIC_GITHUB_REPO=dino
 ```
 
