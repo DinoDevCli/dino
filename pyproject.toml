@@ -9,7 +9,7 @@ description = "Deterministic Proof for Python Decision Pipelines"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
-authors = [{ name = "ArdentCrab" }]
+authors = [{ name = "DinoDevCli" }]
 dependencies = []
 
 [project.optional-dependencies]

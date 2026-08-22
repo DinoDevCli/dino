@@ -18,14 +18,14 @@ dino proof verify --proof ./proof_out/proof.json
 **Free Pack** (Leakage-Scan):
 
 ```bash
-pip install "git+https://github.com/ArdentCrab/devsecops.git"
+pip install "git+https://github.com/DinoDevCli/dino.git"
 dino scan leakage ./my_pipeline.py
 ```
 
 **Proof Pack** (Capsule, Map, Bundle, Flight, Verify, Proof):
 
 ```bash
-pip install "git+https://github.com/ArdentCrab/devsecops.git"
+pip install "git+https://github.com/DinoDevCli/dino.git"
 dino upgrade --pack proof
 dino proof doctor
 ```
@@ -109,7 +109,7 @@ Unlock: `dino upgrade --pack proof`
 ## Entwicklung
 
 ```bash
-git clone https://github.com/ArdentCrab/devsecops.git
+git clone https://github.com/DinoDevCli/dino.git
 cd dino
 python -m venv .venv && source .venv/bin/activate
 pip install -e '.[dev]'
@@ -128,4 +128,4 @@ npm install && npm run dev
 
 ## Lizenz
 
-MIT · [ArdentCrab](https://github.com/ArdentCrab)
+MIT · [DinoDevCli](https://github.com/DinoDevCli)

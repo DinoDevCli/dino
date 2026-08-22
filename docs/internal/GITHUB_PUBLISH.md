@@ -1,4 +1,4 @@
-# Publish (ArdentCrab)
+# Publish (DinoDevCli)
 
 ```bash
 gh auth login
@@ -6,6 +6,6 @@ cd /path/to/dino
 bash scripts/push-github.sh
 ```
 
-Repo: https://github.com/ArdentCrab/devsecops
+Repo: https://github.com/DinoDevCli/dino
 
-Vercel: Root `website` · Env `NEXT_PUBLIC_GITHUB_OWNER=ArdentCrab` · `NEXT_PUBLIC_GITHUB_REPO=dino`
+Vercel: Root `website` · Env `NEXT_PUBLIC_GITHUB_OWNER=DinoDevCli` · `NEXT_PUBLIC_GITHUB_REPO=dino`

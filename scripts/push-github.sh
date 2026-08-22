@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Create ArdentCrab/devsecops on GitHub and push main.
+# Create DinoDevCli/dino on GitHub and push main.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -8,24 +8,22 @@ if ! gh auth status >/dev/null 2>&1; then
   exit 1
 fi
 
+REPO="DinoDevCli/dino"
+URL="https://github.com/${REPO}.git"
+
 if git remote get-url origin >/dev/null 2>&1; then
-  git remote set-url origin git@github.com:ArdentCrab/devsecops.git
+  git remote set-url origin "$URL"
 else
-  git remote add origin git@github.com:ArdentCrab/devsecops.git
+  git remote add origin "$URL"
 fi
 
-if ! gh repo view ArdentCrab/devsecops >/dev/null 2>&1; then
-  gh repo create ArdentCrab/devsecops \
+if ! gh repo view "$REPO" >/dev/null 2>&1; then
+  gh repo create "$REPO" \
     --public \
     --description "Dino — Deterministic Proof for Python Decision Pipelines" \
     --source=. \
     --remote=origin
 fi
 
-# Prefer HTTPS with gh credentials if SSH key is a different account
-if ! git ls-remote git@github.com:ArdentCrab/devsecops.git >/dev/null 2>&1; then
-  git remote set-url origin https://github.com/ArdentCrab/devsecops.git
-fi
-
 git push -u origin main
-echo "Done: https://github.com/ArdentCrab/devsecops"
+echo "Done: https://github.com/${REPO}"

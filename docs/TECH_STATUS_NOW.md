@@ -181,6 +181,6 @@ pytest tests/dino -q
 1. **ICP-Test ausführen** — 10 Gespräche laut [`internal/ICP_TEST.md`](internal/ICP_TEST.md)  
 2. Evidence-Backlog füllen (`docs/internal/evidence/`)  
 3. Pricing an Gesprächsdaten kalibrieren  
-4. Repo auf GitHub pushen (`ArdentCrab/devsecops`)
+4. Repo auf GitHub pushen (`DinoDevCli/dino`)
 
 **Fazit:** Technisch verkaufbar. Marktentscheidung = ICP-Test, nicht mehr Code.

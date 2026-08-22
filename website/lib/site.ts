@@ -1,5 +1,5 @@
-const owner = process.env.NEXT_PUBLIC_GITHUB_OWNER ?? "ArdentCrab";
-const repo = process.env.NEXT_PUBLIC_GITHUB_REPO ?? "devsecops";
+const owner = process.env.NEXT_PUBLIC_GITHUB_OWNER ?? "DinoDevCli";
+const repo = process.env.NEXT_PUBLIC_GITHUB_REPO ?? "dino";
 
 const base = `https://github.com/${owner}/${repo}`;
 const blob = (path: string) => `${base}/blob/main/${path}`;
