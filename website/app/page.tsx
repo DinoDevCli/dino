@@ -11,6 +11,7 @@ import {
   NAV,
   PACKS,
   PAINPOINTS,
+  SECTIONS,
   SITE,
 } from "@/lib/content";
 import { GITHUB, contactHref } from "@/lib/site";
@@ -138,7 +139,7 @@ export default function Home() {
         <div className="mx-auto max-w-6xl">
           <nav
             className="flex items-center justify-between"
-            aria-label="Hauptnavigation"
+            aria-label="Primary"
           >
             <span className="font-mono text-sm tracking-[0.3em] uppercase">
               dino
@@ -186,7 +187,7 @@ export default function Home() {
 
       <main>
         <SectionShell compact>
-          <SectionHeader label="Was ist Dino" />
+          <SectionHeader label={SECTIONS.about.label} />
           <div className="max-w-4xl space-y-4 text-lg leading-relaxed text-pretty md:text-xl">
             {ABOUT.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
@@ -195,7 +196,10 @@ export default function Home() {
         </SectionShell>
 
         <SectionShell compact>
-          <SectionHeader label="Für wen" title="ICP & Painpoints" />
+          <SectionHeader
+            label={SECTIONS.audience.label}
+            title={SECTIONS.audience.title}
+          />
           <div className="border-border grid border-t border-l sm:grid-cols-2">
             {ICPS.map((icp) => (
               <GridCard key={icp.title} title={icp.title} body={icp.body} />
@@ -209,7 +213,10 @@ export default function Home() {
         </SectionShell>
 
         <SectionShell id="features" compact>
-          <SectionHeader label="Features" title="Sieben Module, ein Proof" />
+          <SectionHeader
+            label={SECTIONS.features.label}
+            title={SECTIONS.features.title}
+          />
           <div className="border-border grid border-t border-l sm:grid-cols-2 lg:grid-cols-3">
             {MODULES.map((m) => (
               <GridCard key={m.title} title={m.title} body={m.body} />
@@ -219,8 +226,8 @@ export default function Home() {
 
         <SectionShell id="contract" compact>
           <SectionHeader
-            label="Proof-Contract"
-            title="Dino erfüllt den Proof-Contract"
+            label={SECTIONS.contract.label}
+            title={SECTIONS.contract.title}
           />
           <MonoList items={GUARANTEES} />
           <p className="text-muted-foreground max-w-3xl text-sm leading-relaxed">
@@ -231,13 +238,16 @@ export default function Home() {
               rel="noopener noreferrer"
               className="text-foreground font-mono underline underline-offset-4"
             >
-              Proof-Contract ↗
+              Proof Contract ↗
             </a>
           </p>
         </SectionShell>
 
         <SectionShell id="cli" compact>
-          <SectionHeader label="CLI" title="Drei Kommandos" />
+          <SectionHeader
+            label={SECTIONS.cli.label}
+            title={SECTIONS.cli.title}
+          />
           <div className="border-border flex flex-col border-t border-l">
             {CLI_EXAMPLES.map((ex) => (
               <div key={ex.label} className="border-border border-r border-b">
@@ -254,8 +264,11 @@ export default function Home() {
             ))}
           </div>
           <p className="text-muted-foreground text-sm leading-relaxed">
-            <Link href="/docs" className="text-foreground underline underline-offset-4">
-              Vollständige Docs
+            <Link
+              href="/docs"
+              className="text-foreground underline underline-offset-4"
+            >
+              {SECTIONS.docsHint}
             </Link>{" "}
             ·{" "}
             <a
@@ -264,13 +277,16 @@ export default function Home() {
               rel="noopener noreferrer"
               className="text-foreground underline underline-offset-4"
             >
-              CLI-E2E-Referenz ↗
+              {SECTIONS.cliRef}
             </a>
           </p>
         </SectionShell>
 
         <SectionShell id="pricing" compact>
-          <SectionHeader label="Pricing" title="Ein Preis, keine Abos" />
+          <SectionHeader
+            label={SECTIONS.pricing.label}
+            title={SECTIONS.pricing.title}
+          />
           <div className="border-border grid border-t border-l md:grid-cols-3">
             {PACKS.map((pack) => (
               <div
@@ -300,7 +316,10 @@ export default function Home() {
         </SectionShell>
 
         <SectionShell id="faq" compact>
-          <SectionHeader label="FAQ" title="Häufige Fragen" />
+          <SectionHeader
+            label={SECTIONS.faq.label}
+            title={SECTIONS.faq.title}
+          />
           <dl className="border-border border-t">
             {FAQ.map((item) => (
               <div
@@ -336,7 +355,7 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Proof-Contract
+                  Proof Contract
                 </a>
               </li>
               <li>

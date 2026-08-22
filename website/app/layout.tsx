@@ -15,7 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Dino — Deterministic Proof for Python Decision Pipelines",
   description:
-    "Dino ist ein Proof-CLI für Python-Entscheidungslogik: deterministische Ausführung, Leakage-Scan, Drift-Erkennung und auditierbare proof.json-Artefakte.",
+    "Proof CLI for Python decision logic: sealed execution, leakage scan, drift classification, auditable proof.json.",
 };
 
 export default function RootLayout({
@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="de"
+      lang="en"
       className={`bg-background ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="font-sans antialiased">{children}</body>

@@ -2,9 +2,10 @@
 
 **Deterministic Proof for Python Decision Pipelines**
 
-Dino ist ein Proof-CLI für Python-Entscheidungslogik — Research-Pipelines, Backtests und Risk-Systeme. Es versiegelt Ausführung, erkennt ML-Leakage, klassifiziert Drift und erzeugt ein auditierbares [`proof.json`](docs/PROOF_CONTRACT.md).
+Proof CLI for Python decision logic — research pipelines, backtests, risk systems.
+Seals execution, detects ML leakage, classifies drift, emits content-addressed [`proof.json`](docs/PROOF_CONTRACT.md).
 
-Dino ist kein Secret-Scanner und kein Image-Provenance-Tool.
+Not a secret scanner. Not image provenance.
 
 ```bash
 dino proof run --command "echo ok" --repo . --scan ./src --output-dir ./proof_out
@@ -13,16 +14,16 @@ dino proof verify --proof ./proof_out/proof.json
 
 ---
 
-## Installation
+## Install
 
-**Free Pack** (Leakage-Scan):
+Free pack (`scan`):
 
 ```bash
 pip install "git+https://github.com/DinoDevCli/dino.git"
 dino scan leakage ./my_pipeline.py
 ```
 
-**Proof Pack** (Capsule, Map, Bundle, Flight, Verify, Proof):
+Proof pack (`capsule`, `map`, `bundle`, `flight`, `verify`, `proof`):
 
 ```bash
 pip install "git+https://github.com/DinoDevCli/dino.git"
@@ -30,14 +31,13 @@ dino upgrade --pack proof
 dino proof doctor
 ```
 
-Voraussetzung: Python ≥ 3.10
+Requires Python ≥ 3.10.
 
 ---
 
 ## CLI
 
 ```bash
-# Proof-Kette
 dino proof run \
   --command "echo ok" \
   --repo . \
@@ -46,67 +46,66 @@ dino proof run \
 
 dino proof verify --proof ./proof_out/proof.json
 
-# Leakage (Free)
 dino scan leakage my_pipeline.py
 ```
 
-Vollständige Referenz: [`docs/CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md)
+Full reference: [`docs/CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md)
 
 ---
 
-## Module
+## Modules
 
-| Modul | Pack | Rolle |
-|-------|------|--------|
-| **Scan** | Free | 7 ML-Leakage-Regeln + Grammar |
-| **Capsule** | Proof | Deterministische Ausführung + Replay |
-| **Map** | Proof | AST-Graph, Drift, Plan |
+| Module | Pack | Role |
+|--------|------|------|
+| **Scan** | Free | 7 ML leakage rules + grammar |
+| **Capsule** | Proof | Sealed subprocess + replay |
+| **Map** | Proof | AST graph, drift, plan |
 | **Bundle** | Proof | Regression (`true_delta`, `endpoint_ratio`) |
-| **Flight** | Proof | Canary-Summary |
-| **Verify** | Proof | Drift, Supersession, Attest, Binary |
+| **Flight** | Proof | Canary summary |
+| **Verify** | Proof | Drift, supersession, attest, binary |
 | **Proof** | Proof | `proof.json` · `PROOF_PASSED` / `PROOF_VERIFY_PASSED` |
 
 ---
 
-## Proof-Contract
+## Proof contract
 
-Wenn ein Proof `passed` / `partial` ist und Verify gelingt, garantiert Dino:
+When status is `passed` / `partial` and verify succeeds, Dino guarantees:
 
-- deterministische Ausführung und Wiederholung
-- content-addressed Artefakte (`proof_hash`)
-- Leakage-Regeln für Research-Code
-- Drift-Klassifikation
-- Regression- und Governance-Signale
+- deterministic execution and replay
+- content-addressed artifacts (`proof_hash`)
+- research leakage rules
+- drift classification
+- regression and governance signals
 
-Grenzen und Schemas: [`docs/PROOF_CONTRACT.md`](docs/PROOF_CONTRACT.md)
+Schemas and limits: [`docs/PROOF_CONTRACT.md`](docs/PROOF_CONTRACT.md)
 
 ---
 
 ## Pricing
 
-| Pack | Preis | Inhalt |
-|------|-------|--------|
-| **Free** | 0 € | `scan` |
-| **Indie** | 49 € einmalig | Proof Pack |
-| **Team** | 20 % Rabatt (5–10 Sitze) | Proof Pack |
+| Pack | Price | Includes |
+|------|-------|----------|
+| **Free** | €0 | `scan` |
+| **Indie** | €49 once | Proof pack |
+| **Team** | 20% off (5–10 seats) | Proof pack |
 
 Unlock: `dino upgrade --pack proof`
 
 ---
 
-## Dokumentation
+## Docs
 
-| Doc | Inhalt |
-|-----|--------|
-| [`PROOF_CONTRACT.md`](docs/PROOF_CONTRACT.md) | Normative Garantien |
-| [`CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md) | CLI + Live-Outputs |
-| [`EXAMPLES.md`](docs/EXAMPLES.md) | Kurzbeispiele |
-| [`TECH_STATUS_NOW.md`](docs/TECH_STATUS_NOW.md) | Technischer Stand |
-| [`website/`](website/) | Landing Page |
+| Doc | Role |
+|-----|------|
+| [`PROOF_CONTRACT.md`](docs/PROOF_CONTRACT.md) | Normative guarantees |
+| [`CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md) | CLI + live outputs |
+| [`EXAMPLES.md`](docs/EXAMPLES.md) | Short examples |
+| [`TECH_STATUS_NOW.md`](docs/TECH_STATUS_NOW.md) | Technical status |
+| [`website/`](website/) | Landing page |
 
 ---
 
-## Entwicklung
+## Development
 
 ```bash
 git clone https://github.com/DinoDevCli/dino.git
@@ -116,7 +115,7 @@ pip install -e '.[dev]'
 pytest tests/dino -q
 ```
 
-Website lokal:
+Website:
 
 ```bash
 cd website
@@ -126,6 +125,6 @@ npm install && npm run dev
 
 ---
 
-## Lizenz
+## License
 
 MIT · [DinoDevCli](https://github.com/DinoDevCli)

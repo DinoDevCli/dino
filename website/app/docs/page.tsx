@@ -25,7 +25,7 @@ export default function DocsPage() {
             href="/"
             className="text-muted-foreground font-mono text-xs tracking-[0.15em] uppercase hover:text-foreground"
           >
-            ← Landing
+            ← Home
           </Link>
         </div>
       </header>
@@ -38,8 +38,7 @@ export default function DocsPage() {
               Docs
             </h1>
             <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-              Gleiche Dokumente wie im Repository — Proof-Contract, CLI und
-              Examples.
+              Same documents as the repository — proof contract, CLI, examples.
             </p>
           </div>
 
@@ -80,12 +79,12 @@ export default function DocsPage() {
               GitHub
             </a>
             <a
-              href={`${GITHUB.base}#installation`}
+              href={`${GITHUB.base}#install`}
               target="_blank"
               rel="noopener noreferrer"
               className="border-border hover:border-foreground border px-6 py-3 font-mono text-xs tracking-[0.15em] uppercase"
             >
-              Installation
+              Install
             </a>
           </div>
         </div>

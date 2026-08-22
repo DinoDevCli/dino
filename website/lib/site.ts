@@ -8,12 +8,12 @@ export const GITHUB = {
   owner,
   repo,
   base,
-  readme: `${base}#installation`,
+  readme: `${base}#install`,
   /** Works as soon as main is pushed; replace with /releases/latest after first GitHub Release. */
   downloadZip: `${base}/archive/refs/heads/main.zip`,
   releases: `${base}/releases/latest`,
   issuesNew: `${base}/issues/new`,
-  teamIssue: `${base}/issues/new?title=Team%20Pack%20Anfrage&labels=sales`,
+  teamIssue: `${base}/issues/new?title=Team%20Pack%20Inquiry&labels=sales`,
   docs: {
     proofContract: blob("docs/PROOF_CONTRACT.md"),
     cliReference: blob("docs/CLI_E2E_REFERENCE.md"),
