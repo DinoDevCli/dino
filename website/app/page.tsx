@@ -3,92 +3,104 @@ import { DemoWalkthrough } from "@/components/DemoWalkthrough";
 import { Footer } from "@/components/Footer";
 import { Container, MonoLabel, Section } from "@/components/Layout";
 import { Nav } from "@/components/Nav";
-import { EngineFlow, UspList } from "@/components/Tiles";
+import { ArchitectureFlow } from "@/components/Tiles";
 import {
+  ARCHITECTURE,
   DEMO_COPY,
   DEMO_STEPS,
   EARLY,
-  FLOW,
   HERO,
-  PROBLEM_SOLUTION,
-  USPS,
+  HOW,
+  PROBLEM,
 } from "@/lib/content";
 import { earlyAccessMailto } from "@/lib/site";
+
+function MonoBody({ text }: { text: string }) {
+  const parts = text.split(
+    /(\bproof\.json\b|\bexport\.v1\b|\bproof_index\.json\b|\bchanged: true\/false\b|\bchanged: true\b|\bchanged: false\b)/g,
+  );
+  return (
+    <>
+      {parts.map((part, i) => {
+        if (
+          [
+            "proof.json",
+            "export.v1",
+            "proof_index.json",
+            "changed: true/false",
+            "changed: true",
+            "changed: false",
+          ].includes(part)
+        ) {
+          return (
+            <span key={i} className="font-mono text-foreground">
+              {part}
+            </span>
+          );
+        }
+        return <span key={i}>{part}</span>;
+      })}
+    </>
+  );
+}
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Nav />
 
-      {/* 1. Hero — documentary CLI */}
+      {/* Identity */}
       <section className="relative isolate overflow-hidden">
         <div className="hero-grid absolute inset-0 -z-10" aria-hidden />
-        <Container className="flex min-h-[65vh] flex-col items-start justify-center py-section">
+        <Container className="flex flex-col items-start justify-center py-16 md:py-20">
           <div className="max-w-hero">
             <p className="mb-3 font-mono text-xs text-muted">{HERO.prompt}</p>
-            <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+            <h1 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
               {HERO.title}
             </h1>
-            <p className="mt-4 text-lg text-muted">{HERO.subtitle}</p>
             <p className="mt-3 font-mono text-xs text-muted">{HERO.meta}</p>
           </div>
         </Container>
       </section>
 
-      {/* 2. Problem / Context */}
+      {/* 1. Problem */}
       <Section id="problem">
-        <Container className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-20">
-          <div>
-            <MonoLabel>{PROBLEM_SOLUTION.problemLabel}</MonoLabel>
-            <h2 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
-              {PROBLEM_SOLUTION.problemTitle}
-            </h2>
-            <p className="mt-4 leading-relaxed text-muted">
-              {PROBLEM_SOLUTION.problemBody}
-            </p>
-          </div>
-          <div>
-            <MonoLabel accent>{PROBLEM_SOLUTION.solutionLabel}</MonoLabel>
-            <h2 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
-              {PROBLEM_SOLUTION.solutionTitle}
-            </h2>
-            <p className="mt-4 leading-relaxed text-muted">
-              {PROBLEM_SOLUTION.solutionBody}
-            </p>
+        <Container narrow>
+          <MonoLabel>{PROBLEM.label}</MonoLabel>
+          <div className="mt-4 space-y-1 text-lg leading-snug text-foreground md:text-xl">
+            {PROBLEM.lines.map((line) => (
+              <p key={line}>{line}</p>
+            ))}
           </div>
         </Container>
       </Section>
 
-      {/* 3. Engine */}
-      <Section id="engine">
-        <Container>
-          <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
-            Engine
-          </h2>
-          <p className="mt-2 font-mono text-xs text-muted">
-            Seal → Export → Index → Dashboard
+      {/* 2. How — mechanics */}
+      <Section id="how">
+        <Container narrow>
+          <MonoLabel>{HOW.label}</MonoLabel>
+          <p className="mt-4 leading-relaxed text-muted">
+            <MonoBody text={HOW.body} />
           </p>
-          <EngineFlow steps={FLOW} />
         </Container>
       </Section>
 
-      {/* 4. USPs */}
-      <Section id="capabilities">
+      {/* 3. Architecture — product core */}
+      <Section id="architecture">
         <Container>
-          <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
-            Spec
-          </h2>
-          <UspList items={USPS} />
+          <MonoLabel>{ARCHITECTURE.label}</MonoLabel>
+          <ArchitectureFlow
+            flow={ARCHITECTURE.flow}
+            blocks={ARCHITECTURE.blocks}
+          />
         </Container>
       </Section>
 
-      {/* 5. Demo walkthrough (primary) */}
+      {/* 4. Demo */}
       <Section id="demo">
         <Container narrow>
-          <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
-            {DEMO_COPY.title}
-          </h2>
-          <p className="mt-2 text-muted">{DEMO_COPY.intro}</p>
+          <h2 className="font-mono text-sm text-muted">{DEMO_COPY.title}</h2>
+          <p className="mt-2 text-sm text-muted">{DEMO_COPY.intro}</p>
           <div className="mt-12">
             <DemoWalkthrough steps={DEMO_STEPS} />
           </div>
@@ -98,7 +110,7 @@ export default function Home() {
         </Container>
       </Section>
 
-      {/* 6. Early Access */}
+      {/* Early Access — unchanged below demo */}
       <Section id="early-access">
         <Container narrow>
           <MonoLabel accent>{EARLY.label}</MonoLabel>

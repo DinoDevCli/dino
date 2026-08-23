@@ -15,9 +15,10 @@ Central story:
 
 - No AI template look
 - No marketing tone / polished SaaS
-- Documentary: real commands, golden JSON, real hashes when present
+- Documentary: real commands, golden JSON
 - One page, anchor navigation
-- **Demo** = `DemoWalkthrough` only (readable without Play; no terminal replay)
+- Top of page: **Problem → How → Architecture → Demo** only
+- **Demo** = `DemoWalkthrough` (no terminal replay)
 
 ---
 
@@ -43,9 +44,8 @@ Central story:
 
 ### Layout
 
-- Engine / USP: `max-width: 1200px`
-- Demo / Early Access: `max-width: 800px`
-- Hero copy: `max-width: 900px`
+- Architecture: `max-width: 1200px`
+- Problem / How / Demo / Early Access: `max-width: 800px`
 - Section padding: `py-24`
 - `border-radius: 0`
 - No glow, no autotype, no animation, no marketing pills
@@ -54,26 +54,22 @@ Central story:
 
 ## 2. Page map
 
-| Route | Role |
-|-------|------|
-| `/` | Full documentary page |
-| `/docs` | Optional doc index (repo links) — not in primary nav |
-
 ### Nav
 
 **Dino · Demo · Early Access · GitHub**
 
-Hash links use plain `<a href="{basePath}/#…">` (Next `Link` does not scroll same-page hashes).
-
 ### Section order
 
-1. Hero — static `$ dino version`
-2. Problem / Context
-3. Engine Flow (Seal → Export → Index → Dashboard)
-4. USPs (5 tiles)
+1. Identity — `$ dino version` + product name (no problem copy)
+2. Problem (`#problem`) — fraud_score v1/v2, 3 lines
+3. How (`#how`) — one mechanics paragraph
+4. Architecture (`#architecture`) — flow + Seal / Export / Index / Compare
 5. DemoWalkthrough (`#demo`)
-6. Early Access (`#early-access`) — mailto only
-7. Footer — Early Access · MIT · v0.3.1
+6. Early Access (`#early-access`)
+7. Footer
+
+Do not repeat Seal/Export/Index/Compare outside Architecture.
+Do not add USP / Spec / Engine prose sections.
 
 ---
 
@@ -95,6 +91,7 @@ Hash links use plain `<a href="{basePath}/#…">` (Next `Link` does not scroll s
 | `website/app/page.tsx` | Section order |
 | `website/lib/content.ts` | All copy + golden excerpts |
 | `website/components/DemoWalkthrough.tsx` | Demo |
+| `website/components/Tiles.tsx` | ArchitectureFlow |
 | `website/components/Nav.tsx` | Anchor + GitHub |
 | `docs/internal/WEBSITE_BLUEPRINT.md` | This document |
 

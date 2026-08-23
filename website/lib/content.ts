@@ -1,89 +1,63 @@
-/** Documentary single-page copy — walkthrough first, golden artifacts */
+/** Documentary single-page copy — Problem → How → Architecture → Demo */
 
 export const SITE = {
   version: "0.3.1",
   brand: "Dino",
 };
 
-/** Static CLI prompt — muted only, no animation */
+/** Identity only — problem lives in SECTION 1 */
 export const HERO = {
   prompt: "$ dino version",
   title: "Local-First Audit Engine for Python Pipelines",
-  subtitle: "How did fraud_score change between v1 and v2?",
   meta: "v0.3.1 · Early Access",
 };
 
-export const PROBLEM_SOLUTION = {
-  problemLabel: "# problem",
-  problemTitle: "Two fraud-score runs — v1 and v2.",
-  problemBody:
-    "How do they differ? Why is drift happening? Without a sealed proof and compare, the answer is guesswork.",
-  solutionLabel: "# solution",
-  solutionTitle: "Seal both. Export. Diff.",
-  solutionBody:
-    "Dino seals both runs, exports them, and shows the diff — pipeline_version_diff, verdict, artifacts.",
+export const PROBLEM = {
+  label: "# problem",
+  lines: [
+    "Two fraud-score runs — v1 and v2.",
+    "How do they differ? Why is drift happening?",
+    "Without sealed proofs and compare, the answer is guesswork.",
+  ],
 };
 
-export const FLOW = [
-  {
-    icon: "🛡",
-    step: "Seal",
-    title: "proof.json",
-    detail: "Capsule + Scan + Hash",
-  },
-  {
-    icon: "📦",
-    step: "Export",
-    title: "Path / HTTP / S3",
-    detail: "export.v1 envelope",
-  },
-  {
-    icon: "📊",
-    step: "Index",
-    title: "proof_index.json",
-    detail: "Compare · Metrics · Layout",
-  },
-  {
-    icon: "📈",
-    step: "Dashboard",
-    title: "Your UI",
-    detail: "Superset / Airflow / Custom",
-  },
-];
+export const HOW = {
+  label: "# how",
+  body: "Dino seals each run (proof.json), exports it (export.v1), indexes it (proof_index.json), and compares two proofs. The result is a deterministic verdict: changed: true/false.",
+};
 
-export const USPS = [
-  {
-    label: "Local-First",
-    title: "No cloud. No platform.",
-    body: "No data leaves your infrastructure.",
-  },
-  {
-    label: "Deterministic",
-    title: "proof_hash",
-    body: "Content-addressed. Every sealed run is reproducible.",
-  },
-  {
-    label: "Universal Index",
-    title: "proof_index.json",
-    body: "One dashboard-ready format for every consumer.",
-  },
-  {
-    label: "Export Contracts",
-    title: "Path / HTTP / S3",
-    body: "Integrate where you already store artifacts.",
-  },
-  {
-    label: "Compare / Metrics",
-    title: "changed: true",
-    body: "pipeline_version_diff, verdict_diff, leakage, artifacts.",
-  },
-];
+/** Product core — diagram only, no prose */
+export const ARCHITECTURE = {
+  label: "# architecture",
+  flow: "pipeline → seal → export → index → compare → dashboard",
+  blocks: [
+    {
+      step: "Seal",
+      title: "proof.json",
+      detail: "capsule + scan + hash",
+    },
+    {
+      step: "Export",
+      title: "Path / HTTP / S3",
+      detail: "export.v1 envelope",
+    },
+    {
+      step: "Index",
+      title: "proof_index.json",
+      detail: "compare · metrics · layout",
+    },
+    {
+      step: "Compare",
+      title: "changed: true",
+      detail: "pipeline_version_diff",
+    },
+  ],
+};
 
 export const DEMO_COPY = {
   title: "Demo",
   intro:
-    "fraud_score_v1 → fraud_score_v2. Walkthrough below — readable without Play. Artifacts from tests/simulation/golden.",
-  resultLabel: "# result",
+    "fraud_score_v1 → fraud_score_v2. Golden excerpts from tests/simulation/golden.",
   resultNote:
     "exit 1 when changed — CI gate. Local: make demo in tests/simulation.",
 };
