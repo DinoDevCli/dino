@@ -14,6 +14,7 @@ docs/_record_workdir/
 tests/dino/_work*/
 tests/dino/_work_*.json
 tests/dino/_gap_work/
+tests/dino/_export_work/
 tests/dino/_matrix_work/
 tests/dino/_fixture_work/
 tests/dino/_new_domains_work/
