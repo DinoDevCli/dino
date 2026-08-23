@@ -5,31 +5,30 @@ import { Container, MonoLabel, Section } from "@/components/Layout";
 import { Nav } from "@/components/Nav";
 import { ArchitectureFlow } from "@/components/Tiles";
 import {
-  ARCHITECTURE,
   DEMO_COPY,
   DEMO_STEPS,
   EARLY,
   HERO,
   HOW,
   PROBLEM,
+  PRODUCT,
 } from "@/lib/content";
 import { earlyAccessMailto } from "@/lib/site";
 
 function MonoBody({ text }: { text: string }) {
   const parts = text.split(
-    /(\bproof\.json\b|\bexport\.v1\b|\bproof_index\.json\b|\bchanged: true\/false\b|\bchanged: true\b|\bchanged: false\b)/g,
+    /(\bproof_index\.json\b|\bproof\.json\b|\bexport\.v1\b|\bchanged: true\/false\b|\bPath \/ HTTP \/ S3\b)/g,
   );
   return (
     <>
       {parts.map((part, i) => {
         if (
           [
+            "proof_index.json",
             "proof.json",
             "export.v1",
-            "proof_index.json",
             "changed: true/false",
-            "changed: true",
-            "changed: false",
+            "Path / HTTP / S3",
           ].includes(part)
         ) {
           return (
@@ -67,7 +66,7 @@ export default function Home() {
       <Section id="problem">
         <Container narrow>
           <MonoLabel>{PROBLEM.label}</MonoLabel>
-          <div className="mt-4 space-y-1 text-lg leading-snug text-foreground md:text-xl">
+          <div className="mt-4 space-y-2 text-base leading-relaxed text-foreground md:text-lg">
             {PROBLEM.lines.map((line) => (
               <p key={line}>{line}</p>
             ))}
@@ -75,7 +74,7 @@ export default function Home() {
         </Container>
       </Section>
 
-      {/* 2. How — mechanics */}
+      {/* 2. Mechanics */}
       <Section id="how">
         <Container narrow>
           <MonoLabel>{HOW.label}</MonoLabel>
@@ -85,14 +84,16 @@ export default function Home() {
         </Container>
       </Section>
 
-      {/* 3. Architecture — product core */}
-      <Section id="architecture">
+      {/* 3. Product core */}
+      <Section id="product">
         <Container>
-          <MonoLabel>{ARCHITECTURE.label}</MonoLabel>
-          <ArchitectureFlow
-            flow={ARCHITECTURE.flow}
-            blocks={ARCHITECTURE.blocks}
-          />
+          <MonoLabel>{PRODUCT.label}</MonoLabel>
+          <div className="mt-4 max-w-narrow space-y-3 leading-relaxed text-muted">
+            {PRODUCT.lines.map((line) => (
+              <p key={line}>{line}</p>
+            ))}
+          </div>
+          <ArchitectureFlow flow={PRODUCT.flow} blocks={PRODUCT.blocks} />
         </Container>
       </Section>
 

@@ -60,16 +60,15 @@ Central story:
 
 ### Section order
 
-1. Identity — `$ dino version` + product name (no problem copy)
-2. Problem (`#problem`) — fraud_score v1/v2, 3 lines
+1. Identity — `$ dino version` + product name
+2. Problem (`#problem`) — fraud_score pain (no architecture dump)
 3. How (`#how`) — one mechanics paragraph
-4. Architecture (`#architecture`) — flow + Seal / Export / Index / Compare
+4. Product (`#product`) — definition + architecture diagram
 5. DemoWalkthrough (`#demo`)
 6. Early Access (`#early-access`)
 7. Footer
 
-Do not repeat Seal/Export/Index/Compare outside Architecture.
-Do not add USP / Spec / Engine prose sections.
+Seal / Export / Index / Compare appear as the architecture diagram under Product — not as a separate Engine/USP section.
 
 ---
 

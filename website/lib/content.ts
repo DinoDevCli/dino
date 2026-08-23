@@ -15,20 +15,25 @@ export const HERO = {
 export const PROBLEM = {
   label: "# problem",
   lines: [
-    "Two fraud-score runs — v1 and v2.",
-    "How do they differ? Why is drift happening?",
-    "Without sealed proofs and compare, the answer is guesswork.",
+    "Two fraud-score runs — v1 and v2. You do not know what differs.",
+    "Drift is invisible: no sealed artifacts, no machine-readable delta.",
+    "CI cannot decide if a run changed. Audits stay manual and inconsistent.",
   ],
 };
 
 export const HOW = {
   label: "# how",
-  body: "Dino seals each run (proof.json), exports it (export.v1), indexes it (proof_index.json), and compares two proofs. The result is a deterministic verdict: changed: true/false.",
+  body: "Dino seals each run into a proof bundle (capsule + scan + hash), exports the bundle (Path / HTTP / S3), builds a proof index (proof_index.json), and compares two proofs deterministically. The verdict is changed: true/false.",
 };
 
-/** Product core — diagram only, no prose */
-export const ARCHITECTURE = {
-  label: "# architecture",
+/** Product core — definition once, then diagram only */
+export const PRODUCT = {
+  label: "# product",
+  lines: [
+    "Dino is a local-first audit engine for Python pipelines.",
+    "It produces sealed proofs, export envelopes, and a universal proof index that downstream dashboards can consume.",
+    "It is not a platform, not a cloud service, not a workflow orchestrator — it is an engine that runs locally and outputs deterministic audit artifacts.",
+  ],
   flow: "pipeline → seal → export → index → compare → dashboard",
   blocks: [
     {
@@ -44,7 +49,7 @@ export const ARCHITECTURE = {
     {
       step: "Index",
       title: "proof_index.json",
-      detail: "compare · metrics · layout",
+      detail: "metadata · metrics · layout",
     },
     {
       step: "Compare",
@@ -57,7 +62,7 @@ export const ARCHITECTURE = {
 export const DEMO_COPY = {
   title: "Demo",
   intro:
-    "fraud_score_v1 → fraud_score_v2. Golden excerpts from tests/simulation/golden.",
+    "This is a documentary walkthrough — readable without Play. All artifacts come from tests/simulation/golden.",
   resultNote:
     "exit 1 when changed — CI gate. Local: make demo in tests/simulation.",
 };
