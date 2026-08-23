@@ -17,7 +17,7 @@ import {
   USPS,
   USP_WIDE,
 } from "@/lib/content";
-import { GITHUB, earlyAccessMailto } from "@/lib/site";
+import { GITHUB, earlyAccessMailto, siteHash } from "@/lib/site";
 
 export default function Home() {
   return (
@@ -36,8 +36,8 @@ export default function Home() {
             {HERO.subtitle}
           </p>
           <div className="mt-12 flex flex-wrap gap-4">
-            <Button href="#demo">Live Demo</Button>
-            <Button href="#early-access" variant="secondary">
+            <Button href={siteHash("demo")}>Live Demo</Button>
+            <Button href={siteHash("early-access")} variant="secondary">
               Early Access →
             </Button>
           </div>
@@ -152,26 +152,26 @@ export default function Home() {
             </h2>
             <p className="mt-4 leading-relaxed text-muted">{EARLY.body}</p>
             <div className="mt-8 space-y-2 font-mono text-sm text-muted">
-              <p>
-                → 01. Email{" "}
-                <a
-                  href={earlyAccessMailto()}
-                  className="text-accent hover:underline"
-                >
-                  {EARLY.email}
-                </a>
-              </p>
+              <p>→ 01. Email {EARLY.email}</p>
               <p>→ 02. Name your team / project</p>
               <p>→ 03. Receive a Team Key</p>
               <p>→ 04. Upgrade & start sealing</p>
             </div>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Button href={earlyAccessMailto()}>Request Team Key</Button>
+              <Button href={GITHUB.base} variant="secondary" external>
+                GitHub ↗
+              </Button>
+            </div>
           </div>
-          <div className="flex items-center justify-center border border-border bg-surface p-12">
+          <div className="flex flex-col justify-center gap-4 border border-border bg-black p-8 font-mono text-sm">
+            <p className="text-muted">$ mail —subject &quot;Early Access Request&quot;</p>
+            <p className="text-foreground">{EARLY.email}</p>
             <a
               href={earlyAccessMailto()}
-              className="text-center text-2xl font-bold text-accent hover:underline"
+              className="mt-2 inline-flex w-fit border border-border px-4 py-2 text-muted hover:border-accent hover:text-accent"
             >
-              {EARLY.email} →
+              open mailto →
             </a>
           </div>
         </Container>

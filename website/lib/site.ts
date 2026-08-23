@@ -29,6 +29,17 @@ export const GITHUB = {
 
 export const EARLY_ACCESS_EMAIL = "early@dinodevcli.dev";
 
+/** Base path for GitHub Pages (`/dino` in CI, empty locally). */
+export function siteBasePath(): string {
+  return process.env.NEXT_PUBLIC_BASE_PATH?.replace(/\/$/, "") ?? "";
+}
+
+/** Same-page section jump that works with static export + basePath. */
+export function siteHash(id: string): string {
+  const hash = id.replace(/^#/, "");
+  return `${siteBasePath()}/#${hash}`;
+}
+
 export function earlyAccessMailto(): string {
   return `mailto:${EARLY_ACCESS_EMAIL}?subject=${encodeURIComponent("Early Access Request")}`;
 }
