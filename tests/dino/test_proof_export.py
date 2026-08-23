@@ -63,6 +63,7 @@ def test_export_local_dir() -> None:
     env = json.loads((target / "export.json").read_text(encoding="utf-8"))
     assert env["schema"] == "dino.proof.export.v1"
     assert env["proof_hash"] == proof["proof_hash"]
+    assert (dest / "proof_index.json").is_file()
 
 
 def test_export_via_proof_run_flag() -> None:
@@ -119,6 +120,7 @@ def test_export_http_post() -> None:
         assert received["hash"] == received["body"]["proof_hash"]
         assert "proof" in received["body"]
         assert "capsule/capsule.json" in received["body"]["artifacts"]
+        assert "index_entry" in received["body"]
     finally:
         server.shutdown()
 
@@ -133,4 +135,4 @@ def test_proof_export_subcommand() -> None:
     assert code == 0
     report = json.loads(out)
     assert report["ok"] is True
-    assert build_export_envelope
+    assert (dest / "proof_index.json").is_file()

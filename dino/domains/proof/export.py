@@ -13,7 +13,35 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
+from .index import (
+    INDEX_FILENAME,
+    INDEX_SCHEMA,
+    build_index_entry,
+    empty_index,
+    index_file_path,
+    load_index,
+    save_index,
+    upsert_entry,
+    utc_now_iso,
+)
+
 EXPORT_SCHEMA = "dino.proof.export.v1"
+
+
+@dataclass(frozen=True)
+class IndexMeta:
+    pipeline: str = ""
+    group: str = ""
+    tags: tuple[str, ...] = ()
+
+    @classmethod
+    def from_namespace(cls, args) -> "IndexMeta":
+        raw_tags = getattr(args, "tag", None) or []
+        return cls(
+            pipeline=str(getattr(args, "pipeline", "") or "").strip(),
+            group=str(getattr(args, "group", "") or "").strip(),
+            tags=tuple(str(t).strip() for t in raw_tags if str(t).strip()),
+        )
 
 
 @dataclass(frozen=True)
@@ -78,18 +106,56 @@ def collect_artifact_files(output_dir: Path, proof: dict[str, Any]) -> dict[str,
     return files
 
 
-def build_export_envelope(proof: dict[str, Any], files: dict[str, Path]) -> dict[str, Any]:
+def build_export_envelope(
+    proof: dict[str, Any],
+    files: dict[str, Path],
+    *,
+    index_entry: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """JSON body dashboards can ingest in one POST."""
     artifacts: dict[str, Any] = {}
     for rel, path in sorted(files.items()):
         if rel == "proof.json":
             continue
         artifacts[rel] = json.loads(path.read_text(encoding="utf-8"))
-    return {
+    envelope: dict[str, Any] = {
         "schema": EXPORT_SCHEMA,
         "proof_hash": proof.get("proof_hash"),
         "proof": proof,
         "artifacts": artifacts,
+    }
+    if index_entry is not None:
+        envelope["index_entry"] = index_entry
+    return envelope
+
+
+def _make_index_entry(
+    proof: dict[str, Any],
+    files: dict[str, Path],
+    *,
+    meta: IndexMeta,
+    bundle_path: str,
+) -> dict[str, Any]:
+    return build_index_entry(
+        proof,
+        sorted(files.keys()),
+        pipeline=meta.pipeline,
+        group=meta.group,
+        tags=list(meta.tags),
+        path=bundle_path,
+    )
+
+
+def _update_file_index(archive_root: Path, entry: dict[str, Any]) -> dict[str, Any]:
+    idx_path = index_file_path(archive_root)
+    index = load_index(idx_path)
+    upsert_entry(index, entry)
+    save_index(idx_path, index)
+    return {
+        "ok": True,
+        "index_path": str(idx_path),
+        "proof_count": len(index.get("proofs") or []),
+        "entry": entry,
     }
 
 
@@ -99,8 +165,16 @@ def _target_subdir(dest_path: str, proof_hash: str) -> str:
     return f"{base}/{short}" if base else short
 
 
-def _export_file(output_dir: Path, proof: dict[str, Any], files: dict[str, Path], dest: Destination) -> dict[str, Any]:
+def _export_file(
+    output_dir: Path,
+    proof: dict[str, Any],
+    files: dict[str, Path],
+    dest: Destination,
+    *,
+    meta: IndexMeta,
+) -> dict[str, Any]:
     proof_hash = str(proof.get("proof_hash") or "")
+    bundle_rel = _target_subdir("", proof_hash).strip("/")
     target = Path(_target_subdir(dest.path, proof_hash)).expanduser().resolve()
     if target.exists():
         shutil.rmtree(target)
@@ -109,29 +183,42 @@ def _export_file(output_dir: Path, proof: dict[str, Any], files: dict[str, Path]
         out = target / rel
         out.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, out)
-    envelope = build_export_envelope(proof, files)
+    entry = _make_index_entry(proof, files, meta=meta, bundle_path=bundle_rel)
+    envelope = build_export_envelope(proof, files, index_entry=entry)
     (target / "export.json").write_text(
         json.dumps(envelope, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
+    archive_root = Path(dest.path).expanduser().resolve()
+    index_report = _update_file_index(archive_root, entry)
     return {
         "ok": True,
         "scheme": "file",
         "destination": str(target),
         "proof_hash": proof_hash,
         "files": sorted(files),
+        "index": index_report,
     }
 
 
-def _export_http(proof: dict[str, Any], files: dict[str, Path], dest: Destination) -> dict[str, Any]:
-    envelope = build_export_envelope(proof, files)
+def _export_http(
+    proof: dict[str, Any],
+    files: dict[str, Path],
+    dest: Destination,
+    *,
+    meta: IndexMeta,
+) -> dict[str, Any]:
+    proof_hash = str(proof.get("proof_hash") or "")
+    entry = _make_index_entry(proof, files, meta=meta, bundle_path=proof_hash[:16])
+    envelope = build_export_envelope(proof, files, index_entry=entry)
     body = json.dumps(envelope, separators=(",", ":"), sort_keys=True, ensure_ascii=False).encode("utf-8")
     headers = {
         "Content-Type": "application/json",
         "Accept": "application/json",
         "User-Agent": "dino-cli/0.3",
-        "X-Dino-Proof-Hash": str(proof.get("proof_hash") or ""),
+        "X-Dino-Proof-Hash": proof_hash,
         "X-Dino-Export-Schema": EXPORT_SCHEMA,
+        "X-Dino-Index-Schema": "dino.proof.index.v1",
     }
     token = os.environ.get("DINO_EXPORT_HTTP_TOKEN", "").strip()
     if token:
@@ -150,18 +237,69 @@ def _export_http(proof: dict[str, Any], files: dict[str, Path], dest: Destinatio
         "ok": True,
         "scheme": dest.scheme,
         "destination": dest.raw,
-        "proof_hash": proof.get("proof_hash"),
+        "proof_hash": proof_hash,
         "http_status": status,
         "response_preview": raw[:200],
         "files": sorted(files),
+        "index": {"ok": True, "entry": entry, "mode": "inline_envelope"},
     }
 
 
-def _export_s3(files: dict[str, Path], dest: Destination, proof_hash: str) -> dict[str, Any]:
+def _s3_index_key(prefix: str) -> str:
+    base = prefix.rstrip("/")
+    return f"{base}/{INDEX_FILENAME}" if base else INDEX_FILENAME
+
+
+def _normalize_index_data(data: dict[str, Any]) -> dict[str, Any]:
+    proofs = data.get("proofs") if isinstance(data.get("proofs"), list) else []
+    return {
+        "schema": INDEX_SCHEMA,
+        "updated_at": str(data.get("updated_at") or utc_now_iso()),
+        "proofs": [p for p in proofs if isinstance(p, dict)],
+    }
+
+
+def _merge_s3_index(client, bucket: str, prefix: str, entry: dict[str, Any]) -> dict[str, Any]:
+    import tempfile
+
+    idx_key = _s3_index_key(prefix)
+    index = empty_index()
+    try:
+        obj = client.get_object(Bucket=bucket, Key=idx_key)
+        raw = obj["Body"].read().decode("utf-8", errors="replace")
+        index = _normalize_index_data(json.loads(raw))
+    except Exception:
+        pass
+    upsert_entry(index, entry)
+    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as tmp:
+        save_index(Path(tmp.name), index)
+        tmp_path = tmp.name
+    try:
+        client.upload_file(tmp_path, bucket, idx_key)
+    finally:
+        Path(tmp_path).unlink(missing_ok=True)
+    return {
+        "ok": True,
+        "index_path": f"s3://{bucket}/{idx_key}",
+        "proof_count": len(index.get("proofs") or []),
+        "entry": entry,
+    }
+
+
+def _export_s3(
+    proof: dict[str, Any],
+    files: dict[str, Path],
+    dest: Destination,
+    *,
+    meta: IndexMeta,
+) -> dict[str, Any]:
+    proof_hash = str(proof.get("proof_hash") or "")
     prefix = _target_subdir(dest.path, proof_hash)
     uri_base = f"s3://{dest.netloc}/{prefix}".rstrip("/")
+    bundle_rel = proof_hash[:16]
+    entry = _make_index_entry(proof, files, meta=meta, bundle_path=bundle_rel)
+    envelope = build_export_envelope(proof, files, index_entry=entry)
 
-    # Prefer boto3 when installed; else AWS CLI.
     try:
         import boto3  # type: ignore
     except ImportError:
@@ -174,11 +312,6 @@ def _export_s3(files: dict[str, Path], dest: Destination, proof_hash: str) -> di
             key = f"{prefix}/{rel}".lstrip("/")
             client.upload_file(str(src), dest.netloc, key)
             uploaded.append(f"s3://{dest.netloc}/{key}")
-        # export envelope
-        envelope = build_export_envelope(
-            json.loads(files["proof.json"].read_text(encoding="utf-8")),
-            files,
-        )
         import tempfile
 
         with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as tmp:
@@ -190,6 +323,7 @@ def _export_s3(files: dict[str, Path], dest: Destination, proof_hash: str) -> di
             uploaded.append(f"s3://{dest.netloc}/{key}")
         finally:
             Path(tmp_path).unlink(missing_ok=True)
+        index_report = _merge_s3_index(client, dest.netloc, dest.path, entry)
         return {
             "ok": True,
             "scheme": "s3",
@@ -197,6 +331,7 @@ def _export_s3(files: dict[str, Path], dest: Destination, proof_hash: str) -> di
             "proof_hash": proof_hash,
             "backend": "boto3",
             "files": uploaded,
+            "index": index_report,
         }
 
     aws = shutil.which("aws")
@@ -205,23 +340,24 @@ def _export_s3(files: dict[str, Path], dest: Destination, proof_hash: str) -> di
             "S3 export needs either the 'boto3' package or the AWS CLI (`aws`). "
             "pip install boto3  — or —  install awscli and configure credentials."
         )
-    # Stage to temp dir then sync
     import tempfile
 
+    archive_prefix = dest.path.rstrip("/")
+    idx_uri = f"s3://{dest.netloc}/{_s3_index_key(archive_prefix)}"
     with tempfile.TemporaryDirectory(prefix="dino-export-") as tmp:
         stage = Path(tmp)
+        bundle_stage = stage / bundle_rel
+        bundle_stage.mkdir(parents=True, exist_ok=True)
         for rel, src in files.items():
-            out = stage / rel
+            out = bundle_stage / rel
             out.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, out)
-        proof = json.loads(files["proof.json"].read_text(encoding="utf-8"))
-        (stage / "export.json").write_text(
-            json.dumps(build_export_envelope(proof, files), indent=2, sort_keys=True, ensure_ascii=False)
-            + "\n",
+        (bundle_stage / "export.json").write_text(
+            json.dumps(envelope, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
             encoding="utf-8",
         )
         completed = subprocess.run(
-            [aws, "s3", "sync", str(stage), uri_base],
+            [aws, "s3", "sync", str(bundle_stage), uri_base],
             capture_output=True,
             text=True,
             check=False,
@@ -230,6 +366,14 @@ def _export_s3(files: dict[str, Path], dest: Destination, proof_hash: str) -> di
             raise ValueError(
                 f"aws s3 sync failed: {(completed.stderr or completed.stdout or '').strip()[:500]}"
             )
+        local_index = stage / INDEX_FILENAME
+        subprocess.run([aws, "s3", "cp", idx_uri, str(local_index)], capture_output=True, check=False)
+        index = load_index(local_index) if local_index.is_file() else empty_index()
+        upsert_entry(index, entry)
+        save_index(local_index, index)
+        up = subprocess.run([aws, "s3", "cp", str(local_index), idx_uri], capture_output=True, text=True)
+        if up.returncode != 0:
+            raise ValueError(f"aws s3 cp index failed: {(up.stderr or up.stdout or '').strip()[:500]}")
     return {
         "ok": True,
         "scheme": "s3",
@@ -237,18 +381,28 @@ def _export_s3(files: dict[str, Path], dest: Destination, proof_hash: str) -> di
         "proof_hash": proof_hash,
         "backend": "aws-cli",
         "files": sorted(files) + ["export.json"],
+        "index": {
+            "ok": True,
+            "index_path": idx_uri,
+            "proof_count": len(index.get("proofs") or []),
+            "entry": entry,
+        },
     }
 
 
-def export_proof_dir(output_dir: Path, destination: str) -> dict[str, Any]:
+def export_proof_dir(
+    output_dir: Path,
+    destination: str,
+    *,
+    meta: IndexMeta | None = None,
+) -> dict[str, Any]:
     """
     Upload / copy a sealed proof directory to ``destination``.
 
-    Destinations:
-      - local path: ``./proofs_out`` → ``./proofs_out/<proof_hash16>/``
-      - HTTP(S): POST ``dino.proof.export.v1`` JSON envelope
-      - S3: ``s3://bucket/prefix`` → ``s3://bucket/prefix/<proof_hash16>/``
+    Updates ``proof_index.json`` at the archive root (file/S3) or sends
+    ``index_entry`` inline (HTTP).
     """
+    meta = meta or IndexMeta()
     output_dir = Path(output_dir).resolve()
     proof = _load_proof(output_dir)
     files = collect_artifact_files(output_dir, proof)
@@ -256,11 +410,11 @@ def export_proof_dir(output_dir: Path, destination: str) -> dict[str, Any]:
     proof_hash = str(proof.get("proof_hash") or "")
 
     if dest.scheme == "file":
-        result = _export_file(output_dir, proof, files, dest)
+        result = _export_file(output_dir, proof, files, dest, meta=meta)
     elif dest.scheme in {"http", "https"}:
-        result = _export_http(proof, files, dest)
+        result = _export_http(proof, files, dest, meta=meta)
     elif dest.scheme == "s3":
-        result = _export_s3(files, dest, proof_hash)
+        result = _export_s3(proof, files, dest, meta=meta)
     else:
         raise ValueError(f"unsupported scheme: {dest.scheme}")
 

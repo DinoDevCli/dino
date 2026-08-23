@@ -25,10 +25,14 @@ Export to a team store / dashboard ingest (no Dino dashboard — just upload):
 dino proof run ... --export ./proofs_archive
 dino proof run ... --export https://internal-dashboard/api/proofs
 dino proof run ... --export s3://team-bucket/proofs
-dino proof export --proof-dir ./proof_out --to ./proofs_archive
+dino proof run ... --export ./proofs_archive \
+  --pipeline fraud_score_v4 --group risk-team --tag prod
+
+dino proof index show ./proofs_archive
+dino proof index rebuild ./proofs_archive
 ```
 
-Details: [`PROOF_EXPORT.md`](PROOF_EXPORT.md)
+Details: [`PROOF_INDEX.md`](PROOF_INDEX.md) · [`PROOF_EXPORT.md`](PROOF_EXPORT.md)
 
 ## Leakage (Free pack)
 

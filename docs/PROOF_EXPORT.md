@@ -68,3 +68,5 @@ Expected response: `2xx`. Body ignored except for diagnostics.
 ## Why this matters
 
 Export turns Dino into the **local audit motor** that companies wire into existing dashboards — without Dino becoming SaaS.
+
+Each export also maintains **`proof_index.json`** (schema `dino.proof.index.v1`) at the archive root — list/compare/tag proofs without a Dino UI. See [`PROOF_INDEX.md`](PROOF_INDEX.md).

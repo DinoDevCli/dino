@@ -125,6 +125,7 @@ Contact: [noahpeitz95@gmail.com](mailto:noahpeitz95@gmail.com)
 |-----|------|
 | [`PROOF_CONTRACT.md`](docs/PROOF_CONTRACT.md) | Normative guarantees |
 | [`PROOF_EXPORT.md`](docs/PROOF_EXPORT.md) | Upload to path / HTTP / S3 |
+| [`PROOF_INDEX.md`](docs/PROOF_INDEX.md) | proof_index.json manifest |
 | [`CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md) | CLI + live outputs |
 | [`EXAMPLES.md`](docs/EXAMPLES.md) | Short examples |
 | [`LEMON_SQUEEZY.md`](docs/LEMON_SQUEEZY.md) | Checkout + license keys |

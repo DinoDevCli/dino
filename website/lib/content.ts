@@ -187,7 +187,7 @@ export const FAQ = [
   },
   {
     q: "Can I push proofs into our dashboard?",
-    a: "Yes — dino proof run --export path|https://…/api/proofs|s3://bucket/prefix. Dino uploads sealed proof.json; you keep the dashboard.",
+    a: "Yes — dino proof run --export path|https://…/api/proofs|s3://bucket/prefix. Each export updates proof_index.json so your dashboard can list/compare proofs.",
   },
   {
     q: "Is Dino on PyPI?",
@@ -198,6 +198,7 @@ export const FAQ = [
 export const DOC_LINKS = [
   { label: "Proof Contract", path: "docs/PROOF_CONTRACT.md" },
   { label: "Proof Export", path: "docs/PROOF_EXPORT.md" },
+  { label: "Proof Index", path: "docs/PROOF_INDEX.md" },
   { label: "CLI Reference", path: "docs/CLI_E2E_REFERENCE.md" },
   { label: "Examples", path: "docs/EXAMPLES.md" },
   { label: "Lemon Squeezy", path: "docs/LEMON_SQUEEZY.md" },

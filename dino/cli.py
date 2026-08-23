@@ -158,6 +158,9 @@ def _proof(sub: argparse._SubParsersAction) -> None:
         default="",
         help="Upload sealed proof: path | http(s)://… | s3://bucket/prefix",
     )
+    run.add_argument("--pipeline", default="", help="Pipeline label for proof_index.json")
+    run.add_argument("--group", default="", help="Group label for proof_index.json")
+    run.add_argument("--tag", action="append", default=[], help="Tag for proof_index.json (repeatable)")
     ver = s.add_parser("verify", help="Re-verify a proof.json bundle")
     ver.add_argument("--proof", required=True)
     exp = s.add_parser("export", help="Upload an existing proof directory")
@@ -172,6 +175,15 @@ def _proof(sub: argparse._SubParsersAction) -> None:
         required=True,
         help="Destination: path | http(s)://… | s3://bucket/prefix",
     )
+    exp.add_argument("--pipeline", default="", help="Pipeline label for proof_index.json")
+    exp.add_argument("--group", default="", help="Group label for proof_index.json")
+    exp.add_argument("--tag", action="append", default=[], help="Tag for proof_index.json (repeatable)")
+    idx = s.add_parser("index", help="Proof index manifest (proof_index.json)")
+    idx_sub = idx.add_subparsers(dest="index_cmd", required=True)
+    idx_show = idx_sub.add_parser("show", help="Print proof_index.json")
+    idx_show.add_argument("archive", help="Archive directory containing proof_index.json")
+    idx_rebuild = idx_sub.add_parser("rebuild", help="Rebuild index from archive subfolders")
+    idx_rebuild.add_argument("archive", help="Archive root to scan")
     doc = s.add_parser("doctor", help="Proof-stack health checks")
     doc.add_argument("--output-dir", default="")
 
@@ -528,10 +540,14 @@ def _run_proof(args: argparse.Namespace, cmd: str, json_mode: bool) -> int:
 
         export_dest = getattr(args, "export", "") or ""
         if export_dest.strip():
-            from dino.domains.proof.export import export_proof_dir
+            from dino.domains.proof.export import IndexMeta, export_proof_dir
 
             try:
-                export_report = export_proof_dir(Path(args.output_dir), export_dest.strip())
+                export_report = export_proof_dir(
+                    Path(args.output_dir),
+                    export_dest.strip(),
+                    meta=IndexMeta.from_namespace(args),
+                )
             except ValueError as exc:
                 return _fail(out, "export_failed", str(exc), 1)
             proof = dict(proof)
@@ -540,7 +556,7 @@ def _run_proof(args: argparse.Namespace, cmd: str, json_mode: bool) -> int:
         _emit_proof_result(out, proof, json_mode=json_mode)
         return 0 if proof.get("ok") else 1
     if cmd == "export":
-        from dino.domains.proof.export import export_proof_dir
+        from dino.domains.proof.export import IndexMeta, export_proof_dir
 
         proof_dir = getattr(args, "proof_dir", "") or ""
         proof_path = getattr(args, "proof", "") or ""
@@ -551,11 +567,36 @@ def _run_proof(args: argparse.Namespace, cmd: str, json_mode: bool) -> int:
         else:
             return _fail(out, "invalid_args", "proof export requires --proof-dir or --proof", 2)
         try:
-            report = export_proof_dir(base, args.to)
+            report = export_proof_dir(base, args.to, meta=IndexMeta.from_namespace(args))
         except ValueError as exc:
             return _fail(out, "export_failed", str(exc), 1)
         out.emit_success(report)
         return 0 if report.get("ok") else 1
+    if cmd == "index":
+        from dino.domains.proof.index import index_file_path, load_index, rebuild_index_from_archive, save_index
+
+        archive = Path(args.archive)
+        if args.index_cmd == "show":
+            index = load_index(index_file_path(archive))
+            if json_mode:
+                out.emit_success(index)
+            else:
+                import sys
+
+                sys.stdout.write(json.dumps(index, indent=2, sort_keys=True, ensure_ascii=False) + "\n")
+            return 0
+        if args.index_cmd == "rebuild":
+            index = rebuild_index_from_archive(archive)
+            path = save_index(index_file_path(archive), index)
+            payload = {"ok": True, "index_path": str(path), "proof_count": len(index.get("proofs") or [])}
+            if json_mode:
+                out.emit_success(payload)
+            else:
+                import sys
+
+                sys.stdout.write(f"Rebuilt {path} ({payload['proof_count']} proofs)\n")
+            return 0
+        return _fail(out, "unknown_command", f"unknown proof index command: {args.index_cmd}", 2)
     if cmd == "verify":
         from dino.domains.proof.chain import verify_proof
 
