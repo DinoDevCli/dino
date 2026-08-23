@@ -1,5 +1,5 @@
 export const SITE = {
-  version: "0.3.0",
+  version: "0.3.1",
   tagline: "Dino — Local-First Audit Engine for Python Pipelines",
   subtitle:
     "Deterministic proofs, export contracts, and a universal proof index for your dashboards.",

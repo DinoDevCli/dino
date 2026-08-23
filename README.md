@@ -193,7 +193,9 @@ Contact: [noahpeitz95@gmail.com](mailto:noahpeitz95@gmail.com)
 | [`PROOF_INDEX.md`](docs/PROOF_INDEX.md) | Index / compare / metrics / layout |
 | [`CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md) | CLI reference |
 | [`EXAMPLES.md`](docs/EXAMPLES.md) | Short examples |
+| [`INTEGRATION_DASHBOARDS.md`](docs/INTEGRATION_DASHBOARDS.md) | Airflow, MLflow, Superset, etc. |
 | [`website/`](website/) | Landing page |
+| [`docs/internal/LAUNCH_KIT.md`](docs/internal/LAUNCH_KIT.md) | Announcement copy (maintainers) |
 
 ---
 

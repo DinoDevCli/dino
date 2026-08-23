@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.1
+
+- **Public launch positioning:** local-first audit engine (not a platform)
+- Export contracts: path / HTTP / S3 (`dino.proof.export.v1`)
+- Proof index: `proof_index.json`, compare, metrics, layout (`dino.proof.index.v1`)
+- Full E2E suite: `tests/e2e/`
+- Dashboard integration guide: `docs/INTEGRATION_DASHBOARDS.md`
+- Lemon Squeezy license key unlock for Proof pack
+
 ## 0.3.0
 
 - Proof chain: `proof run` / `verify` / `doctor` with content-addressed `proof.json`
