@@ -3,6 +3,8 @@
 ## 0.3.1
 
 - **Early Access:** free Team Keys for evaluation teams; pricing deferred
+- **Early Access keys:** HMAC-signed `dinoea.v1.*` with expiry (`dino issue-key`, auto-deactivate)
+- **Production simulation:** `tests/simulation/` — fraud pipeline + full Dino team workflow
 - **Public launch positioning:** local-first audit engine (not a platform)
 - Export contracts: path / HTTP / S3 (`dino.proof.export.v1`)
 - Proof index: `proof_index.json`, compare, metrics, layout (`dino.proof.index.v1`)

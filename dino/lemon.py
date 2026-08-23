@@ -73,13 +73,21 @@ def _post_form(url: str, fields: dict[str, str], *, timeout: float = 20.0) -> di
 
 def validate_proof_key(key: str, *, instance_name: str | None = None) -> dict[str, Any]:
     """
-    Validate / activate a Proof-pack license key via Lemon Squeezy.
+    Validate / activate a Proof-pack license key.
 
+    Order: Early Access signed key → offline allowlist → Lemon Squeezy.
     Returns a small meta dict suitable for storing under license.json.
     """
     key = (key or "").strip()
     if not key:
         raise ValueError("license key must be non-empty")
+
+    from dino.early_access import is_early_access_key, verify_key
+
+    if is_early_access_key(key):
+        meta = verify_key(key)
+        meta["instance_name"] = instance_name or default_instance_name()
+        return meta
 
     if _skip_remote() or key in _offline_keys():
         return {

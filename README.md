@@ -86,6 +86,9 @@ dino scan leakage ./tests/e2e/pipe.py          # Free pack
 dino upgrade --pack proof --key YOUR_TEAM_KEY
 dino proof doctor
 
+# Maintainers: issue Early Access keys
+dino issue-key --team risk-lab --days 90
+
 dino proof run \
   --command echo ok \
   --scan ./tests/e2e/pipe.py \
@@ -197,6 +200,7 @@ Pricing will be introduced after Early Access.
 | [`CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md) | CLI reference |
 | [`EXAMPLES.md`](docs/EXAMPLES.md) | Short examples |
 | [`INTEGRATION_DASHBOARDS.md`](docs/INTEGRATION_DASHBOARDS.md) | Airflow, MLflow, Superset, etc. |
+| [`tests/simulation/`](tests/simulation/) | Production-grade team E2E simulation |
 | [`website/`](website/) | Landing page |
 
 ---

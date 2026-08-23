@@ -23,7 +23,8 @@ def build_parser() -> argparse.ArgumentParser:
         description="Deterministic Proof for Python Decision Pipelines",
         epilog=(
             "Meta: dino version | packs | status | upgrade --pack proof --key KEY | "
-            "init-license. Global: --json for machine-readable envelopes."
+            "issue-key --team NAME [--days N] | init-license. Global: --json for "
+            "machine-readable envelopes."
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -711,7 +712,50 @@ def _run_meta(argv: list[str], json_mode: bool) -> int:
             sys.stdout.write(f"[{mark}] {row['pack']:10} {row['tier']:5}  {row['price_hint']}\n")
             sys.stdout.write(f"    {row['description']}\n")
             sys.stdout.write(f"    domains: {', '.join(row['domains'])}\n\n")
-        sys.stdout.write("Unlock:  dino upgrade --pack proof --key YOUR_LICENSE_KEY\n")
+        sys.stdout.write("Unlock:  dino upgrade --pack proof --key YOUR_TEAM_KEY\n")
+        return 0
+
+    if cmd == "issue-key":
+        # Maintainer: issue Early Access Team Keys (HMAC-signed).
+        from dino.early_access import SIGNING_SECRET_ENV, issue_key
+
+        team = "team"
+        days = 90
+        args = argv[1:]
+        i = 0
+        while i < len(args):
+            if args[i] == "--team" and i + 1 < len(args):
+                team = args[i + 1]
+                i += 2
+                continue
+            if args[i].startswith("--team="):
+                team = args[i].split("=", 1)[1]
+                i += 1
+                continue
+            if args[i] == "--days" and i + 1 < len(args):
+                days = int(args[i + 1])
+                i += 2
+                continue
+            if args[i].startswith("--days="):
+                days = int(args[i].split("=", 1)[1])
+                i += 1
+                continue
+            i += 1
+        try:
+            key = issue_key(team=team, days=days)
+        except ValueError as exc:
+            sys.stderr.write(f"{exc}\n")
+            return 2
+        if json_mode:
+            sys.stdout.write(
+                json.dumps({"key": key, "team": team, "days": days}, indent=2) + "\n"
+            )
+        else:
+            sys.stdout.write(f"{key}\n")
+            sys.stdout.write(
+                f"# team={team} days={days}  "
+                f"(set {SIGNING_SECRET_ENV} for production issuance)\n"
+            )
         return 0
 
     if cmd == "status":
@@ -783,7 +827,7 @@ def main(argv: list[str] | None = None) -> int:
         sys.stdout.write(f"{__version__}\n")
         return 0
     argv, json_mode = _pop_json_flag(argv)
-    if argv and argv[0] in {"packs", "upgrade", "status", "init-license"}:
+    if argv and argv[0] in {"packs", "upgrade", "status", "init-license", "issue-key"}:
         return _run_meta(argv, json_mode)
     parser = build_parser()
     try:

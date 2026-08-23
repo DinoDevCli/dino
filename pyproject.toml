@@ -24,7 +24,8 @@ where = ["."]
 include = ["dino*"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests/dino", "tests/e2e"]
+testpaths = ["tests/dino", "tests/e2e", "tests/simulation"]
+pythonpath = ["."]
 addopts = "-q"
 filterwarnings = ["ignore::DeprecationWarning"]
 

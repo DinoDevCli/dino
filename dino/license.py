@@ -19,8 +19,8 @@ DEFAULT_LICENSE: dict[str, Any] = {
 }
 
 BUY_HINT = (
-    "Buy Indie (€49) via Lemon Squeezy (see website / README), then:\n"
-    "  dino upgrade --pack proof --key YOUR_LICENSE_KEY"
+    "Early Access: request a free Team Key (GitHub issue / early@dinodevcli.dev), then:\n"
+    "  dino upgrade --pack proof --key YOUR_TEAM_KEY"
 )
 
 
@@ -90,8 +90,38 @@ def save_license(data: dict[str, Any]) -> Path:
     return LICENSE_PATH
 
 
+def _deactivate_expired_proof(lic: dict[str, Any]) -> dict[str, Any]:
+    """Drop proof pack if Early Access key is expired or signature no longer valid."""
+    packs = list(lic.get("active_packs") or [])
+    if "proof" not in packs:
+        return lic
+    key = str((lic.get("keys") or {}).get("proof") or "")
+    if not key:
+        return lic
+    from dino.early_access import is_early_access_key, verify_key
+
+    if not is_early_access_key(key):
+        return lic
+    try:
+        verify_key(key)
+        return lic
+    except ValueError:
+        packs = [p for p in packs if p != "proof"]
+        lic["active_packs"] = _normalize_packs(packs)
+        activations = dict(lic.get("activations") or {})
+        if "proof" in activations:
+            activations["proof"] = {
+                **activations["proof"],
+                "status": "expired",
+            }
+            lic["activations"] = activations
+        save_license(lic)
+        return lic
+
+
 def get_active_packs() -> list[str]:
-    return list(load_license().get("active_packs") or ["free"])
+    lic = _deactivate_expired_proof(load_license())
+    return list(lic.get("active_packs") or ["free"])
 
 
 def is_pack_active(pack: str) -> bool:
@@ -130,8 +160,12 @@ def activate_pack(pack: str, key: str = "") -> dict[str, Any]:
             raise ValueError(
                 "Proof pack requires a Lemon Squeezy license key.\n" + BUY_HINT
             )
-        # Idempotent: same key already stored → skip remote
+        # Idempotent: same key already stored → re-check Early Access expiry
         if keys.get("proof") == key and "proof" in packs:
+            from dino.early_access import is_early_access_key, verify_key
+
+            if is_early_access_key(key):
+                verify_key(key)  # raises if expired
             return lic
         from .lemon import validate_proof_key
 
@@ -142,6 +176,8 @@ def activate_pack(pack: str, key: str = "") -> dict[str, Any]:
             "status": activation.get("status"),
             "instance_id": activation.get("instance_id"),
             "instance_name": activation.get("instance_name"),
+            "expires_at": activation.get("expires_at"),
+            "team": activation.get("team"),
             "product_name": (activation.get("meta") or {}).get("product_name"),
         }
     elif key:
