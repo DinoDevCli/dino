@@ -13,56 +13,45 @@ import {
   FLOW,
   HERO,
   PROBLEM_SOLUTION,
-  QUICKSTART,
   USPS,
-  USP_WIDE,
 } from "@/lib/content";
-import { GITHUB, earlyAccessMailto, siteHash } from "@/lib/site";
+import { earlyAccessMailto } from "@/lib/site";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Nav active="home" />
+      <Nav />
 
-      {/* 1. Hero — static CLI prompt */}
+      {/* 1. Hero — documentary CLI */}
       <section className="relative isolate overflow-hidden">
         <div className="hero-grid absolute inset-0 -z-10" aria-hidden />
-        <Container className="flex min-h-[70vh] flex-col items-start justify-center py-section">
-          <p className="font-mono text-sm text-muted">{HERO.prompt}</p>
-          <h1 className="mt-4 text-5xl font-bold leading-[1.1] tracking-tightest text-foreground md:text-6xl lg:text-7xl">
-            {HERO.title}
-          </h1>
-          <p className="mt-6 max-w-[560px] text-lg leading-relaxed text-muted md:text-xl">
-            {HERO.subtitle}
-          </p>
-          <div className="mt-12 flex flex-wrap gap-4">
-            <Button href={siteHash("demo")}>Live Demo</Button>
-            <Button href={siteHash("early-access")} variant="secondary">
-              Early Access →
-            </Button>
+        <Container className="flex min-h-[65vh] flex-col items-start justify-center py-section">
+          <div className="max-w-hero">
+            <p className="mb-3 font-mono text-xs text-muted">{HERO.prompt}</p>
+            <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+              {HERO.title}
+            </h1>
+            <p className="mt-4 text-lg text-muted">{HERO.subtitle}</p>
+            <p className="mt-3 font-mono text-xs text-muted">{HERO.meta}</p>
           </div>
-          <p className="mt-16 font-mono text-sm text-muted">{HERO.meta}</p>
         </Container>
       </section>
 
-      {/* 2. Problem ↔ Solution */}
+      {/* 2. Problem / Context */}
       <Section id="problem">
-        <Container className="grid grid-cols-1 gap-12 md:grid-cols-5 md:gap-16">
-          <div className="md:col-span-2">
+        <Container className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-20">
+          <div>
             <MonoLabel>{PROBLEM_SOLUTION.problemLabel}</MonoLabel>
-            <h2 className="mt-4 text-3xl font-bold tracking-tighter">
+            <h2 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
               {PROBLEM_SOLUTION.problemTitle}
             </h2>
             <p className="mt-4 leading-relaxed text-muted">
               {PROBLEM_SOLUTION.problemBody}
             </p>
           </div>
-          <div className="hidden justify-center md:col-span-1 md:flex">
-            <div className="h-full w-px bg-border" aria-hidden />
-          </div>
-          <div className="md:col-span-2">
+          <div>
             <MonoLabel accent>{PROBLEM_SOLUTION.solutionLabel}</MonoLabel>
-            <h2 className="mt-4 text-3xl font-bold tracking-tighter">
+            <h2 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
               {PROBLEM_SOLUTION.solutionTitle}
             </h2>
             <p className="mt-4 leading-relaxed text-muted">
@@ -75,9 +64,11 @@ export default function Home() {
       {/* 3. Engine */}
       <Section id="engine">
         <Container>
-          <h2 className="text-3xl font-bold tracking-tighter">How Dino works</h2>
-          <p className="mt-2 font-mono text-sm text-muted">
-            pipeline → seal → export → proof_index.json → dashboard
+          <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
+            Engine
+          </h2>
+          <p className="mt-2 font-mono text-xs text-muted">
+            Seal → Export → Index → Dashboard
           </p>
           <EngineFlow steps={FLOW} />
         </Container>
@@ -86,14 +77,17 @@ export default function Home() {
       {/* 4. USPs */}
       <Section id="capabilities">
         <Container>
-          <UspList items={USPS} wide={USP_WIDE} />
+          <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
+            Spec
+          </h2>
+          <UspList items={USPS} />
         </Container>
       </Section>
 
       {/* 5. Demo walkthrough (primary) */}
       <Section id="demo">
         <Container narrow>
-          <h2 className="text-3xl font-bold tracking-tighter">
+          <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
             {DEMO_COPY.title}
           </h2>
           <p className="mt-2 text-muted">{DEMO_COPY.intro}</p>
@@ -101,15 +95,7 @@ export default function Home() {
             <DemoWalkthrough steps={DEMO_STEPS} />
           </div>
           <p className="mt-8 font-mono text-xs text-muted">
-            {DEMO_COPY.resultNote}{" "}
-            <a
-              href={`${GITHUB.base}/tree/main/tests/simulation`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-accent hover:underline"
-            >
-              make demo ↗
-            </a>
+            {DEMO_COPY.resultNote}
           </p>
         </Container>
       </Section>
@@ -117,7 +103,7 @@ export default function Home() {
       {/* 6. Slow replay (secondary) */}
       <Section id="replay">
         <Container narrow>
-          <p className="font-mono text-sm text-muted">{DEMO_COPY.replayLabel}</p>
+          <p className="font-mono text-xs text-muted">{DEMO_COPY.replayLabel}</p>
           <p className="mt-2 text-sm text-muted">{DEMO_COPY.replayHint}</p>
           <div className="mt-8">
             <TerminalPlayer
@@ -129,50 +115,18 @@ export default function Home() {
         </Container>
       </Section>
 
-      {/* 7. Quickstart */}
-      <Section id="quickstart">
-        <Container narrow>
-          <h2 className="text-3xl font-bold tracking-tighter">Quickstart</h2>
-          <p className="mt-2 text-muted">Install. Seal. Export.</p>
-          <div className="mt-10 overflow-x-auto border border-border bg-black p-6">
-            <pre className="font-mono text-sm leading-relaxed text-foreground">
-              <code>{QUICKSTART}</code>
-            </pre>
-          </div>
-        </Container>
-      </Section>
-
-      {/* 8. Early Access */}
+      {/* 7. Early Access */}
       <Section id="early-access">
-        <Container className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16">
-          <div>
-            <MonoLabel accent>{EARLY.label}</MonoLabel>
-            <h2 className="mt-4 text-3xl font-bold tracking-tighter">
-              {EARLY.title}
-            </h2>
-            <p className="mt-4 leading-relaxed text-muted">{EARLY.body}</p>
-            <div className="mt-8 space-y-2 font-mono text-sm text-muted">
-              <p>→ 01. Email {EARLY.email}</p>
-              <p>→ 02. Name your team / project</p>
-              <p>→ 03. Receive a Team Key</p>
-              <p>→ 04. Upgrade & start sealing</p>
-            </div>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Button href={earlyAccessMailto()}>Request Team Key</Button>
-              <Button href={GITHUB.base} variant="secondary" external>
-                GitHub ↗
-              </Button>
-            </div>
-          </div>
-          <div className="flex flex-col justify-center gap-4 border border-border bg-black p-8 font-mono text-sm">
-            <p className="text-muted">$ mail —subject &quot;Early Access Request&quot;</p>
-            <p className="text-foreground">{EARLY.email}</p>
-            <a
-              href={earlyAccessMailto()}
-              className="mt-2 inline-flex w-fit border border-border px-4 py-2 text-muted hover:border-accent hover:text-accent"
-            >
-              open mailto →
-            </a>
+        <Container narrow>
+          <MonoLabel accent>{EARLY.label}</MonoLabel>
+          <h2 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
+            {EARLY.title}
+          </h2>
+          <p className="mt-4 leading-relaxed text-muted">{EARLY.body}</p>
+          <div className="mt-8">
+            <Button href={earlyAccessMailto()} variant="secondary">
+              {EARLY.email}
+            </Button>
           </div>
         </Container>
       </Section>

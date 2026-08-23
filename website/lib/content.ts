@@ -8,46 +8,46 @@ export const SITE = {
 /** Static CLI prompt — muted only, no animation */
 export const HERO = {
   prompt: "$ dino version",
-  title: "Local-First Audit Engine",
+  title: "Local-First Audit Engine for Python Pipelines",
   subtitle: "How did fraud_score change between v1 and v2?",
-  meta: "v0.3.1 · Early Access · MIT · Python 3.10+",
+  meta: "v0.3.1 · Early Access",
 };
 
 export const PROBLEM_SOLUTION = {
   problemLabel: "# problem",
-  problemTitle: "How does fraud_score v1 differ from v2?",
+  problemTitle: "Two fraud-score runs — v1 and v2.",
   problemBody:
-    "You shipped a new seed, a new pipeline label, maybe a new feature set. Regulators and risk ask: what changed? Without a sealed proof and compare, the answer is guesswork.",
+    "How do they differ? Why is drift happening? Without a sealed proof and compare, the answer is guesswork.",
   solutionLabel: "# solution",
-  solutionTitle: "Seal both runs. Read changed: true.",
+  solutionTitle: "Seal both. Export. Diff.",
   solutionBody:
-    "Dino seals each run into proof.json, exports into an archive, and compares. pipeline_version_diff and artifact deltas are the audit signal — not a vendor dashboard.",
+    "Dino seals both runs, exports them, and shows the diff — pipeline_version_diff, verdict, artifacts.",
 };
 
 export const FLOW = [
   {
-    step: "1. Seal",
+    icon: "🛡",
+    step: "Seal",
     title: "proof.json",
     detail: "Capsule + Scan + Hash",
-    accent: true,
   },
   {
-    step: "2. Export",
-    title: "export.v1",
-    detail: "Path / HTTP / S3",
-    accent: true,
+    icon: "📦",
+    step: "Export",
+    title: "Path / HTTP / S3",
+    detail: "export.v1 envelope",
   },
   {
-    step: "3. Index",
+    icon: "📊",
+    step: "Index",
     title: "proof_index.json",
     detail: "Compare · Metrics · Layout",
-    accent: true,
   },
   {
-    step: "4. Dashboard",
+    icon: "📈",
+    step: "Dashboard",
     title: "Your UI",
     detail: "Superset / Airflow / Custom",
-    accent: false,
   },
 ];
 
@@ -59,36 +59,35 @@ export const USPS = [
   },
   {
     label: "Deterministic",
-    title: "Content-addressed proof_hash.",
-    body: "Every sealed run is reproducible.",
+    title: "proof_hash",
+    body: "Content-addressed. Every sealed run is reproducible.",
   },
   {
     label: "Universal Index",
-    title: "Dashboard-ready JSON.",
-    body: "One format for every consumer.",
+    title: "proof_index.json",
+    body: "One dashboard-ready format for every consumer.",
   },
   {
     label: "Export Contracts",
-    title: "Path / HTTP / S3.",
-    body: "Integrate anywhere you already store artifacts.",
+    title: "Path / HTTP / S3",
+    body: "Integrate where you already store artifacts.",
+  },
+  {
+    label: "Compare / Metrics",
+    title: "changed: true",
+    body: "pipeline_version_diff, verdict_diff, leakage, artifacts.",
   },
 ];
 
-export const USP_WIDE = {
-  label: "Compare & Metrics",
-  title: "Why is changed: true?",
-  body: "pipeline_version_diff, verdict_diff, leakage, artifacts — the fields your CI gate reads.",
-};
-
 export const DEMO_COPY = {
-  title: "Live Demo",
+  title: "Demo",
   intro:
-    "We audit a fraud-score pipeline. Two runs — v1 and v2. Dino shows the diff.",
+    "fraud_score_v1 → fraud_score_v2. Walkthrough below — readable without Play. Artifacts from tests/simulation/golden.",
   resultLabel: "# result",
   resultNote:
-    "exit 1 when changed — use as a CI gate. Reproduce locally: make demo in tests/simulation.",
-  replayLabel: "# replay (optional)",
-  replayHint: "Same session, slow line reveal. Walkthrough above is the source of truth.",
+    "exit 1 when changed — CI gate. Local: make demo in tests/simulation.",
+  replayLabel: "Optional terminal replay (slow)",
+  replayHint: "Same session, line reveal. Walkthrough above is the source of truth.",
 };
 
 /** From tests/simulation/golden/demo_excerpts.json — do not invent */
@@ -128,62 +127,58 @@ const GOLDEN_INDEX = `{
 
 export const DEMO_RESULT = GOLDEN_COMPARE;
 
-export const DEMO_STEPS = [
-  {
-    title: "# 1. Run A — baseline fraud_score_v1",
-    command: `dino proof run \\
-  --command "python pipeline/run.py --seed seed-42" \\
-  --scan ./pipeline \\
-  --pipeline fraud_score_v1 \\
-  --group risk-team --tag demo \\
-  --export ./archive`,
-    explanation:
-      "→ Seals the baseline run. Capsule replay + leakage scan land in proof.json (golden excerpt below).",
-    artifactExcerpt: GOLDEN_PROOF,
-  },
-  {
-    title: "# 2. Run B — fraud_score_v2 (new seed)",
-    command: `dino proof run \\
-  --command "python pipeline/run.py --seed seed-123" \\
-  --scan ./pipeline \\
-  --pipeline fraud_score_v2 \\
-  --group risk-team --tag demo \\
-  --export ./archive`,
-    explanation:
-      "→ Second seal into the same archive. proof_index.json now lists both pipelines.",
-    artifactExcerpt: GOLDEN_INDEX,
-  },
-  {
-    title: "# 3. Compare — what changed?",
-    command: `dino proof index compare ./archive \\
-  <hash_v1> <hash_v2>`,
-    explanation:
-      "→ changed: true because pipeline_version_diff moves fraud_score_v1 → fraud_score_v2.",
-    artifactExcerpt: GOLDEN_COMPARE,
-  },
-  {
-    title: "# 4. Fail-closed — empty scan roots",
-    command: `dino proof run \\
-  --command "echo ok" \\
-  --scan ./does_not_exist \\
-  --output-dir ./proof_out`,
-    explanation:
-      "→ Dino refuses a silent pass. EMPTY_SCAN_ROOTS / fail-closed — no proof without a real scan target.",
-    artifactExcerpt: `{
+export const FAIL_SNIPPET = `{
   "ok": false,
   "files_scanned": 0,
   "findings": [{
     "rule": "EMPTY_SCAN_ROOTS",
-    "detail": "no .py files under scan roots (missing paths: ./does_not_exist)",
+    "detail": "no .py files under scan roots",
     "severity": "FAIL"
   }]
-}`,
+}`;
+
+export const DEMO_STEPS = [
+  {
+    title: "Run A — fraud_score_v1",
+    command: `dino proof run \\
+  --command "python pipeline/run.py --seed seed-42" \\
+  --scan ./pipeline \\
+  --pipeline fraud_score_v1 \\
+  --export ./archive`,
+    explanation:
+      "Seals the baseline run. Capsule replay + leakage scan land in proof.json (golden excerpt).",
+    artifactExcerpt: GOLDEN_PROOF,
+  },
+  {
+    title: "Run B — fraud_score_v2",
+    command: `dino proof run \\
+  --command "python pipeline/run.py --seed seed-123" \\
+  --scan ./pipeline \\
+  --pipeline fraud_score_v2 \\
+  --export ./archive`,
+    explanation:
+      "Second seal into the same archive. proof_index.json lists both pipelines.",
+    artifactExcerpt: GOLDEN_INDEX,
+  },
+  {
+    title: "Compare",
+    command: `dino proof index compare ./archive <hash_v1> <hash_v2>`,
+    explanation:
+      "Shows the diff. changed: true because pipeline_version_diff moves fraud_score_v1 → fraud_score_v2.",
+    artifactExcerpt: GOLDEN_COMPARE,
+  },
+  {
+    title: "Fail-closed",
+    command: `dino proof run --command "echo ok" --scan ./does_not_exist`,
+    explanation:
+      "EMPTY_SCAN_ROOTS — no silent pass without a real scan target.",
+    artifactExcerpt: FAIL_SNIPPET,
   },
 ];
 
 /** Replay transcript — same story, for slow TerminalPlayer */
 export const DEMO_LINES = [
-  "# replay — fraud_score v1 then v2, then compare",
+  "# optional replay — fraud_score v1 then v2, then compare",
   "",
   "$ dino proof run --command \"python pipeline/run.py --seed seed-42\" \\",
   "    --scan ./pipeline --pipeline fraud_score_v1 --export ./archive",
@@ -194,24 +189,16 @@ export const DEMO_LINES = [
   "sealed  fraud_score_v2  status=partial  scan_ok=true",
   "",
   "$ dino proof index compare ./archive <hash_v1> <hash_v2>",
-  'changed: true',
-  'pipeline_version_diff: fraud_score_v1 → fraud_score_v2',
+  "changed: true",
+  "pipeline_version_diff: fraud_score_v1 → fraud_score_v2",
   "",
   "# exit 1 — CI gate signal",
 ];
 
-export const QUICKSTART = `pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
-
-dino proof run \\
-  --command "python3 train.py" \\
-  --scan ./src \\
-  --output-dir ./proof_out \\
-  --export ./archive`;
-
 export const EARLY = {
   label: "# early access",
   title: "Free Mode. Proof Pack. 60 Days.",
-  body: "Leakage scan stays free forever. The full Proof pack (index, export, compare) is free for 60 days for Early Access teams.",
+  body: "Leakage scan stays free forever. Proof / index / export free for 60 days for Early Access teams. Email early@dinodevcli.dev — team or project name — receive a Team Key.",
   email: "early@dinodevcli.dev",
 };
 

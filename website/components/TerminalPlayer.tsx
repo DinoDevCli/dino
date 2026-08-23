@@ -97,7 +97,7 @@ export function TerminalPlayer({
               onClick={play}
               className="border border-border px-6 py-3 font-mono text-xs uppercase tracking-wider text-muted hover:border-foreground hover:text-foreground"
             >
-              ▶ Replay
+              ▶ Optional replay
             </button>
           </div>
         ) : null}

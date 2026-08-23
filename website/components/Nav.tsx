@@ -2,20 +2,18 @@ import Link from "next/link";
 import { GITHUB, siteHash } from "@/lib/site";
 
 type NavItem =
-  | { kind: "route"; href: string; label: string }
   | { kind: "hash"; href: string; label: string }
   | { kind: "external"; href: string; label: string };
 
 const LINKS: NavItem[] = [
-  { kind: "route", href: "/", label: "Home" },
   { kind: "hash", href: siteHash("demo"), label: "Demo" },
   { kind: "hash", href: siteHash("early-access"), label: "Early Access" },
   { kind: "external", href: GITHUB.base, label: "GitHub" },
 ];
 
-export function Nav({ active = "home" }: { active?: "home" | "docs" }) {
+export function Nav({ active: _active = "home" }: { active?: "home" | "docs" }) {
   return (
-    <header className="relative z-20 border-b border-border bg-background/90">
+    <header className="relative z-20 border-b border-border bg-background">
       <nav
         className="mx-auto flex max-w-content items-center justify-between px-gutter py-5"
         aria-label="Primary"
@@ -24,24 +22,12 @@ export function Nav({ active = "home" }: { active?: "home" | "docs" }) {
           href="/"
           className="font-mono text-sm uppercase tracking-[0.25em] text-foreground hover:text-accent"
         >
-          dino
+          Dino
         </Link>
         <ul className="flex items-center gap-1 sm:gap-6">
           {LINKS.map((item) => {
-            const isActive = active === "home" && item.kind === "route";
-            const className = `px-2 py-1 font-mono text-xs uppercase tracking-wider sm:text-sm ${
-              isActive ? "text-accent" : "text-muted hover:text-foreground"
-            }`;
-
-            if (item.kind === "hash") {
-              return (
-                <li key={item.href}>
-                  <a href={item.href} className={className}>
-                    {item.label}
-                  </a>
-                </li>
-              );
-            }
+            const className =
+              "px-2 py-1 font-mono text-xs uppercase tracking-wider text-muted hover:text-foreground sm:text-sm";
 
             if (item.kind === "external") {
               return (
@@ -52,7 +38,7 @@ export function Nav({ active = "home" }: { active?: "home" | "docs" }) {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {item.label} ↗
+                    {item.label}
                   </a>
                 </li>
               );
@@ -60,9 +46,9 @@ export function Nav({ active = "home" }: { active?: "home" | "docs" }) {
 
             return (
               <li key={item.href}>
-                <Link href={item.href} className={className}>
+                <a href={item.href} className={className}>
                   {item.label}
-                </Link>
+                </a>
               </li>
             );
           })}

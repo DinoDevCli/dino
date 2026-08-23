@@ -3,20 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --background: #0a0a0e;
-  --surface: #121216;
-  --surface-2: #16161a;
+  --background: #0a0a0f;
+  --surface: #111118;
+  --surface-2: #16161e;
   --border: #1e1e26;
   --border-strong: #2a2a32;
   --hover: #282830;
-  --foreground: #e8e8ed;
-  --muted: #8a8a99;
-  --accent: #3b82f6;
-  --accent-hover: #2563eb;
+  --foreground: #ffffff;
+  --muted: #a0a0b0;
+  --accent: #ff6b00;
+  --accent-hover: #e55f00;
   --code-bg: #000000;
+  --json-bg: #111118;
 
-  --content-max: 1100px;
-  --narrow-max: 900px;
+  --content-max: 1200px;
+  --narrow-max: 800px;
   --grid-gutter: 1.5rem;
 }
 
@@ -44,37 +45,34 @@ a {
     background-color 0.2s ease;
 }
 
-/* Subtle technical grid — no glow */
+/* Static technical grid — no glow, no motion */
 .hero-grid {
   background-color: var(--background);
   background-image:
     linear-gradient(
       to right,
-      color-mix(in srgb, var(--border) 55%, transparent) 1px,
+      color-mix(in srgb, var(--border) 45%, transparent) 1px,
       transparent 1px
     ),
     linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--border) 55%, transparent) 1px,
+      color-mix(in srgb, var(--border) 45%, transparent) 1px,
       transparent 1px
     );
   background-size: 48px 48px;
-  animation: grid-drift 48s linear infinite;
 }
 
-@keyframes grid-drift {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 48px 48px;
-  }
+pre.code-panel {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+}
+
+pre.json-panel {
+  background: var(--json-bg);
+  border: 1px solid var(--border);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-grid {
-    animation: none;
-  }
   html {
     scroll-behavior: auto;
   }

@@ -19,10 +19,12 @@ module.exports = {
         accent: "var(--accent)",
         "accent-hover": "var(--accent-hover)",
         "code-bg": "var(--code-bg)",
+        "json-bg": "var(--json-bg)",
       },
       maxWidth: {
-        content: "1100px",
-        narrow: "900px",
+        content: "1200px",
+        narrow: "800px",
+        hero: "900px",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
