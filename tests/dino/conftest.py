@@ -40,6 +40,7 @@ def _all_packs_unlocked(tmp_path, monkeypatch):
     lic_dir.mkdir(exist_ok=True)
     monkeypatch.setattr("dino.license.LICENSE_DIR", lic_dir)
     monkeypatch.setattr("dino.license.LICENSE_PATH", lic_dir / "license.json")
+    monkeypatch.setenv("DINO_OFFLINE_LICENSE_KEYS", "test")
     save_license(dict(DEFAULT_LICENSE))
     for pack in PACKS:
         activate_pack(pack, key="test")

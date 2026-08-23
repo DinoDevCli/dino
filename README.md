@@ -35,7 +35,8 @@ Proof pack (`capsule`, `map`, `bundle`, `flight`, `verify`, `proof`):
 
 ```bash
 pip install "git+https://github.com/DinoDevCli/dino.git"
-dino upgrade --pack proof
+# After Lemon Squeezy purchase (license key in receipt email):
+dino upgrade --pack proof --key YOUR_LICENSE_KEY
 dino proof doctor
 ```
 
@@ -104,12 +105,12 @@ Schemas and limits: [`docs/PROOF_CONTRACT.md`](docs/PROOF_CONTRACT.md)
 - Team pricing applies up to **20 seats**
 - Above 20 seats → contact us
 - No Enterprise tier, no subscriptions, no lock-in
-- Proof Pack unlock is **local** today (`dino upgrade --pack proof`); pay via contact — key enforcement ships with the storefront
+- Checkout via **Lemon Squeezy**; unlock with license key (see [`docs/LEMON_SQUEEZY.md`](docs/LEMON_SQUEEZY.md))
 
 Unlock:
 
 ```bash
-dino upgrade --pack proof
+dino upgrade --pack proof --key YOUR_LICENSE_KEY
 ```
 
 > Not on PyPI under `dino` (name collision). Install only via the GitHub URL above.
@@ -125,6 +126,7 @@ Contact: [noahpeitz95@gmail.com](mailto:noahpeitz95@gmail.com)
 | [`PROOF_CONTRACT.md`](docs/PROOF_CONTRACT.md) | Normative guarantees |
 | [`CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md) | CLI + live outputs |
 | [`EXAMPLES.md`](docs/EXAMPLES.md) | Short examples |
+| [`LEMON_SQUEEZY.md`](docs/LEMON_SQUEEZY.md) | Checkout + license keys |
 | [`TECH_STATUS_NOW.md`](docs/TECH_STATUS_NOW.md) | Technical status |
 | [`website/`](website/) | Landing page |
 

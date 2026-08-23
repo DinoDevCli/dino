@@ -16,7 +16,7 @@ import {
   SECTIONS,
   SITE,
 } from "@/lib/content";
-import { GITHUB, contactHref } from "@/lib/site";
+import { GITHUB, contactHref, packCheckoutHref } from "@/lib/site";
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -105,33 +105,37 @@ function ExternalLink({
   children,
   primary = false,
   className = "",
+  lemon = false,
 }: {
   href: string;
   children: React.ReactNode;
   primary?: boolean;
   className?: string;
+  lemon?: boolean;
 }) {
   const base =
     "border px-6 py-3 font-mono text-xs tracking-[0.15em] uppercase inline-block text-center";
   const cls = primary
     ? `${base} border-foreground bg-foreground text-background hover:bg-foreground/90 ${className}`
     : `${base} border-border text-foreground hover:border-foreground ${className}`;
+  const lemonClass = lemon ? "lemonsqueezy-button" : "";
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={cls}
+      className={`${cls} ${lemonClass}`.trim()}
     >
       {children}
     </a>
   );
 }
 
-function packHref(tier: "free" | "indie" | "team" | "large"): string {
-  if (tier === "team" || tier === "large") return contactHref();
-  if (tier === "indie") return GITHUB.downloadZip;
-  return GITHUB.readme;
+function packHref(tier: "free" | "indie" | "team" | "large"): {
+  href: string;
+  lemon: boolean;
+} {
+  return packCheckoutHref(tier);
 }
 
 export default function Home() {
@@ -293,7 +297,9 @@ export default function Home() {
             title={SECTIONS.pricing.title}
           />
           <div className="border-border grid border-t border-l sm:grid-cols-2 lg:grid-cols-4">
-            {PACKS.map((pack) => (
+            {PACKS.map((pack) => {
+              const checkout = packHref(pack.tier);
+              return (
               <div
                 key={pack.name}
                 className={`border-border flex flex-col gap-8 border-r border-b p-6 md:p-8 ${
@@ -310,13 +316,15 @@ export default function Home() {
                   </p>
                 </div>
                 <ExternalLink
-                  href={packHref(pack.tier)}
+                  href={checkout.href}
+                  lemon={checkout.lemon}
                   className="mt-auto px-5 py-3"
                 >
                   {pack.cta}
                 </ExternalLink>
               </div>
-            ))}
+              );
+            })}
           </div>
           <ul className="text-muted-foreground max-w-3xl space-y-2 font-mono text-sm leading-relaxed">
             {PRICING_RULES.map((rule) => (
@@ -331,7 +339,8 @@ export default function Home() {
             <code className="text-foreground">{PRICING_UNLOCK}</code>
             <br />
             <span className="text-muted-foreground">
-              Contact:{" "}
+              After Lemon Squeezy checkout, paste the license key into the command
+              above. Contact:{" "}
               <a
                 href={contactHref()}
                 className="text-foreground underline underline-offset-4"

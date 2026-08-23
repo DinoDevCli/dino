@@ -22,7 +22,7 @@ def build_parser() -> argparse.ArgumentParser:
         prog="dino",
         description="Deterministic Proof for Python Decision Pipelines",
         epilog=(
-            "Meta: dino version | packs | status | upgrade --pack proof|free [--key KEY] | "
+            "Meta: dino version | packs | status | upgrade --pack proof --key KEY | "
             "init-license. Global: --json for machine-readable envelopes."
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -564,7 +564,7 @@ def _run_meta(argv: list[str], json_mode: bool) -> int:
             sys.stdout.write(f"[{mark}] {row['pack']:10} {row['tier']:5}  {row['price_hint']}\n")
             sys.stdout.write(f"    {row['description']}\n")
             sys.stdout.write(f"    domains: {', '.join(row['domains'])}\n\n")
-        sys.stdout.write("Unlock:  dino upgrade --pack proof\n")
+        sys.stdout.write("Unlock:  dino upgrade --pack proof --key YOUR_LICENSE_KEY\n")
         return 0
 
     if cmd == "status":
@@ -613,7 +613,7 @@ def _run_meta(argv: list[str], json_mode: bool) -> int:
                 continue
             i += 1
         if not pack:
-            sys.stderr.write("Usage: dino upgrade --pack proof|free [--key KEY]\n")
+            sys.stderr.write("Usage: dino upgrade --pack proof|free --key KEY\n")
             return 2
         try:
             lic = activate_pack(pack, key=key)

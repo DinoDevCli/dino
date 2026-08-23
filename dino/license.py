@@ -15,7 +15,13 @@ DEFAULT_LICENSE: dict[str, Any] = {
     "schema": "dino_license_v2",
     "active_packs": ["free"],
     "keys": {},
+    "activations": {},
 }
+
+BUY_HINT = (
+    "Buy Indie (€49) via Lemon Squeezy (see website / README), then:\n"
+    "  dino upgrade --pack proof --key YOUR_LICENSE_KEY"
+)
 
 
 def _normalize_packs(packs: list[Any]) -> list[str]:
@@ -48,11 +54,19 @@ def load_license() -> dict[str, Any]:
     keys = data.get("keys")
     if not isinstance(keys, dict):
         keys = {}
+    activations = data.get("activations")
+    if not isinstance(activations, dict):
+        activations = {}
     norm_keys = {resolve_pack_name(str(k)): str(v) for k, v in keys.items()}
     return {
         "schema": data.get("schema", "dino_license_v2"),
         "active_packs": _normalize_packs(packs),
         "keys": {k: v for k, v in norm_keys.items() if k in PACKS},
+        "activations": {
+            resolve_pack_name(str(k)): v
+            for k, v in activations.items()
+            if resolve_pack_name(str(k)) in PACKS and isinstance(v, dict)
+        },
     }
 
 
@@ -65,6 +79,11 @@ def save_license(data: dict[str, Any]) -> Path:
             resolve_pack_name(str(k)): str(v)
             for k, v in dict(data.get("keys") or {}).items()
             if resolve_pack_name(str(k)) in PACKS
+        },
+        "activations": {
+            resolve_pack_name(str(k)): v
+            for k, v in dict(data.get("activations") or {}).items()
+            if resolve_pack_name(str(k)) in PACKS and isinstance(v, dict)
         },
     }
     LICENSE_PATH.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
@@ -90,18 +109,49 @@ def is_domain_active(domain: str) -> bool:
 
 
 def activate_pack(pack: str, key: str = "") -> dict[str, Any]:
+    """
+    Activate a pack locally.
+
+    - ``free``: always available, key optional.
+    - ``proof``: requires a Lemon Squeezy license key (``--key``).
+    """
     name = resolve_pack_name(pack)
     if name not in PACKS:
         raise ValueError(f"Unknown pack: {pack}. Known: {', '.join(sorted(PACKS))}")
+
     lic = load_license()
     packs = list(lic.get("active_packs") or [])
+    keys = dict(lic.get("keys") or {})
+    activations = dict(lic.get("activations") or {})
+    key = (key or "").strip()
+
+    if name == "proof":
+        if not key:
+            raise ValueError(
+                "Proof pack requires a Lemon Squeezy license key.\n" + BUY_HINT
+            )
+        # Idempotent: same key already stored → skip remote
+        if keys.get("proof") == key and "proof" in packs:
+            return lic
+        from .lemon import validate_proof_key
+
+        activation = validate_proof_key(key)
+        keys["proof"] = key
+        activations["proof"] = {
+            "provider": activation.get("provider"),
+            "status": activation.get("status"),
+            "instance_id": activation.get("instance_id"),
+            "instance_name": activation.get("instance_name"),
+            "product_name": (activation.get("meta") or {}).get("product_name"),
+        }
+    elif key:
+        keys[name] = key
+
     if name not in packs:
         packs.append(name)
     lic["active_packs"] = packs
-    keys = dict(lic.get("keys") or {})
-    if key:
-        keys[name] = key
     lic["keys"] = keys
+    lic["activations"] = activations
     save_license(lic)
     return lic
 

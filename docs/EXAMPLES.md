@@ -5,7 +5,7 @@ Short commands for Dino 0.3.0. Live outputs: [`CLI_E2E_REFERENCE.md`](CLI_E2E_RE
 ## Proof chain
 
 ```bash
-dino upgrade --pack proof
+dino upgrade --pack proof --key YOUR_LICENSE_KEY
 
 dino proof run \
   --command echo ok \

@@ -126,7 +126,7 @@ export const PACKS = [
     name: "Indie",
     price: "€49",
     hint: "One-time — Full Proof Pack",
-    cta: "Download",
+    cta: "Buy",
     tier: "indie" as const,
     featured: true,
   },
@@ -134,7 +134,7 @@ export const PACKS = [
     name: "Team",
     price: "€39",
     hint: "Per seat (20% off) — Full Proof Pack",
-    cta: "Contact",
+    cta: "Buy / Contact",
     tier: "team" as const,
   },
   {
@@ -151,10 +151,10 @@ export const PRICING_RULES = [
   "Team pricing applies up to 20 seats",
   "Above 20 seats → contact us",
   "No Enterprise tier, no subscriptions, no lock-in",
-  "Unlock is local today (dino upgrade --pack proof); pay via contact until storefront ships",
+  "Checkout via Lemon Squeezy · unlock with: dino upgrade --pack proof --key YOUR_KEY",
 ];
 
-export const PRICING_UNLOCK = "dino upgrade --pack proof";
+export const PRICING_UNLOCK = "dino upgrade --pack proof --key YOUR_LICENSE_KEY";
 
 export const FAQ = [
   {
@@ -182,6 +182,10 @@ export const FAQ = [
     a: "Prefer argv tokens: --command echo ok. Use one quoted string when the program takes flags: --command \"python3 train.py --seed 0\".",
   },
   {
+    q: "How do I unlock the Proof Pack?",
+    a: "Buy Indie/Team on Lemon Squeezy, copy the license key from the receipt email, then run: dino upgrade --pack proof --key YOUR_LICENSE_KEY",
+  },
+  {
     q: "Is Dino on PyPI?",
     a: "No — the name dino is taken. Install from GitHub: pip install \"git+https://github.com/DinoDevCli/dino.git\".",
   },
@@ -191,6 +195,7 @@ export const DOC_LINKS = [
   { label: "Proof Contract", path: "docs/PROOF_CONTRACT.md" },
   { label: "CLI Reference", path: "docs/CLI_E2E_REFERENCE.md" },
   { label: "Examples", path: "docs/EXAMPLES.md" },
+  { label: "Lemon Squeezy", path: "docs/LEMON_SQUEEZY.md" },
   { label: "Tech Status", path: "docs/TECH_STATUS_NOW.md" },
 ];
 
