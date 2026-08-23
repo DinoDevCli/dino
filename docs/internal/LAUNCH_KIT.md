@@ -23,7 +23,7 @@
 | 07 | Pitch newsletters — templates below | Manual |
 
 **Early Access (current):** Free scan forever · Proof pack via free Team Key ·  
-[early@dinodevcli.dev](mailto:early@dinodevcli.dev) · no checkout · dashboards external.
+[dinodevcli@gmail.com](mailto:dinodevcli@gmail.com) · no checkout · dashboards external.
 
 ---
 
@@ -35,7 +35,7 @@
 Dino v0.3.1 enters **Early Access**.
 Team Keys are free. No checkout.
 
-**Request Early Access:** [Open an issue](https://github.com/DinoDevCli/dino/issues/new?title=Early%20Access%20Request) · [early@dinodevcli.dev](mailto:early@dinodevcli.dev)
+**Request Early Access:** [Open an issue](https://github.com/DinoDevCli/dino/issues/new?title=Early%20Access%20Request) · [dinodevcli@gmail.com](mailto:dinodevcli@gmail.com)
 
 ---
 
@@ -231,4 +231,4 @@ gh repo edit DinoDevCli/dino \
 gh repo edit DinoDevCli/dino --add-topic python --add-topic mlops --add-topic audit --add-topic local-first
 ```
 
-Contact: **early@dinodevcli.dev** (same as website). No Lemon checkout during Early Access.
+Contact: **dinodevcli@gmail.com** (same as website). No Lemon checkout during Early Access.

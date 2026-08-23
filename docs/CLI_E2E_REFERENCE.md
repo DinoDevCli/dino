@@ -68,7 +68,7 @@ Dino packs (free + proof)
     domains: capsule, map, bundle, flight, verify, proof
 
 Unlock:  dino upgrade --pack proof --key YOUR_TEAM_KEY
-         (request key: early@dinodevcli.dev)
+         (request key: dinodevcli@gmail.com)
 ```
 
 **exit:** 0

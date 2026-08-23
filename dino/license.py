@@ -19,7 +19,7 @@ DEFAULT_LICENSE: dict[str, Any] = {
 }
 
 BUY_HINT = (
-    "Early Access: request a free Team Key → early@dinodevcli.dev\n"
+    "Early Access: request a free Team Key → dinodevcli@gmail.com\n"
     "  (or GitHub issue: Early Access Request), then:\n"
     "  dino upgrade --pack proof --key YOUR_TEAM_KEY"
 )

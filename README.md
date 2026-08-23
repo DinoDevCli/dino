@@ -39,7 +39,7 @@ dino proof index layout ./archive
 ### Request Early Access
 
 Open an issue: https://github.com/DinoDevCli/dino/issues/new?title=Early%20Access%20Request  
-Or email: [early@dinodevcli.dev](mailto:early@dinodevcli.dev)
+Or email: [dinodevcli@gmail.com](mailto:dinodevcli@gmail.com)
 
 ---
 
@@ -192,9 +192,11 @@ Canonical bundles are content-addressed. Browse folders are symlinks (or `.dino_
 | **Free** | Forever | Leakage scan (`dino scan leakage`) |
 | **Proof** | Early Access Team Key | Capsule, map, bundle, flight, verify, proof chain + export/index |
 
-Request a free Team Key: [issue](https://github.com/DinoDevCli/dino/issues/new?title=Early%20Access%20Request) · [early@dinodevcli.dev](mailto:early@dinodevcli.dev)
+Request a free Team Key: [issue](https://github.com/DinoDevCli/dino/issues/new?title=Early%20Access%20Request) · [dinodevcli@gmail.com](mailto:dinodevcli@gmail.com)
 
 Engine only — dashboards are external.
+
+Maintainer: issue keys + customer email pack → [`docs/internal/EARLY_ACCESS_OPS.md`](docs/internal/EARLY_ACCESS_OPS.md)
 
 ---
 

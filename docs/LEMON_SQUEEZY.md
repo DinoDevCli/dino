@@ -5,7 +5,7 @@
 | Pack | Access |
 |------|--------|
 | Free (scan) | Forever |
-| Proof | Free Team Key via [early@dinodevcli.dev](mailto:early@dinodevcli.dev) or [GitHub issue](https://github.com/DinoDevCli/dino/issues/new?title=Early%20Access%20Request) |
+| Proof | Free Team Key via [dinodevcli@gmail.com](mailto:dinodevcli@gmail.com) or [GitHub issue](https://github.com/DinoDevCli/dino/issues/new?title=Early%20Access%20Request) |
 
 ```bash
 pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"

@@ -33,7 +33,7 @@ jobs:
           NEXT_PUBLIC_BASE_PATH: /dino
           NEXT_PUBLIC_GITHUB_OWNER: DinoDevCli
           NEXT_PUBLIC_GITHUB_REPO: dino
-          NEXT_PUBLIC_CONTACT_EMAIL: early@dinodevcli.dev
+          NEXT_PUBLIC_CONTACT_EMAIL: dinodevcli@gmail.com
         run: |
           npm ci
           npm run build

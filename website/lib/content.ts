@@ -90,12 +90,12 @@ export const EARLY = {
   title: "Free Mode. Proof Pack. 60 Days.",
   benefits: [
     "Leakage scan — free forever",
-    "Proof / index / export — free for 60 days",
-    "Team Key by email — name your team or project",
+    "Proof pack — free Team Key, 60 days",
+    "Email dinodevcli@gmail.com — name your team or project",
   ],
   note: "Engine only — dashboards are external.",
   cta: "Request a Team Key",
-  email: "early@dinodevcli.dev",
+  email: "dinodevcli@gmail.com",
 };
 
 /** From tests/simulation/golden/demo_excerpts.json — do not invent */

@@ -2,7 +2,7 @@
 
 ## 0.3.1
 
-- **Early Access:** free Team Keys (`early@dinodevcli.dev` / GitHub issue); no checkout
+- **Early Access:** free Team Keys (`dinodevcli@gmail.com` / GitHub issue); no checkout
 - **Early Access keys:** HMAC-signed `dinoea.v1.*` with expiry (`dino issue-key`, auto-deactivate)
 - **Packs:** Free scan forever · Proof pack via Early Access Team Key
 - **Production simulation:** `tests/simulation/` — fraud pipeline + full Dino team workflow

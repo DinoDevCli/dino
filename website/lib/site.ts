@@ -5,7 +5,7 @@ const base = `https://github.com/${owner}/${repo}`;
 const blob = (path: string) => `${base}/blob/main/${path}`;
 
 /** Public contact — Early Access (same as website mailto) */
-const DEFAULT_CONTACT = "early@dinodevcli.dev";
+const DEFAULT_CONTACT = "dinodevcli@gmail.com";
 
 export const GITHUB = {
   owner,
@@ -27,7 +27,7 @@ export const GITHUB = {
     process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || DEFAULT_CONTACT,
 };
 
-export const EARLY_ACCESS_EMAIL = "early@dinodevcli.dev";
+export const EARLY_ACCESS_EMAIL = "dinodevcli@gmail.com";
 
 /** Base path for GitHub Pages (`/dino` in CI, empty locally). */
 export function siteBasePath(): string {
