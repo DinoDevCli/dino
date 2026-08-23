@@ -11,12 +11,13 @@ import {
   HOW,
   PROBLEM,
   PRODUCT,
+  QUICKSTART,
 } from "@/lib/content";
 import { earlyAccessMailto } from "@/lib/site";
 
 function MonoBody({ text }: { text: string }) {
   const parts = text.split(
-    /(\bproof_index\.json\b|\bcompare\.json\b|\bproof\.json\b|\bexport\.v1\b|\bchanged: true\/false\b|\bchanged: true\b|\bPath \/ HTTP \/ S3\b)/g,
+    /(\bproof_index\.json\b|\bcompare\.json\b|\bproof\.json\b|\bexport\.v1\b|\bchanged: true\/false\b|\bchanged: true\b|\bPath \/ HTTP \/ S3\b|\btests\/simulation\/golden\b)/g,
   );
   return (
     <>
@@ -30,6 +31,7 @@ function MonoBody({ text }: { text: string }) {
             "changed: true/false",
             "changed: true",
             "Path / HTTP / S3",
+            "tests/simulation/golden",
           ].includes(part)
         ) {
           return (
@@ -59,7 +61,16 @@ export default function Home() {
           <p className="mt-6 max-w-hero text-lg leading-relaxed text-foreground md:text-xl">
             <MonoBody text={HERO.definition} />
           </p>
-          <p className="mt-4 font-mono text-xs text-muted">{HERO.meta}</p>
+          <div className="mt-8 max-w-hero border border-border bg-black px-4 py-3">
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+              {QUICKSTART.label}
+            </p>
+            <p className="mt-2 overflow-x-auto font-mono text-sm text-foreground">
+              {QUICKSTART.line}
+            </p>
+            <p className="mt-2 font-mono text-xs text-muted">{QUICKSTART.hint}</p>
+          </div>
+          <p className="mt-5 font-mono text-xs text-muted">{HERO.meta}</p>
         </Container>
       </section>
 
@@ -92,7 +103,11 @@ export default function Home() {
 
           <ArchitectureFlow flow={PRODUCT.flow} blocks={PRODUCT.blocks} />
 
-          <div className="mt-12 max-w-narrow">
+          <p className="mt-8 max-w-narrow text-sm leading-relaxed text-muted">
+            <MonoBody text={PRODUCT.repoBridge} />
+          </p>
+
+          <div className="mt-10 max-w-narrow">
             <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">
               {PRODUCT.wiringLabel}
             </p>

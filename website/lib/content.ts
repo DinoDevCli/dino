@@ -54,8 +54,10 @@ export const PRODUCT = {
     },
   ],
   noDashboard:
-    "Dino does not include a dashboard — your UI consumes the artifacts (proof_index.json, compare.json).",
+    "Dino does not include a dashboard — dashboards consume the artifacts (proof_index.json, compare.json).",
   roles: "Dino outputs audit artifacts — dashboards render them.",
+  repoBridge:
+    "The website demo uses the same artifacts found in tests/simulation/golden in the GitHub repository.",
   wiringLabel: "Dashboard Integration",
   wiring: [
     "Dashboards read Dino's artifacts via Path, HTTP, or S3.",
@@ -66,6 +68,13 @@ export const PRODUCT = {
     "Deterministic CI gate: changed: true/false",
     "Local-first — data never leaves your infra",
   ],
+};
+
+/** Real install — not on PyPI as `dino` (name collision) */
+export const QUICKSTART = {
+  label: "# install",
+  line: `pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"`,
+  hint: "Then: dino scan leakage --help · dino proof run --help",
 };
 
 export const DEMO_COPY = {
