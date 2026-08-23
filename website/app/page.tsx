@@ -1,427 +1,240 @@
 import Link from "next/link";
-import { CopyButton } from "@/components/CopyButton";
 import {
-  ACCESS,
   DEMO,
-  EARLY_ACCESS,
-  ENGINE,
-  FAQ,
-  FOOTER,
-  MOMENT_OF_TRUTH,
-  NAV,
-  PROBLEM,
+  EARLY,
+  FLOW,
+  HERO,
+  PROBLEM_SOLUTION,
+  QUICKSTART,
   SITE,
+  USP_WIDE,
+  USPS,
 } from "@/lib/content";
 import { GITHUB, earlyAccessMailto } from "@/lib/site";
 
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="text-muted-foreground font-mono text-xs tracking-[0.2em] uppercase">
-      {children}
-    </p>
-  );
-}
-
-function SectionTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <h2 className="max-w-3xl text-3xl leading-tight tracking-tight text-balance md:text-4xl">
-      {children}
-    </h2>
-  );
-}
-
-function SectionShell({
-  id,
-  children,
-}: {
-  id?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section id={id} className="border-border border-t px-6 py-16 md:px-10 md:py-24">
-      <div className="mx-auto flex max-w-6xl flex-col gap-10">{children}</div>
-    </section>
-  );
-}
-
-function CodeBlock({ label, code }: { label: string; code: string }) {
-  return (
-    <div className="border-border border-r border-b">
-      <div className="border-border flex items-center justify-between border-b px-6 py-3">
-        <p className="text-muted-foreground font-mono text-xs tracking-[0.2em] uppercase">
-          {label}
-        </p>
-        <CopyButton text={code} />
-      </div>
-      <pre className="text-foreground overflow-x-auto px-6 py-6 font-mono text-sm leading-relaxed">
-        <code>{code}</code>
-      </pre>
-    </div>
-  );
-}
-
-function ExternalLink({
-  href,
-  children,
-  primary = false,
-}: {
-  href: string;
-  children: React.ReactNode;
-  primary?: boolean;
-}) {
-  const base =
-    "border px-6 py-3 font-mono text-xs tracking-[0.15em] uppercase inline-block text-center";
-  const cls = primary
-    ? `${base} border-foreground bg-foreground text-background hover:bg-foreground/90`
-    : `${base} border-border text-foreground hover:border-foreground`;
-  return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>
-      {children}
-    </a>
-  );
-}
+const shell = "mx-auto w-full max-w-content px-6";
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
-      <div className="border-border bg-foreground/[0.03] border-b px-6 py-3 text-center font-mono text-xs tracking-[0.12em] uppercase md:px-10">
-        {EARLY_ACCESS.banner}
-      </div>
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Hero */}
+      <section
+        className={`${shell} flex min-h-[70vh] flex-col items-start justify-center py-24`}
+      >
+        <span className="font-mono text-sm uppercase tracking-wider text-accent">
+          {HERO.badge}
+        </span>
+        <h1 className="mt-4 text-5xl font-bold leading-[1.1] tracking-tightest md:text-6xl lg:text-7xl">
+          <span className="text-foreground">{HERO.line1}</span>
+          <br />
+          <span className="text-accent">{HERO.line2}</span>
+        </h1>
+        <p className="mt-6 max-w-[600px] text-xl leading-relaxed text-muted">
+          {HERO.subtitle}
+        </p>
+        <div className="mt-12 flex flex-wrap gap-4">
+          <a
+            href="#demo"
+            className="bg-accent px-8 py-3 font-medium text-white hover:bg-accent-hover"
+          >
+            ▶ Live Demo
+          </a>
+          <a
+            href="#early-access"
+            className="border border-border px-8 py-3 font-medium text-foreground hover:border-accent hover:text-accent"
+          >
+            Early Access →
+          </a>
+        </div>
+        <p className="mt-16 font-mono text-sm text-muted">
+          <a
+            href={GITHUB.base}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-accent"
+          >
+            {HERO.footnote}
+          </a>
+        </p>
+      </section>
 
-      <header className="px-6 pt-10 pb-16 md:px-10 md:pt-14 md:pb-28">
-        <div className="mx-auto max-w-6xl">
-          <nav className="flex items-center justify-between" aria-label="Primary">
-            <span className="font-mono text-sm tracking-[0.3em] uppercase">
-              {SITE.brand}
-            </span>
-            <ul className="text-muted-foreground hidden gap-8 font-mono text-xs tracking-[0.15em] uppercase md:flex">
-              {NAV.map((item) => (
-                <li key={item.href}>
-                  {item.href.startsWith("/") ? (
-                    <Link className="hover:text-foreground" href={item.href}>
-                      {item.label}
-                    </Link>
-                  ) : (
-                    <a className="hover:text-foreground" href={item.href}>
-                      {item.label}
-                    </a>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </nav>
+      {/* Problem ↔ Solution */}
+      <section
+        className={`${shell} grid grid-cols-1 gap-12 border-t border-border py-24 md:grid-cols-5 md:gap-16`}
+      >
+        <div className="md:col-span-2">
+          <span className="font-mono text-sm text-muted">
+            {PROBLEM_SOLUTION.problemLabel}
+          </span>
+          <h2 className="mt-4 text-3xl font-bold tracking-tighter">
+            {PROBLEM_SOLUTION.problemTitle}
+          </h2>
+          <p className="mt-4 leading-relaxed text-muted">
+            {PROBLEM_SOLUTION.problemBody}
+          </p>
+        </div>
+        <div className="hidden justify-center md:col-span-1 md:flex">
+          <div className="h-full w-px bg-border" aria-hidden />
+        </div>
+        <div className="md:col-span-2">
+          <span className="font-mono text-sm text-accent">
+            {PROBLEM_SOLUTION.solutionLabel}
+          </span>
+          <h2 className="mt-4 text-3xl font-bold tracking-tighter">
+            {PROBLEM_SOLUTION.solutionTitle}
+          </h2>
+          <p className="mt-4 leading-relaxed text-muted">
+            {PROBLEM_SOLUTION.solutionBody}
+          </p>
+        </div>
+      </section>
 
-          <div className="mt-20 flex max-w-4xl flex-col gap-8 md:mt-32">
-            <p className="text-muted-foreground font-mono text-xs tracking-[0.2em] uppercase">
-              v{SITE.version} · Early Access
-            </p>
-            <h1 className="text-4xl leading-[1.05] tracking-tight text-balance md:text-6xl lg:text-7xl">
-              {SITE.tagline}
-            </h1>
-            <p className="text-xl leading-relaxed tracking-tight md:text-2xl">
-              {SITE.promise}
-            </p>
-            <p className="text-muted-foreground max-w-2xl text-lg leading-relaxed text-pretty">
-              {SITE.subtitle}
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <ExternalLink href={earlyAccessMailto()} primary>
-                Request Early Access
-              </ExternalLink>
-              <a
-                href="#demo"
-                className="border-border hover:border-foreground border px-6 py-3 font-mono text-xs tracking-[0.15em] uppercase"
+      {/* Engine flow */}
+      <section className={`${shell} border-t border-border py-24`}>
+        <h2 className="text-3xl font-bold tracking-tighter">How Dino works</h2>
+        <div className="mt-12 flex flex-col gap-4 md:flex-row md:items-stretch md:justify-between">
+          {FLOW.map((step, i) => (
+            <div key={step.step} className="flex flex-1 flex-col gap-4 md:flex-row md:items-center">
+              <div
+                className={`flex-1 border border-border bg-surface p-6 ${
+                  step.accent ? "" : "opacity-60"
+                }`}
               >
-                Live Demo
-              </a>
-              <ExternalLink href={GITHUB.base}>GitHub</ExternalLink>
+                <span
+                  className={`font-mono text-sm ${
+                    step.accent ? "text-accent" : "text-muted"
+                  }`}
+                >
+                  {step.step}
+                </span>
+                <p className="mt-2 font-medium text-foreground">{step.title}</p>
+                <p className="text-sm text-muted">{step.detail}</p>
+              </div>
+              {i < FLOW.length - 1 ? (
+                <span
+                  className="hidden text-2xl text-border md:block"
+                  aria-hidden
+                >
+                  →
+                </span>
+              ) : null}
             </div>
+          ))}
+        </div>
+      </section>
+
+      {/* USPs */}
+      <section
+        className={`${shell} grid grid-cols-1 gap-x-16 gap-y-8 border-t border-border py-24 sm:grid-cols-2`}
+      >
+        {USPS.map((usp) => (
+          <div key={usp.label}>
+            <h3 className="font-mono text-sm text-accent">{usp.label}</h3>
+            <p className="mt-1 font-medium text-foreground">{usp.title}</p>
+            <p className="text-sm text-muted">{usp.body}</p>
+          </div>
+        ))}
+        <div className="col-span-1 border-t border-border pt-8 sm:col-span-2">
+          <h3 className="font-mono text-sm text-accent">{USP_WIDE.label}</h3>
+          <p className="mt-1 font-medium text-foreground">{USP_WIDE.title}</p>
+          <p className="text-sm text-muted">{USP_WIDE.body}</p>
+        </div>
+      </section>
+
+      {/* Live Demo */}
+      <section
+        id="demo"
+        className="mx-auto w-full max-w-narrow border-t border-border px-6 py-24"
+      >
+        <h2 className="text-3xl font-bold tracking-tighter">{DEMO.title}</h2>
+        <p className="mt-2 text-muted">{DEMO.subtitle}</p>
+        <div className="mt-12 overflow-hidden border border-border bg-code-bg">
+          <pre className="overflow-x-auto p-6 font-mono text-sm leading-relaxed text-foreground">
+            <code>{DEMO.transcript}</code>
+          </pre>
+        </div>
+        <p className="mt-4 font-mono text-xs text-muted">
+          Reproduce:{" "}
+          <a
+            href={`${GITHUB.base}/tree/main/tests/simulation`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:underline"
+          >
+            make demo
+          </a>{" "}
+          in tests/simulation
+        </p>
+      </section>
+
+      {/* Quickstart */}
+      <section className="mx-auto w-full max-w-narrow border-t border-border px-6 py-24">
+        <h2 className="text-3xl font-bold tracking-tighter">{QUICKSTART.title}</h2>
+        <p className="mt-2 text-muted">{QUICKSTART.subtitle}</p>
+        <div className="mt-12 overflow-x-auto border border-border bg-code-bg p-6">
+          <pre className="font-mono text-sm leading-relaxed text-foreground">
+            <code>{QUICKSTART.code}</code>
+          </pre>
+        </div>
+      </section>
+
+      {/* Early Access */}
+      <section
+        id="early-access"
+        className={`${shell} grid grid-cols-1 gap-12 border-t border-border py-24 md:grid-cols-2 md:gap-16`}
+      >
+        <div>
+          <span className="font-mono text-sm text-accent">{EARLY.label}</span>
+          <h2 className="mt-4 text-3xl font-bold tracking-tighter">
+            {EARLY.title}
+          </h2>
+          <p className="mt-4 leading-relaxed text-muted">{EARLY.body}</p>
+          <div className="mt-8 space-y-2 font-mono text-sm text-muted">
+            <p>
+              → 01. Email{" "}
+              <a href={earlyAccessMailto()} className="text-accent hover:underline">
+                {EARLY.email}
+              </a>
+            </p>
+            <p>→ 02. Name your team / project</p>
+            <p>→ 03. Receive a Team Key</p>
+            <p>→ 04. Upgrade & start sealing</p>
           </div>
         </div>
-      </header>
+        <div className="flex items-center justify-center border border-border bg-surface p-12">
+          <a
+            href={earlyAccessMailto()}
+            className="text-center text-2xl font-bold text-accent hover:underline"
+          >
+            {EARLY.email} →
+          </a>
+        </div>
+      </section>
 
-      <main>
-        {/* Why now */}
-        <SectionShell id="why-now">
-          <SectionLabel>Why now</SectionLabel>
-          <p className="max-w-3xl text-2xl leading-snug tracking-tight text-balance md:text-3xl">
-            {MOMENT_OF_TRUTH}
-          </p>
-        </SectionShell>
-
-        {/* Problem */}
-        <SectionShell id="problem">
-          <div className="flex flex-col gap-4">
-            <SectionLabel>{PROBLEM.label}</SectionLabel>
-            <SectionTitle>{PROBLEM.title}</SectionTitle>
-            <p className="text-muted-foreground max-w-3xl text-lg leading-relaxed text-pretty">
-              {PROBLEM.body}
-            </p>
-          </div>
-          <div className="border-border grid border-t border-l sm:grid-cols-3">
-            {PROBLEM.pains.map((p) => (
-              <div
-                key={p.title}
-                className="border-border flex flex-col gap-3 border-r border-b p-6 md:p-8"
-              >
-                <h3 className="text-base tracking-tight">{p.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{p.body}</p>
-              </div>
-            ))}
-          </div>
-        </SectionShell>
-
-        {/* Engine */}
-        <SectionShell id="engine">
-          <div className="flex flex-col gap-4">
-            <SectionLabel>{ENGINE.label}</SectionLabel>
-            <SectionTitle>{ENGINE.title}</SectionTitle>
-          </div>
-          <pre className="border-border text-foreground overflow-x-auto border px-6 py-8 font-mono text-sm leading-relaxed tracking-wide md:text-base">
-            <code>{ENGINE.flow}</code>
-          </pre>
-          <div className="border-border grid border-t border-l sm:grid-cols-3">
-            {ENGINE.contracts.map((c) => (
-              <div
-                key={c.id}
-                className="border-border flex flex-col gap-3 border-r border-b p-6 md:p-8"
-              >
-                <h3 className="font-mono text-sm tracking-tight">{c.id}</h3>
-                <p className="text-muted-foreground font-mono text-xs">{c.schema}</p>
-                <p className="text-muted-foreground text-sm leading-relaxed">{c.body}</p>
-              </div>
-            ))}
-          </div>
-          <div className="border-border grid border-t border-l sm:grid-cols-3">
-            {ENGINE.localFirst.map((p) => (
-              <div
-                key={p.title}
-                className="border-border flex flex-col gap-3 border-r border-b p-6 md:p-8"
-              >
-                <h3 className="text-base tracking-tight">{p.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{p.body}</p>
-              </div>
-            ))}
-          </div>
-        </SectionShell>
-
-        {/* Live Demo */}
-        <SectionShell id="demo">
-          <div className="flex flex-col gap-4">
-            <SectionLabel>{DEMO.label}</SectionLabel>
-            <SectionTitle>{DEMO.title}</SectionTitle>
-            <p className="text-muted-foreground max-w-3xl text-lg leading-relaxed text-pretty">
-              {DEMO.intro}
-            </p>
-          </div>
-
-          <div className="border-border grid border-t border-l sm:grid-cols-2">
-            {[DEMO.runA, DEMO.runB].map((run) => (
-              <div
-                key={run.label}
-                className="border-border flex flex-col gap-2 border-r border-b p-6 md:p-8"
-              >
-                <h3 className="font-mono text-xs tracking-[0.15em] uppercase">
-                  {run.label}
-                </h3>
-                <p className="text-muted-foreground text-sm">{run.detail}</p>
-                <p className="font-mono text-sm">
-                  proof_hash {run.hash}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div className="border-border flex flex-col border-t border-l">
-            {DEMO.commands.map((ex) => (
-              <CodeBlock key={ex.label} label={ex.label} code={ex.code} />
-            ))}
-          </div>
-
-          <div className="grid gap-6 lg:grid-cols-2">
-            <div className="border-border border">
-              <div className="border-border border-b px-6 py-3">
-                <p className="text-muted-foreground font-mono text-xs tracking-[0.2em] uppercase">
-                  proof.json (excerpt)
-                </p>
-              </div>
-              <pre className="overflow-x-auto px-6 py-6 font-mono text-xs leading-relaxed md:text-sm">
-                <code>{DEMO.proofExcerpt}</code>
-              </pre>
-            </div>
-            <div className="border-border border">
-              <div className="border-border border-b px-6 py-3">
-                <p className="text-muted-foreground font-mono text-xs tracking-[0.2em] uppercase">
-                  proof_index.json (excerpt)
-                </p>
-              </div>
-              <pre className="overflow-x-auto px-6 py-6 font-mono text-xs leading-relaxed md:text-sm">
-                <code>{DEMO.indexExcerpt}</code>
-              </pre>
-            </div>
-          </div>
-
-          <div className="border-border border">
-            <div className="border-border flex items-center justify-between border-b px-6 py-3">
-              <p className="text-muted-foreground font-mono text-xs tracking-[0.2em] uppercase">
-                compare result
-              </p>
-              <CopyButton text={DEMO.compareExcerpt} />
-            </div>
-            <pre className="overflow-x-auto px-6 py-6 font-mono text-xs leading-relaxed md:text-sm">
-              <code>{DEMO.compareExcerpt}</code>
-            </pre>
-            <p className="border-border text-muted-foreground border-t px-6 py-5 text-sm leading-relaxed">
-              {DEMO.compareCallout}
-            </p>
-          </div>
-
-          <p className="text-muted-foreground font-mono text-xs tracking-wide">
-            {DEMO.makeHint}{" "}
+      {/* Footer */}
+      <footer className="border-t border-border py-12">
+        <div
+          className={`${shell} flex flex-col gap-4 text-sm text-muted sm:flex-row sm:justify-between`}
+        >
+          <span>
+            {SITE.brand} — Local-First Audit Engine
+          </span>
+          <span className="flex flex-wrap gap-x-4 gap-y-2">
+            <span>
+              v{SITE.version} · Early Access · MIT
+            </span>
+            <Link href="/docs" className="hover:text-accent">
+              Docs
+            </Link>
             <a
-              href={`${GITHUB.base}/tree/main/tests/simulation`}
+              href={GITHUB.base}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-foreground underline underline-offset-4"
+              className="hover:text-accent"
             >
-              tests/simulation ↗
+              GitHub
             </a>
-          </p>
-        </SectionShell>
-
-        {/* Early Access */}
-        <SectionShell id="early-access">
-          <div className="flex flex-col gap-4">
-            <SectionLabel>{ACCESS.label}</SectionLabel>
-            <SectionTitle>{ACCESS.title}</SectionTitle>
-          </div>
-
-          <div className="border-border grid border-t border-l sm:grid-cols-2">
-            <div className="border-border flex flex-col gap-6 border-r border-b p-6 md:p-10">
-              <h3 className="font-mono text-xs tracking-[0.2em] uppercase">
-                {ACCESS.free.name}
-              </h3>
-              <ul className="space-y-3">
-                {ACCESS.free.items.map((item) => (
-                  <li key={item} className="flex gap-3 text-sm leading-relaxed">
-                    <span className="text-muted-foreground font-mono" aria-hidden>
-                      —
-                    </span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="border-border bg-foreground/[0.03] flex flex-col gap-6 border-r border-b p-6 md:p-10">
-              <h3 className="font-mono text-xs tracking-[0.2em] uppercase">
-                {ACCESS.early.name}
-              </h3>
-              <ul className="space-y-3">
-                {ACCESS.early.items.map((item) => (
-                  <li key={item} className="flex gap-3 text-sm leading-relaxed">
-                    <span className="text-muted-foreground font-mono" aria-hidden>
-                      —
-                    </span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-6">
-            <h3 className="font-mono text-xs tracking-[0.2em] uppercase">
-              Next steps
-            </h3>
-            <ol className="border-border max-w-3xl space-y-0 border-t">
-              {ACCESS.checklist.map((step, i) => (
-                <li
-                  key={step}
-                  className="border-border flex gap-4 border-b py-5 text-sm leading-relaxed"
-                >
-                  <span className="text-muted-foreground font-mono text-xs">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span>{step}</span>
-                </li>
-              ))}
-            </ol>
-            <div className="flex flex-wrap gap-3">
-              <ExternalLink href={earlyAccessMailto()} primary>
-                {ACCESS.cta}
-              </ExternalLink>
-              <ExternalLink href={GITHUB.earlyAccessIssue}>
-                Open GitHub Issue
-              </ExternalLink>
-            </div>
-            <p className="text-muted-foreground text-sm">{ACCESS.note}</p>
-          </div>
-        </SectionShell>
-
-        {/* FAQ */}
-        <SectionShell id="faq">
-          <SectionLabel>FAQ</SectionLabel>
-          <dl className="border-border border-t">
-            {FAQ.map((item) => (
-              <div
-                key={item.q}
-                className="border-border grid gap-3 border-b py-8 md:grid-cols-2 md:gap-10"
-              >
-                <dt className="text-lg tracking-tight">{item.q}</dt>
-                <dd className="text-muted-foreground text-sm leading-relaxed">{item.a}</dd>
-              </div>
-            ))}
-          </dl>
-        </SectionShell>
-      </main>
-
-      <footer className="border-border border-t px-6 py-12 md:px-10">
-        <div className="mx-auto flex max-w-6xl flex-col gap-6">
-          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-            <span className="font-mono text-sm tracking-[0.3em] uppercase">
-              dino{" "}
-              <span className="text-muted-foreground tracking-normal normal-case">
-                Early Access · MIT · v{SITE.version}
-              </span>
-            </span>
-            <nav aria-label="Footer">
-              <ul className="text-muted-foreground flex flex-wrap gap-x-6 gap-y-3 font-mono text-xs tracking-[0.15em] uppercase">
-                <li>
-                  <a className="hover:text-foreground" href="#demo">
-                    Demo
-                  </a>
-                </li>
-                <li>
-                  <a className="hover:text-foreground" href="#early-access">
-                    Early Access
-                  </a>
-                </li>
-                <li>
-                  <Link className="hover:text-foreground" href="/docs">
-                    Docs
-                  </Link>
-                </li>
-                <li>
-                  <a
-                    className="hover:text-foreground"
-                    href={GITHUB.base}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    GitHub
-                  </a>
-                </li>
-                <li>
-                  <a className="hover:text-foreground" href={earlyAccessMailto()}>
-                    {EARLY_ACCESS.email}
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-          <p className="text-muted-foreground font-mono text-xs tracking-wide">
-            {FOOTER.line}
-          </p>
+          </span>
         </div>
       </footer>
     </div>

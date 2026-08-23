@@ -1,94 +1,58 @@
 import Link from "next/link";
-import { DOC_LINKS } from "@/lib/content";
+import { DOC_LINKS, SITE } from "@/lib/content";
 import { GITHUB } from "@/lib/site";
-
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="text-muted-foreground font-mono text-xs tracking-[0.2em] uppercase">
-      {children}
-    </p>
-  );
-}
 
 export default function DocsPage() {
   return (
-    <div className="min-h-screen">
-      <header className="border-border border-b px-6 py-8 md:px-10">
-        <div className="mx-auto flex max-w-6xl items-center justify-between">
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="border-b border-border py-8">
+        <div className="mx-auto flex max-w-content items-center justify-between px-6">
           <Link
             href="/"
-            className="font-mono text-sm tracking-[0.3em] uppercase hover:opacity-80"
+            className="font-mono text-sm uppercase tracking-wider hover:text-accent"
           >
-            dino
+            {SITE.brand}
           </Link>
-          <Link
-            href="/"
-            className="text-muted-foreground font-mono text-xs tracking-[0.15em] uppercase hover:text-foreground"
-          >
+          <Link href="/" className="font-mono text-sm text-muted hover:text-accent">
             ← Home
           </Link>
         </div>
       </header>
 
-      <main className="px-6 py-20 md:px-10 md:py-28">
-        <div className="mx-auto flex max-w-6xl flex-col gap-10">
-          <div className="flex flex-col gap-4">
-            <SectionLabel>Documentation</SectionLabel>
-            <h1 className="text-3xl leading-tight tracking-tight md:text-4xl">
-              Docs
-            </h1>
-            <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-              Same documents as the repository — proof contract, CLI, examples.
-            </p>
-          </div>
+      <main className="mx-auto max-w-content px-6 py-24">
+        <span className="font-mono text-sm text-accent"># docs</span>
+        <h1 className="mt-4 text-3xl font-bold tracking-tighter md:text-4xl">
+          Documentation
+        </h1>
+        <p className="mt-4 max-w-xl text-muted">
+          Same documents as the repository — contracts, CLI, integration, simulation.
+        </p>
 
-          <ul className="border-border border-t">
-            {DOC_LINKS.map((doc) => (
-              <li key={doc.path} className="border-border border-b">
-                <a
-                  href={`${GITHUB.base}/blob/main/${doc.path}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-muted-foreground flex items-baseline justify-between gap-4 py-6 font-mono text-sm"
-                >
-                  <span>{doc.label}</span>
-                  <span className="text-muted-foreground text-xs">↗</span>
-                </a>
-              </li>
-            ))}
-            <li className="border-border border-b">
+        <ul className="mt-12 border-t border-border">
+          {DOC_LINKS.map((doc) => (
+            <li key={doc.path} className="border-b border-border">
               <a
-                href={GITHUB.readme}
+                href={`${GITHUB.base}/blob/main/${doc.path}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-muted-foreground flex items-baseline justify-between gap-4 py-6 font-mono text-sm"
+                className="flex items-baseline justify-between gap-6 py-5 hover:text-accent"
               >
-                <span>README</span>
-                <span className="text-muted-foreground text-xs">↗</span>
+                <span className="font-medium">{doc.label}</span>
+                <span className="font-mono text-xs text-muted">{doc.path}</span>
               </a>
             </li>
-          </ul>
-
-          <div className="flex flex-wrap gap-3">
-            <a
-              href={GITHUB.base}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="border-foreground bg-foreground text-background hover:bg-foreground/90 border px-6 py-3 font-mono text-xs tracking-[0.15em] uppercase"
-            >
-              GitHub
-            </a>
-            <a
-              href={`${GITHUB.base}#install`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="border-border hover:border-foreground border px-6 py-3 font-mono text-xs tracking-[0.15em] uppercase"
-            >
-              Install
-            </a>
-          </div>
-        </div>
+          ))}
+        </ul>
       </main>
+
+      <footer className="border-t border-border py-12">
+        <div className="mx-auto flex max-w-content justify-between px-6 text-sm text-muted">
+          <span>{SITE.brand} — Local-First Audit Engine</span>
+          <span>
+            v{SITE.version} · Early Access · MIT
+          </span>
+        </div>
+      </footer>
     </div>
   );
 }
