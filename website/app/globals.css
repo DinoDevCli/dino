@@ -3,21 +3,22 @@
 @tailwind utilities;
 
 :root {
-  --background: #0a0a0f;
-  --surface: #111118;
-  --surface-2: #16161e;
-  --border: #1e1e26;
-  --border-strong: #2a2a32;
-  --hover: #282830;
-  --foreground: #ffffff;
-  --muted: #a0a0b0;
+  --background: #0b0a09;
+  --surface: #141210;
+  --surface-2: #1a1714;
+  --border: #2a2622;
+  --border-strong: #3d3730;
+  --hover: #2e2924;
+  --foreground: #f4f1ec;
+  --muted: #9c958c;
   --accent: #ff6b00;
-  --accent-hover: #e55f00;
+  --accent-hover: #e85f00;
+  --accent-dim: color-mix(in srgb, #ff6b00 18%, transparent);
   --code-bg: #000000;
-  --json-bg: #111118;
+  --json-bg: #12100e;
 
-  --content-max: 1200px;
-  --narrow-max: 800px;
+  --content-max: 1120px;
+  --narrow-max: 760px;
   --grid-gutter: 1.5rem;
 }
 
@@ -34,32 +35,40 @@ body {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--accent) 35%, transparent);
+  background: color-mix(in srgb, var(--accent) 40%, transparent);
   color: var(--foreground);
 }
 
 a {
   transition:
-    color 0.2s ease,
-    border-color 0.2s ease,
-    background-color 0.2s ease;
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
 
-/* Static technical grid — no glow, no motion */
+/* Warm, quiet field — no glow */
 .hero-grid {
   background-color: var(--background);
   background-image:
+    radial-gradient(
+      ellipse 80% 50% at 15% 0%,
+      var(--accent-dim),
+      transparent 55%
+    ),
     linear-gradient(
       to right,
-      color-mix(in srgb, var(--border) 45%, transparent) 1px,
+      color-mix(in srgb, var(--border) 55%, transparent) 1px,
       transparent 1px
     ),
     linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--border) 45%, transparent) 1px,
+      color-mix(in srgb, var(--border) 55%, transparent) 1px,
       transparent 1px
     );
-  background-size: 48px 48px;
+  background-size:
+    auto,
+    40px 40px,
+    40px 40px;
 }
 
 pre.code-panel {
@@ -70,6 +79,37 @@ pre.code-panel {
 pre.json-panel {
   background: var(--json-bg);
   border: 1px solid var(--border);
+}
+
+.mailto-cta {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--accent);
+  color: #0b0a09;
+  border: 1px solid var(--accent);
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.mailto-cta:hover {
+  background: var(--accent-hover);
+}
+
+.mailto-cta .cta-label {
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.mailto-cta .cta-email {
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
 }
 
 @media (prefers-reduced-motion: reduce) {

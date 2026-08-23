@@ -1,11 +1,10 @@
-/** Documentary single-page copy — Problem → How → Architecture → Demo */
+/** Documentary single-page copy — Problem → How → Product → Demo → Early Access */
 
 export const SITE = {
   version: "0.3.1",
   brand: "Dino",
 };
 
-/** Identity only — problem lives in SECTION 1 */
 export const HERO = {
   prompt: "$ dino version",
   title: "Local-First Audit Engine for Python Pipelines",
@@ -26,21 +25,14 @@ export const HOW = {
   body: "Dino seals each run into a proof bundle (capsule + scan + hash), exports the bundle (Path / HTTP / S3), builds a proof index (proof_index.json), and compares two proofs deterministically. The verdict is changed: true/false.",
 };
 
-/** Product core — definition once, then diagram; dashboard = consumer */
 export const PRODUCT = {
   label: "# product",
   title: "Product Architecture",
   lines: [
     "Dino is a local-first audit engine for Python pipelines.",
-    "It is not a platform, not a cloud service, not a workflow orchestrator — it runs locally and outputs deterministic audit artifacts.",
+    "Not a platform. Not a cloud service. Not a workflow orchestrator — a local engine that emits deterministic audit artifacts.",
   ],
-  /** Explicit boundary — immediately after the architecture diagram */
-  noDashboard: [
-    "Dino does not include a dashboard.",
-    "It produces sealed proofs, export envelopes, and a universal proof index that your dashboards consume.",
-  ],
-  roles: "Engine in → Artifacts out → Dashboard renders.",
-  flow: "pipeline → seal → export → index → compare → dashboard",
+  flow: "pipeline → seal → export → index → compare → your dashboard",
   blocks: [
     {
       step: "Seal",
@@ -62,35 +54,38 @@ export const PRODUCT = {
       title: "changed: true",
       detail: "pipeline_version_diff",
     },
-    {
-      step: "Dashboard",
-      title: "Your UI",
-      detail: "reads proof_index.json / compare.json · Superset / Airflow / Custom",
-      consumer: true,
-    },
   ],
-};
-
-export const DASHBOARD = {
-  label: "# dashboard",
-  title: "Dashboard Integration (bring your own UI)",
-  lines: [
-    "Dashboards read Dino's artifacts.",
-    "proof_index.json and compare.json are designed for Superset, Airflow, MLflow, or your own UI.",
-    "Dino outputs the data — you choose the visualization.",
+  /** Said once — then benefits, not more “no dashboard” talk */
+  boundary:
+    "Dino does not ship a dashboard. It outputs sealed proofs, export envelopes, and a universal proof index — your UI (Superset, Airflow, MLflow, or custom) consumes them.",
+  benefits: [
+    "Deterministic CI gate: changed: true/false",
+    "Export anywhere: Path / HTTP / S3",
+    "One index format for every consumer",
+    "Local-first — data never leaves your infra",
   ],
   example:
-    "Example: Superset reads proof_index.json via S3 or HTTP and renders drift charts.",
+    "e.g. Superset reads proof_index.json from S3/HTTP and charts drift.",
 };
 
 export const DEMO_COPY = {
   title: "Demo",
   intro:
-    "This is a documentary walkthrough — readable without Play. All artifacts come from tests/simulation/golden.",
+    "Documentary walkthrough — readable without Play. Artifacts from tests/simulation/golden.",
   resultNote:
     "exit 1 when changed — CI gate. Local: make demo in tests/simulation.",
-  dashboardNote:
-    "The demo shows the engine output. Dashboards are built on top of these artifacts.",
+};
+
+export const EARLY = {
+  label: "# early access",
+  title: "Free Mode. Proof Pack. 60 Days.",
+  benefits: [
+    "Leakage scan — free forever",
+    "Proof / index / export — free for 60 days",
+    "Team Key by email — name your team or project",
+  ],
+  cta: "Request a Team Key",
+  email: "early@dinodevcli.dev",
 };
 
 /** From tests/simulation/golden/demo_excerpts.json — do not invent */
@@ -178,14 +173,6 @@ export const DEMO_STEPS = [
     artifactExcerpt: FAIL_SNIPPET,
   },
 ];
-
-export const EARLY = {
-  label: "# early access",
-  title: "Free Mode. Proof Pack. 60 Days.",
-  body: "Leakage scan stays free forever. Proof / index / export free for 60 days for Early Access teams. Email early@dinodevcli.dev — team or project name — receive a Team Key.",
-  note: "Early Access includes the engine and artifacts — dashboards are built by your team.",
-  email: "early@dinodevcli.dev",
-};
 
 export const DOC_LINKS = [
   { label: "Proof Contract", path: "docs/PROOF_CONTRACT.md" },

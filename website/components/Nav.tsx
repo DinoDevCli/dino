@@ -13,14 +13,14 @@ const LINKS: NavItem[] = [
 
 export function Nav({ active: _active = "home" }: { active?: "home" | "docs" }) {
   return (
-    <header className="relative z-20 border-b border-border bg-background">
+    <header className="relative z-20 border-b border-border bg-background/95">
       <nav
-        className="mx-auto flex max-w-content items-center justify-between px-gutter py-5"
+        className="mx-auto flex max-w-content items-center justify-between px-gutter py-4"
         aria-label="Primary"
       >
         <Link
           href="/"
-          className="font-mono text-sm uppercase tracking-[0.25em] text-foreground hover:text-accent"
+          className="font-mono text-sm uppercase tracking-[0.28em] text-foreground hover:text-accent"
         >
           Dino
         </Link>

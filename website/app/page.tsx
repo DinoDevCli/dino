@@ -1,11 +1,9 @@
-import { Button } from "@/components/Button";
 import { DemoWalkthrough } from "@/components/DemoWalkthrough";
 import { Footer } from "@/components/Footer";
 import { Container, MonoLabel, Section } from "@/components/Layout";
 import { Nav } from "@/components/Nav";
 import { ArchitectureFlow } from "@/components/Tiles";
 import {
-  DASHBOARD,
   DEMO_COPY,
   DEMO_STEPS,
   EARLY,
@@ -18,7 +16,7 @@ import { earlyAccessMailto } from "@/lib/site";
 
 function MonoBody({ text }: { text: string }) {
   const parts = text.split(
-    /(\bproof_index\.json\b|\bcompare\.json\b|\bproof\.json\b|\bexport\.v1\b|\bchanged: true\/false\b|\bPath \/ HTTP \/ S3\b)/g,
+    /(\bproof_index\.json\b|\bcompare\.json\b|\bproof\.json\b|\bexport\.v1\b|\bchanged: true\/false\b|\bchanged: true\b|\bPath \/ HTTP \/ S3\b)/g,
   );
   return (
     <>
@@ -30,6 +28,7 @@ function MonoBody({ text }: { text: string }) {
             "proof.json",
             "export.v1",
             "changed: true/false",
+            "changed: true",
             "Path / HTTP / S3",
           ].includes(part)
         ) {
@@ -50,48 +49,47 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground">
       <Nav />
 
-      {/* Identity */}
-      <section className="relative isolate overflow-hidden border-b border-border">
+      <section className="relative isolate overflow-hidden">
         <div className="hero-grid absolute inset-0 -z-10" aria-hidden />
-        <Container className="flex min-h-[42vh] flex-col items-start justify-center py-20 md:py-28">
-          <div className="max-w-hero">
-            <p className="mb-4 font-mono text-xs text-muted">{HERO.prompt}</p>
-            <h1 className="text-4xl font-bold leading-[1.12] tracking-tightest text-foreground md:text-5xl lg:text-6xl">
-              {HERO.title}
-            </h1>
-            <p className="mt-5 font-mono text-xs text-muted">{HERO.meta}</p>
-          </div>
+        <Container className="flex min-h-[48vh] flex-col justify-center py-24 md:py-32">
+          <p className="mb-5 font-mono text-xs text-accent">{HERO.prompt}</p>
+          <h1 className="max-w-hero text-4xl font-bold leading-[1.1] tracking-tightest md:text-5xl lg:text-[3.4rem]">
+            {HERO.title}
+          </h1>
+          <p className="mt-6 font-mono text-xs text-muted">{HERO.meta}</p>
         </Container>
       </section>
 
-      {/* 1–2. Problem + How (paired layout) */}
-      <Section id="problem" bordered={false}>
-        <Container className="grid grid-cols-1 gap-14 border-t border-border pt-section md:grid-cols-2 md:gap-16">
-          <div>
-            <MonoLabel>{PROBLEM.label}</MonoLabel>
-            <div className="mt-5 space-y-3 text-base leading-relaxed text-foreground md:text-lg">
-              {PROBLEM.lines.map((line) => (
-                <p key={line}>{line}</p>
-              ))}
-            </div>
-          </div>
-          <div id="how">
-            <MonoLabel>{HOW.label}</MonoLabel>
-            <p className="mt-5 leading-relaxed text-muted">
-              <MonoBody text={HOW.body} />
-            </p>
+      {/* Problem */}
+      <Section id="problem">
+        <Container narrow>
+          <MonoLabel accent>{PROBLEM.label}</MonoLabel>
+          <div className="mt-6 space-y-3 text-lg leading-snug text-foreground">
+            {PROBLEM.lines.map((line) => (
+              <p key={line}>{line}</p>
+            ))}
           </div>
         </Container>
       </Section>
 
-      {/* 3. Product Architecture */}
+      {/* How */}
+      <Section id="how">
+        <Container narrow>
+          <MonoLabel>{HOW.label}</MonoLabel>
+          <p className="mt-6 text-base leading-relaxed text-muted">
+            <MonoBody text={HOW.body} />
+          </p>
+        </Container>
+      </Section>
+
+      {/* Product */}
       <Section id="product">
         <Container>
           <MonoLabel>{PRODUCT.label}</MonoLabel>
-          <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
+          <h2 className="mt-3 text-3xl font-bold tracking-tight">
             {PRODUCT.title}
           </h2>
-          <div className="mt-5 max-w-narrow space-y-3 leading-relaxed text-muted">
+          <div className="mt-5 max-w-narrow space-y-3 text-muted">
             {PRODUCT.lines.map((line) => (
               <p key={line}>{line}</p>
             ))}
@@ -99,77 +97,67 @@ export default function Home() {
 
           <ArchitectureFlow flow={PRODUCT.flow} blocks={PRODUCT.blocks} />
 
-          <div className="mt-12 max-w-narrow border-l-2 border-accent pl-5">
-            <div className="space-y-2 text-base leading-relaxed text-foreground">
-              {PRODUCT.noDashboard.map((line) => (
-                <p key={line}>{line}</p>
+          <div className="mt-12 max-w-narrow">
+            <p className="leading-relaxed text-foreground">
+              <MonoBody text={PRODUCT.boundary} />
+            </p>
+            <ul className="mt-6 space-y-2 border-t border-border pt-6">
+              {PRODUCT.benefits.map((item) => (
+                <li
+                  key={item}
+                  className="flex gap-3 font-mono text-sm text-muted"
+                >
+                  <span className="text-accent" aria-hidden>
+                    →
+                  </span>
+                  <span>
+                    <MonoBody text={item} />
+                  </span>
+                </li>
               ))}
-            </div>
-            <p className="mt-5 font-mono text-xs text-muted md:text-sm">
-              {PRODUCT.roles}
+            </ul>
+            <p className="mt-5 font-mono text-xs text-muted">
+              {PRODUCT.example}
             </p>
           </div>
         </Container>
       </Section>
 
-      {/* Dashboard Integration */}
-      <Section id="dashboard">
-        <Container narrow>
-          <MonoLabel>{DASHBOARD.label}</MonoLabel>
-          <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
-            {DASHBOARD.title}
-          </h2>
-          <div className="mt-5 space-y-3 leading-relaxed text-muted">
-            {DASHBOARD.lines.map((line) => (
-              <p key={line}>
-                <MonoBody text={line} />
-              </p>
-            ))}
-          </div>
-          <p className="mt-6 border border-border bg-black px-4 py-3 font-mono text-xs leading-relaxed text-muted md:text-sm">
-            {DASHBOARD.example}
-          </p>
-        </Container>
-      </Section>
-
-      {/* 4. Demo */}
+      {/* Demo */}
       <Section id="demo">
         <Container narrow>
-          <h2 className="font-mono text-sm text-muted"># {DEMO_COPY.title}</h2>
-          <p className="mt-2 text-sm text-muted">{DEMO_COPY.intro}</p>
+          <MonoLabel accent># {DEMO_COPY.title}</MonoLabel>
+          <p className="mt-3 text-sm text-muted">{DEMO_COPY.intro}</p>
           <div className="mt-12">
             <DemoWalkthrough steps={DEMO_STEPS} />
           </div>
           <p className="mt-8 font-mono text-xs text-muted">
             {DEMO_COPY.resultNote}
           </p>
-          <p className="mt-3 text-sm text-muted">{DEMO_COPY.dashboardNote}</p>
         </Container>
       </Section>
 
       {/* Early Access */}
       <Section id="early-access">
-        <Container className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-16">
-          <div>
-            <MonoLabel accent>{EARLY.label}</MonoLabel>
-            <h2 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
-              {EARLY.title}
-            </h2>
-            <p className="mt-4 leading-relaxed text-muted">{EARLY.body}</p>
-            <p className="mt-4 font-mono text-xs leading-relaxed text-muted">
-              {EARLY.note}
-            </p>
-            <div className="mt-8">
-              <Button href={earlyAccessMailto()} variant="secondary">
-                {EARLY.email}
-              </Button>
-            </div>
-          </div>
-          <div className="flex flex-col justify-center gap-3 border border-border bg-black p-8 font-mono text-sm">
-            <p className="text-muted">$ scope</p>
-            <p className="text-foreground">engine + artifacts</p>
-            <p className="text-muted">dashboards = your team</p>
-          </div>
+        <Container narrow>
+          <MonoLabel accent>{EARLY.label}</MonoLabel>
+          <h2 className="mt-4 text-3xl font-bold tracking-tight">
+            {EARLY.title}
+          </h2>
+          <ul className="mt-8 space-y-3">
+            {EARLY.benefits.map((item) => (
+              <li key={item} className="flex gap-3 text-muted">
+                <span className="font-mono text-accent" aria-hidden>
+                  →
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <a href={earlyAccessMailto()} className="mailto-cta mt-10">
+            <span className="cta-label">{EARLY.cta}</span>
+            <span className="cta-email">{EARLY.email}</span>
+          </a>
         </Container>
       </Section>
 

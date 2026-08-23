@@ -28,7 +28,8 @@ export function DemoWalkthrough({ steps }: { steps: DemoStep[] }) {
       <div className="border border-border bg-code-bg p-6">
         <p className="font-mono text-xs text-muted"># result</p>
         <p className="mt-3 font-mono text-lg text-foreground">
-          <span className="text-accent">changed</span>: true
+          <span className="text-accent">changed</span>
+          <span className="text-muted">: true</span>
         </p>
         <p className="mt-2 font-mono text-sm text-muted">
           pipeline_version_diff: fraud_score_v1 → fraud_score_v2
