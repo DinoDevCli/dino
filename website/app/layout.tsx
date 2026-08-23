@@ -15,9 +15,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dino — Deterministic Proof for Python Decision Pipelines",
+  title: "Dino — Local-First Audit Engine for Python Pipelines",
   description:
-    "Proof CLI for Python decision logic: sealed execution, leakage scan, drift classification, auditable proof.json.",
+    "Deterministic proofs, export contracts, and a universal proof index for your dashboards. Local audit motor — not a platform.",
 };
 
 export default function RootLayout({

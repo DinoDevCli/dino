@@ -1,41 +1,44 @@
 # Examples
 
-Short commands for Dino 0.3.0. Live outputs: [`CLI_E2E_REFERENCE.md`](CLI_E2E_REFERENCE.md).
+Short commands for Dino 0.3.0 — local audit engine. Live dumps: [`CLI_E2E_REFERENCE.md`](CLI_E2E_REFERENCE.md).
 
-## Proof chain
+## Proof + export + index
 
 ```bash
 dino upgrade --pack proof --key YOUR_LICENSE_KEY
 
 dino proof run \
   --command echo ok \
-  --repo . \
-  --scan ./tests/dino/fixtures/scan/clean_code.py \
-  --output-dir ./proof_out
+  --scan ./tests/e2e/pipe.py \
+  --output-dir ./proof_out \
+  --pipeline fraud_score_v4 \
+  --group risk-team \
+  --tag prod --tag v4 \
+  --export ./archive
 
 dino proof verify --proof ./proof_out/proof.json
 dino proof doctor
+
+dino proof index show ./archive
+dino proof index metrics ./archive
+dino proof index compare ./archive <hash_a> <hash_b>
+dino proof index layout ./archive
+dino proof index rebuild ./archive
 ```
 
-`--command` is argv (`echo ok`). One quoted string (`"echo ok"`) also works.
-
-Export to a team store / dashboard ingest (no Dino dashboard — just upload):
+Other export targets (same labels):
 
 ```bash
-dino proof run ... --export ./proofs_archive
-dino proof run ... --export https://internal-dashboard/api/proofs
-dino proof run ... --export s3://team-bucket/proofs
-dino proof run ... --export ./proofs_archive \
+dino proof run ... --export https://internal.example/api/proofs \
   --pipeline fraud_score_v4 --group risk-team --tag prod
 
-dino proof index show ./proofs_archive
-dino proof index metrics ./proofs_archive
-dino proof index compare ./proofs_archive <hash_a> <hash_b>
-dino proof index layout ./proofs_archive
-dino proof index rebuild ./proofs_archive
+dino proof run ... --export s3://team-bucket/proofs \
+  --pipeline fraud_score_v4 --group risk-team --tag prod
 ```
 
-Details: [`PROOF_INDEX.md`](PROOF_INDEX.md) · [`PROOF_EXPORT.md`](PROOF_EXPORT.md)
+`--command` is argv (`echo ok`). One quoted string also works when the program needs `--flags`.
+
+Contracts: [`PROOF_EXPORT.md`](PROOF_EXPORT.md) · [`PROOF_INDEX.md`](PROOF_INDEX.md)
 
 ## Leakage (Free pack)
 
@@ -43,7 +46,7 @@ Details: [`PROOF_INDEX.md`](PROOF_INDEX.md) · [`PROOF_EXPORT.md`](PROOF_EXPORT.
 dino scan leakage ./tests/dino/fixtures/scan/forbidden_import.py
 # exit 1 — LEAKY_IMPORT
 
-dino scan leakage ./tests/dino/fixtures/scan/clean_code.py
+dino scan leakage ./tests/e2e/pipe.py
 # exit 0 — no findings
 ```
 

@@ -5,7 +5,8 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "dino"
 version = "0.3.0"
-description = "Deterministic Proof for Python Decision Pipelines"
+description = "Local-first audit engine for Python pipelines — deterministic proofs, export contracts, proof index"
+
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
@@ -23,7 +24,7 @@ where = ["."]
 include = ["dino*"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests/dino"]
+testpaths = ["tests/dino", "tests/e2e"]
 addopts = "-q"
 filterwarnings = ["ignore::DeprecationWarning"]
 

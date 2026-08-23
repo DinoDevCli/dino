@@ -2,9 +2,9 @@
 
 Schema: **`dino.proof.index.v1`** · File: **`proof_index.json`**
 
-No dashboard. No UI. A single JSON contract so teams can list, compare, version, tag, group, and historize proofs in **their** systems.
+Engine contract for listing, comparing, tagging, grouping, and historizing proofs — **without** a Dino UI or SaaS.
 
-## Example
+## Example entry
 
 ```json
 {
@@ -12,7 +12,7 @@ No dashboard. No UI. A single JSON contract so teams can list, compare, version,
   "updated_at": "2026-08-23T12:00:00Z",
   "proofs": [
     {
-      "hash": "abc123…full proof_hash",
+      "hash": "abc123…",
       "timestamp": "2026-08-23T12:00:00Z",
       "pipeline": "fraud_score_v4",
       "group": "risk-team",
@@ -29,54 +29,31 @@ No dashboard. No UI. A single JSON contract so teams can list, compare, version,
 }
 ```
 
-| Field | Meaning |
-|-------|---------|
-| `drift` | `none` when aligned; else drift bucket from map |
-| `leakage` | `none` (clean), `failed`, or `skipped` |
-| `path` | Bundle folder under archive (`<hash16>/`) |
-| `group` / `tags` | Optional — set via CLI |
-
-## CLI
+## CLI (engine → consumer)
 
 ```bash
-# Auto-update index + browse layout on export
-dino proof run ... \
-  --export ./proofs_archive \
+dino proof run \
+  --command echo ok \
+  --scan ./tests/e2e/pipe.py \
+  --output-dir ./proof_out \
   --pipeline fraud_score_v4 \
   --group risk-team \
-  --tag prod --tag v4
+  --tag prod --tag v4 \
+  --export ./archive
 
-dino proof export --proof-dir ./proof_out --to ./proofs_archive \
-  --pipeline fraud_score_v4
-
-# Read / rebuild / layout
-dino proof index show ./proofs_archive
-dino proof index rebuild ./proofs_archive
-dino proof index layout ./proofs_archive
-
-# Compare two proofs (exit 1 if changed)
-dino proof index compare ./proofs_archive abc123 def456
-
-# Health summary JSON
-dino proof index metrics ./proofs_archive
+dino proof index show ./archive
+dino proof index metrics ./archive
+dino proof index compare ./archive <hash_a> <hash_b>
+dino proof index layout ./archive
+dino proof index rebuild ./archive
 ```
 
-## Compare contract (`dino.proof.index.compare.v1`)
+### Compare — `dino.proof.index.compare.v1`
 
-```bash
-dino proof index compare ./proofs_archive <hash_a> <hash_b>
-```
+Drift / leakage / supersede / artifacts / pipeline / verdict / tags deltas.  
+Exit **1** when `changed` (CI-friendly).
 
-JSON includes: `drift_delta`, `leakage_delta`, `supersede_status`, `artifacts_diff`,
-`pipeline_version_diff`, `verdict_diff`, `status_diff`, `tags_diff`, `changed`.
-
-Hashes may be full, prefix, or `path` slug. Exit **1** when `changed` is true (handy for CI).
-
-## Metrics contract (`dino.proof.index.metrics.v1`)
-
-```bash
-dino proof index metrics ./proofs_archive
-```
+### Metrics — `dino.proof.index.metrics.v1`
 
 ```json
 {
@@ -92,44 +69,27 @@ dino proof index metrics ./proofs_archive
 }
 ```
 
-## Archive layout contract
-
-Canonical bundles stay content-addressed:
+### Layout contract
 
 ```
-<archive>/<proof_hash16>/
+<archive>/<hash16>/
 <archive>/proof_index.json
+<archive>/pipelines/<pipeline>/<hash16>/
+<archive>/groups/<group>/<hash16>/
+<archive>/tags/<tag>/<hash16>/
 ```
 
-Browse views (symlinks when the OS allows, else `.dino_layout_ref` pointers):
+Symlinks when possible; otherwise `.dino_layout_ref` pointers.
 
-```
-<archive>/pipelines/<pipeline>/<proof_hash16>/
-<archive>/groups/<group>/<proof_hash16>/
-<archive>/tags/<tag>/<proof_hash16>/
-```
+## Dashboard consumption
 
-Updated on every local `--export` and via `dino proof index layout|rebuild`.
+Your systems:
 
-## Where it lives
+1. Watch `proof_index.json` or HTTP `index_entry`
+2. Call / parse `metrics` for health tiles
+3. Call / parse `compare` for regression gates
+4. Browse `pipelines/` · `groups/` · `tags/` for folder-based audits
 
-| Export target | Index behavior |
-|---------------|----------------|
-| **Local path** | `<archive>/proof_index.json` + layout links |
-| **S3** | `s3://bucket/prefix/proof_index.json` |
-| **HTTP** | `index_entry` inside export POST body |
+Dino does not host the index. Dino is the motor.
 
-HTTP ingest: merge `index_entry` into your DB — Dino does not host the index.
-
-## Why this is enough
-
-Companies feed `proof_index.json` + compare/metrics into:
-
-- compliance reports
-- drift charts
-- audit pipelines
-- governance UIs / alerts
-
-Dino stays the **local audit motor** + **uploader** + **manifest**. You keep the dashboard.
-
-See also: [`PROOF_EXPORT.md`](PROOF_EXPORT.md)
+See [`PROOF_EXPORT.md`](PROOF_EXPORT.md).

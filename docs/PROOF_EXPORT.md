@@ -1,72 +1,82 @@
 # Proof export (uploader)
 
-Dino does **not** ship a dashboard. It ships a sealed `proof.json` and an optional **export** so teams can drop proofs into their own store / API / bucket.
+Dino is a **local audit engine**. It does **not** ship a dashboard, SaaS, or hosted control plane.
 
-Schema: `dino.proof.export.v1`
+It emits sealed `proof.json` plus an optional **export contract** so teams drop proofs into *their* path / HTTP / S3 consumers.
+
+Schema: **`dino.proof.export.v1`**
 
 ## CLI
 
+Always pair export with index labels:
+
 ```bash
-# During seal
 dino proof run \
   --command echo ok \
-  --scan ./path/to/pipeline.py \
+  --scan ./tests/e2e/pipe.py \
   --output-dir ./proof_out \
-  --export ./proofs_archive
+  --pipeline fraud_score_v4 \
+  --group risk-team \
+  --tag prod --tag v4 \
+  --export ./archive
 
-dino proof run ... --export https://internal-dashboard/api/proofs
-dino proof run ... --export s3://team-bucket/proofs
+dino proof run ... --export https://internal-dashboard/api/proofs \
+  --pipeline fraud_score_v4 --group risk-team --tag prod
 
-# After the fact
-dino proof export --proof-dir ./proof_out --to ./proofs_archive
-dino proof export --proof ./proof_out/proof.json --to https://internal-dashboard/api/proofs
+dino proof run ... --export s3://team-bucket/proofs \
+  --pipeline fraud_score_v4 --group risk-team --tag prod
+
+dino proof export --proof-dir ./proof_out --to ./archive \
+  --pipeline fraud_score_v4 --group risk-team --tag prod
 ```
 
-Auth for HTTP: set `DINO_EXPORT_HTTP_TOKEN` (sent as `Authorization: Bearer …`).
+Auth for HTTP: `DINO_EXPORT_HTTP_TOKEN` → `Authorization: Bearer …`.
 
-S3: needs `boto3` **or** AWS CLI (`aws s3 sync`) with credentials.
+S3: `boto3` **or** AWS CLI with credentials.
 
 ## Layout (file / S3)
 
-Content-addressed subfolder: `<dest>/<proof_hash[:16]>/`
-
 ```
-<dest>/<hash16>/
+<archive>/<hash16>/
   proof.json
-  export.json          # full envelope
-  capsule/capsule.json
-  capsule/replay.json
-  scan.json            # if present
-  map_verify.json      # if present
+  export.json          # envelope + index_entry
+  capsule/…
+  scan.json
+<archive>/proof_index.json
+<archive>/pipelines/<pipeline>/<hash16>/
+<archive>/groups/<group>/<hash16>/
+<archive>/tags/<tag>/<hash16>/
 ```
 
 ## HTTP contract
 
-`POST` JSON:
+`POST` JSON (`dino.proof.export.v1`):
 
 ```json
 {
   "schema": "dino.proof.export.v1",
   "proof_hash": "…",
-  "proof": { "...": "proof.json body" },
-  "artifacts": {
-    "capsule/capsule.json": {},
-    "scan.json": {}
+  "proof": {},
+  "artifacts": {},
+  "index_entry": {
+    "hash": "…",
+    "pipeline": "fraud_score_v4",
+    "group": "risk-team",
+    "tags": ["prod", "v4"],
+    "drift": "none",
+    "leakage": "none"
   }
 }
 ```
 
-Headers:
+Headers: `Content-Type`, `X-Dino-Proof-Hash`, `X-Dino-Export-Schema`, optional `Authorization`.
 
-- `Content-Type: application/json`
-- `X-Dino-Proof-Hash: <proof_hash>`
-- `X-Dino-Export-Schema: dino.proof.export.v1`
-- `Authorization: Bearer <token>` (optional)
+## Integration model
 
-Expected response: `2xx`. Body ignored except for diagnostics.
+| You provide | Dino provides |
+|-------------|----------------|
+| Dashboard / alerts / storage | Sealed proofs + export envelope |
+| HTTP ingest or S3 bucket | `dino.proof.export.v1` POST / upload |
+| Compliance renderers | `proof_index.json` updates |
 
-## Why this matters
-
-Export turns Dino into the **local audit motor** that companies wire into existing dashboards — without Dino becoming SaaS.
-
-Each export also maintains **`proof_index.json`** (schema `dino.proof.index.v1`) at the archive root — list/compare/tag proofs without a Dino UI. See [`PROOF_INDEX.md`](PROOF_INDEX.md).
+See [`PROOF_INDEX.md`](PROOF_INDEX.md) for listing, metrics, compare, layout.

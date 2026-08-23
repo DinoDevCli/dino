@@ -3,62 +3,155 @@
 [![CI](https://github.com/DinoDevCli/dino/actions/workflows/ci.yml/badge.svg)](https://github.com/DinoDevCli/dino/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
+[![Local-First](https://img.shields.io/badge/Local--First-audit%20engine-0a0a0a)](docs/PROOF_INDEX.md)
 
-**Deterministic Proof for Python Decision Pipelines**
+**Local-First Audit Engine for Python Pipelines**
 
-Proof CLI for Python decision logic — research pipelines, backtests, risk systems.
-Seals execution, detects ML leakage, classifies drift, emits content-addressed [`proof.json`](docs/PROOF_CONTRACT.md).
+Deterministic proofs · export contracts · universal proof index — for **your** dashboards.
 
-**Scope (intentional):** sealed runs + replay + `proof_hash` for decision pipelines.
-Not a general SAST/DAST suite, secret scanner, SBOM tool, or container/image provenance product.
+> Dino is a local audit motor — not a platform. No hosted UI. No SaaS. No cloud product.
 
 ```bash
-dino proof run --command echo ok --repo . --scan ./path/to/pipeline.py --output-dir ./proof_out
-dino proof verify --proof ./proof_out/proof.json
-```
+dino proof run \
+  --command echo ok \
+  --scan ./tests/e2e/pipe.py \
+  --output-dir ./proof_out \
+  --pipeline fraud_score_v4 \
+  --group risk-team \
+  --tag prod --tag v4 \
+  --export ./archive
 
-`--command` takes argv tokens (`echo ok`). A single quoted string (`"echo ok"`) is also accepted — required when the program itself takes `--flags` (e.g. `--command "python3 train.py --seed 0"`).
-`--scan` must resolve to at least one `.py` file or the scan fails.
+dino proof index metrics ./archive
+dino proof index compare ./archive <hash_a> <hash_b>
+dino proof index layout ./archive
+```
 
 ---
 
-## Install
+## What is Dino?
 
-Free pack (`scan`):
+| Capability | Role |
+|------------|------|
+| **Local audit engine** | Runs offline in CI and on laptops |
+| **Deterministic proofs** | `proof.json` + `proof_hash` + capsule replay |
+| **Export contracts** | Path / HTTP / S3 (`dino.proof.export.v1`) |
+| **Proof index** | `proof_index.json` + compare / metrics / layout |
+
+Not a general SAST suite, secret scanner, SBOM tool, or image provenance product.
+
+---
+
+## Why Dino?
+
+- **No dashboard** — you render compliance charts yourself
+- **No SaaS** — artifacts stay in your store
+- **No cloud** — optional S3/HTTP is *your* infrastructure
+- Fits **Risk, Fraud, Research, Compliance** teams that already have governance tooling
+
+---
+
+## Core contracts
+
+| Schema | Purpose |
+|--------|---------|
+| [`dino.proof.bundle.v1`](docs/PROOF_CONTRACT.md) | Sealed proof chain |
+| [`dino.proof.export.v1`](docs/PROOF_EXPORT.md) | Upload envelope |
+| [`dino.proof.index.v1`](docs/PROOF_INDEX.md) | Manifest listing |
+| `dino.proof.index.compare.v1` | Diff two proofs |
+| `dino.proof.index.metrics.v1` | Health summary |
+
+---
+
+## Quickstart
 
 ```bash
 pip install "git+https://github.com/DinoDevCli/dino.git"
-dino scan leakage ./my_pipeline.py
-```
+dino scan leakage ./tests/e2e/pipe.py          # Free pack
 
-Proof pack (`capsule`, `map`, `bundle`, `flight`, `verify`, `proof`):
-
-```bash
-pip install "git+https://github.com/DinoDevCli/dino.git"
-# After Lemon Squeezy purchase (license key in receipt email):
+# Proof pack (after Lemon Squeezy purchase):
 dino upgrade --pack proof --key YOUR_LICENSE_KEY
 dino proof doctor
+
+dino proof run \
+  --command echo ok \
+  --scan ./tests/e2e/pipe.py \
+  --output-dir ./proof_out \
+  --pipeline fraud_score_v4 \
+  --group risk-team \
+  --tag prod --tag v4 \
+  --export ./archive
+
+dino proof verify --proof ./proof_out/proof.json
+dino proof index show ./archive
+dino proof index metrics ./archive
 ```
+
+`--command` takes argv tokens (`echo ok`) or one quoted string when the program needs `--flags`.
+`--scan` must resolve to at least one `.py` file.
+
+> Not on PyPI under `dino` (name collision). Install only via GitHub.
 
 Requires Python ≥ 3.10.
 
 ---
 
-## CLI
+## Integrating Dino
+
+### Path
 
 ```bash
-dino proof run \
-  --command echo ok \
-  --repo . \
-  --scan ./path/to/pipeline.py \
-  --output-dir ./proof_out
-
-dino proof verify --proof ./proof_out/proof.json
-
-dino scan leakage my_pipeline.py
+dino proof run ... --export ./archive \
+  --pipeline fraud_score_v4 --group risk-team --tag prod
 ```
 
-Full reference: [`docs/CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md)
+Consumers read `./archive/proof_index.json` and `./archive/<hash16>/`.
+
+### HTTP
+
+```bash
+export DINO_EXPORT_HTTP_TOKEN=…
+dino proof run ... --export https://internal.example/api/proofs \
+  --pipeline fraud_score_v4 --group risk-team --tag prod
+```
+
+POST body: `dino.proof.export.v1` including `index_entry`.
+
+### S3
+
+```bash
+dino proof run ... --export s3://team-bucket/proofs \
+  --pipeline fraud_score_v4 --group risk-team --tag prod
+```
+
+Needs `boto3` or AWS CLI credentials.
+
+### Index consumption
+
+```bash
+dino proof index metrics ./archive
+dino proof index compare ./archive <hash_a> <hash_b>   # exit 1 if changed
+dino proof index layout ./archive
+dino proof index rebuild ./archive
+```
+
+Feed JSON into your alerts, drift charts, and compliance reports.
+
+---
+
+## Proof index layout
+
+```
+<archive>/<proof_hash16>/
+  proof.json
+  export.json
+  scan.json …
+<archive>/proof_index.json
+<archive>/pipelines/<pipeline>/<proof_hash16>/
+<archive>/groups/<group>/<proof_hash16>/
+<archive>/tags/<tag>/<proof_hash16>/
+```
+
+Canonical bundles are content-addressed. Browse folders are symlinks (or `.dino_layout_ref` pointers).
 
 ---
 
@@ -66,27 +159,13 @@ Full reference: [`docs/CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md)
 
 | Module | Pack | Role |
 |--------|------|------|
-| **Scan** | Free | 7 ML leakage rules + grammar |
+| **Scan** | Free | Research leakage rules |
 | **Capsule** | Proof | Sealed subprocess + replay |
 | **Map** | Proof | AST graph, drift, plan |
-| **Bundle** | Proof | Regression (`true_delta`, `endpoint_ratio`) |
+| **Bundle** | Proof | Regression signals |
 | **Flight** | Proof | Canary summary |
-| **Verify** | Proof | Drift, supersession, attest, binary |
-| **Proof** | Proof | `proof.json` · `PROOF_PASSED` / `PROOF_VERIFY_PASSED` |
-
----
-
-## Proof contract
-
-When status is `passed` / `partial` and verify succeeds, Dino guarantees:
-
-- deterministic execution and replay
-- content-addressed artifacts (`proof_hash`)
-- research leakage rules
-- drift classification
-- regression and governance signals
-
-Schemas and limits: [`docs/PROOF_CONTRACT.md`](docs/PROOF_CONTRACT.md)
+| **Verify** | Proof | Drift, supersession, attest |
+| **Proof** | Proof | Chain + export + index |
 
 ---
 
@@ -97,23 +176,9 @@ Schemas and limits: [`docs/PROOF_CONTRACT.md`](docs/PROOF_CONTRACT.md)
 | **Free** | €0 | Leakage Scan |
 | **Indie** | €49 one-time | Full Proof Pack |
 | **Team** | €39 per seat (20% off) | Full Proof Pack |
-| **Large Teams** | Custom | 20+ seats, invoicing on request |
+| **Large Teams** | Custom | 20+ seats |
 
-**Rules**
-
-- Team pricing starts at **3 seats**
-- Team pricing applies up to **20 seats**
-- Above 20 seats → contact us
-- No Enterprise tier, no subscriptions, no lock-in
-- Checkout via **Lemon Squeezy**; unlock with license key (see [`docs/LEMON_SQUEEZY.md`](docs/LEMON_SQUEEZY.md))
-
-Unlock:
-
-```bash
-dino upgrade --pack proof --key YOUR_LICENSE_KEY
-```
-
-> Not on PyPI under `dino` (name collision). Install only via the GitHub URL above.
+Checkout via **Lemon Squeezy**; unlock with `dino upgrade --pack proof --key …` ([`docs/LEMON_SQUEEZY.md`](docs/LEMON_SQUEEZY.md)).
 
 Contact: [noahpeitz95@gmail.com](mailto:noahpeitz95@gmail.com)
 
@@ -124,12 +189,10 @@ Contact: [noahpeitz95@gmail.com](mailto:noahpeitz95@gmail.com)
 | Doc | Role |
 |-----|------|
 | [`PROOF_CONTRACT.md`](docs/PROOF_CONTRACT.md) | Normative guarantees |
-| [`PROOF_EXPORT.md`](docs/PROOF_EXPORT.md) | Upload to path / HTTP / S3 |
-| [`PROOF_INDEX.md`](docs/PROOF_INDEX.md) | proof_index.json manifest |
-| [`CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md) | CLI + live outputs |
+| [`PROOF_EXPORT.md`](docs/PROOF_EXPORT.md) | Export contracts |
+| [`PROOF_INDEX.md`](docs/PROOF_INDEX.md) | Index / compare / metrics / layout |
+| [`CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md) | CLI reference |
 | [`EXAMPLES.md`](docs/EXAMPLES.md) | Short examples |
-| [`LEMON_SQUEEZY.md`](docs/LEMON_SQUEEZY.md) | Checkout + license keys |
-| [`TECH_STATUS_NOW.md`](docs/TECH_STATUS_NOW.md) | Technical status |
 | [`website/`](website/) | Landing page |
 
 ---
@@ -141,19 +204,13 @@ git clone https://github.com/DinoDevCli/dino.git
 cd dino
 python -m venv .venv && source .venv/bin/activate
 pip install -e '.[dev]'
-pytest tests/dino -q
-```
-
-Website:
-
-```bash
-cd website
-cp .env.example .env.local
-npm install && npm run dev
+pytest tests/dino tests/e2e -q
 ```
 
 ---
 
-## License
+## No UI. No SaaS. No Cloud.
+
+Dino is the **engine**. Your dashboard consumes the **contracts**.
 
 MIT · [DinoDevCli](https://github.com/DinoDevCli)

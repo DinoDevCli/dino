@@ -1,3 +1,31 @@
+# Dino CLI — Reference (engine + contracts)
+
+**Version:** 0.3.0 · **Positioning:** local-first audit engine — not a platform  
+**Flag:** `--json` (JSON envelope) · **E2E suite:** `tests/e2e/`
+
+Dino seals proofs and emits **export** + **index** contracts for *your* dashboards. No hosted UI. No SaaS.
+
+### Integration snapshot
+
+```bash
+dino proof run \
+  --command echo ok \
+  --scan ./tests/e2e/pipe.py \
+  --output-dir ./proof_out \
+  --pipeline fraud_score_v4 \
+  --group risk-team \
+  --tag prod --tag v4 \
+  --export ./archive
+
+dino proof index metrics ./archive
+dino proof index compare ./archive <hash_a> <hash_b>
+dino proof index layout ./archive
+```
+
+Contracts: [`PROOF_EXPORT.md`](PROOF_EXPORT.md) · [`PROOF_INDEX.md`](PROOF_INDEX.md) · [`PROOF_CONTRACT.md`](PROOF_CONTRACT.md)
+
+---
+
 # Dino CLI — Vollständige Referenz mit E2E-Outputs
 
 **Stand:** 2026-08-22 · **Version:** 0.3.0

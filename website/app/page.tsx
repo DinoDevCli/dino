@@ -4,9 +4,13 @@ import {
   ABOUT,
   CLI_EXAMPLES,
   CONTRACT_FOOTNOTE,
+  ENGINE_POINTS,
+  EXPORT_CONTRACTS,
   FAQ,
   GUARANTEES,
   ICPS,
+  INDEX_FEATURES,
+  INTEGRATE,
   MODULES,
   NAV,
   PACKS,
@@ -172,8 +176,7 @@ export default function Home() {
               {SITE.tagline}
             </h1>
             <p className="text-muted-foreground max-w-2xl text-lg leading-relaxed text-pretty">
-              {SITE.subtitle.split("proof.json")[0]}
-              <span className="text-foreground font-mono">proof.json</span>.
+              {SITE.subtitle}
             </p>
             <div className="flex flex-wrap gap-3">
               <ExternalLink href={GITHUB.downloadZip} primary>
@@ -192,11 +195,19 @@ export default function Home() {
       </header>
 
       <main>
-        <SectionShell compact>
-          <SectionHeader label={SECTIONS.about.label} />
+        <SectionShell id="engine" compact>
+          <SectionHeader
+            label={SECTIONS.about.label}
+            title={SECTIONS.about.title}
+          />
           <div className="max-w-4xl space-y-4 text-lg leading-relaxed text-pretty md:text-xl">
             {ABOUT.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+          <div className="border-border grid border-t border-l sm:grid-cols-3">
+            {ENGINE_POINTS.map((p) => (
+              <GridCard key={p.title} title={p.title} body={p.body} />
             ))}
           </div>
         </SectionShell>
@@ -226,6 +237,42 @@ export default function Home() {
           <div className="border-border grid border-t border-l sm:grid-cols-2 lg:grid-cols-3">
             {MODULES.map((m) => (
               <GridCard key={m.title} title={m.title} body={m.body} />
+            ))}
+          </div>
+        </SectionShell>
+
+        <SectionShell id="export" compact>
+          <SectionHeader
+            label={SECTIONS.export.label}
+            title={SECTIONS.export.title}
+          />
+          <div className="border-border grid border-t border-l sm:grid-cols-3">
+            {EXPORT_CONTRACTS.map((c) => (
+              <GridCard key={c.title} title={c.title} body={c.body} />
+            ))}
+          </div>
+        </SectionShell>
+
+        <SectionShell id="index" compact>
+          <SectionHeader
+            label={SECTIONS.index.label}
+            title={SECTIONS.index.title}
+          />
+          <div className="border-border grid border-t border-l sm:grid-cols-2 lg:grid-cols-4">
+            {INDEX_FEATURES.map((f) => (
+              <GridCard key={f.title} title={f.title} body={f.body} />
+            ))}
+          </div>
+        </SectionShell>
+
+        <SectionShell id="integrate" compact>
+          <SectionHeader
+            label={SECTIONS.integrate.label}
+            title={SECTIONS.integrate.title}
+          />
+          <div className="border-border grid border-t border-l sm:grid-cols-3">
+            {INTEGRATE.map((i) => (
+              <GridCard key={i.title} title={i.title} body={i.body} />
             ))}
           </div>
         </SectionShell>
@@ -300,29 +347,29 @@ export default function Home() {
             {PACKS.map((pack) => {
               const checkout = packHref(pack.tier);
               return (
-              <div
-                key={pack.name}
-                className={`border-border flex flex-col gap-8 border-r border-b p-6 md:p-8 ${
-                  pack.featured ? "bg-foreground/[0.03]" : ""
-                }`}
-              >
-                <div className="flex flex-col gap-3">
-                  <h3 className="font-mono text-xs tracking-[0.2em] uppercase">
-                    {pack.name}
-                  </h3>
-                  <p className="text-4xl tracking-tight">{pack.price}</p>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {pack.hint}
-                  </p>
-                </div>
-                <ExternalLink
-                  href={checkout.href}
-                  lemon={checkout.lemon}
-                  className="mt-auto px-5 py-3"
+                <div
+                  key={pack.name}
+                  className={`border-border flex flex-col gap-8 border-r border-b p-6 md:p-8 ${
+                    pack.featured ? "bg-foreground/[0.03]" : ""
+                  }`}
                 >
-                  {pack.cta}
-                </ExternalLink>
-              </div>
+                  <div className="flex flex-col gap-3">
+                    <h3 className="font-mono text-xs tracking-[0.2em] uppercase">
+                      {pack.name}
+                    </h3>
+                    <p className="text-4xl tracking-tight">{pack.price}</p>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {pack.hint}
+                    </p>
+                  </div>
+                  <ExternalLink
+                    href={checkout.href}
+                    lemon={checkout.lemon}
+                    className="mt-auto px-5 py-3"
+                  >
+                    {pack.cta}
+                  </ExternalLink>
+                </div>
               );
             })}
           </div>
@@ -339,8 +386,8 @@ export default function Home() {
             <code className="text-foreground">{PRICING_UNLOCK}</code>
             <br />
             <span className="text-muted-foreground">
-              After Lemon Squeezy checkout, paste the license key into the command
-              above. Contact:{" "}
+              After Lemon Squeezy checkout, paste the license key into the
+              command above. Contact:{" "}
               <a
                 href={contactHref()}
                 className="text-foreground underline underline-offset-4"
@@ -373,62 +420,67 @@ export default function Home() {
       </main>
 
       <footer className="border-border border-t px-6 py-12 md:px-10">
-        <div className="mx-auto flex max-w-6xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <span className="font-mono text-sm tracking-[0.3em] uppercase">
-            dino{" "}
-            <span className="text-muted-foreground tracking-normal normal-case">
-              v{SITE.version}
+        <div className="mx-auto flex max-w-6xl flex-col gap-6">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <span className="font-mono text-sm tracking-[0.3em] uppercase">
+              dino{" "}
+              <span className="text-muted-foreground tracking-normal normal-case">
+                v{SITE.version}
+              </span>
             </span>
-          </span>
-          <nav aria-label="Footer">
-            <ul className="text-muted-foreground flex flex-wrap gap-x-6 gap-y-3 font-mono text-xs tracking-[0.15em] uppercase">
-              <li>
-                <Link className="hover:text-foreground" href="/docs">
-                  Docs
-                </Link>
-              </li>
-              <li>
-                <a
-                  className="hover:text-foreground"
-                  href={GITHUB.docs.proofContract}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Proof Contract
-                </a>
-              </li>
-              <li>
-                <a
-                  className="hover:text-foreground"
-                  href={`${GITHUB.base}/blob/main/LICENSE`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  MIT
-                </a>
-              </li>
-              <li>
-                <a
-                  className="hover:text-foreground"
-                  href={GITHUB.base}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  GitHub
-                </a>
-              </li>
-              <li>
-                <a className="hover:text-foreground" href="#pricing">
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a className="hover:text-foreground" href={contactHref()}>
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </nav>
+            <nav aria-label="Footer">
+              <ul className="text-muted-foreground flex flex-wrap gap-x-6 gap-y-3 font-mono text-xs tracking-[0.15em] uppercase">
+                <li>
+                  <Link className="hover:text-foreground" href="/docs">
+                    Docs
+                  </Link>
+                </li>
+                <li>
+                  <a
+                    className="hover:text-foreground"
+                    href={GITHUB.docs.proofContract}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Proof Contract
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="hover:text-foreground"
+                    href={`${GITHUB.base}/blob/main/LICENSE`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    MIT
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="hover:text-foreground"
+                    href={GITHUB.base}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    GitHub
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:text-foreground" href="#pricing">
+                    Pricing
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:text-foreground" href={contactHref()}>
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <p className="text-muted-foreground font-mono text-xs tracking-wide">
+            {SECTIONS.footerLine}
+          </p>
         </div>
       </footer>
     </div>

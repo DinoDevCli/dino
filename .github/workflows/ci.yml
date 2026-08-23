@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -e ".[dev]"
-      - run: pytest tests/dino -q
+      - run: pytest tests/dino tests/e2e -q
 
   website:
     runs-on: ubuntu-latest
