@@ -26,14 +26,20 @@ export const HOW = {
   body: "Dino seals each run into a proof bundle (capsule + scan + hash), exports the bundle (Path / HTTP / S3), builds a proof index (proof_index.json), and compares two proofs deterministically. The verdict is changed: true/false.",
 };
 
-/** Product core — definition once, then diagram only */
+/** Product core — definition once, then diagram; dashboard = consumer */
 export const PRODUCT = {
   label: "# product",
+  title: "Product Architecture",
   lines: [
     "Dino is a local-first audit engine for Python pipelines.",
-    "It produces sealed proofs, export envelopes, and a universal proof index that downstream dashboards can consume.",
-    "It is not a platform, not a cloud service, not a workflow orchestrator — it is an engine that runs locally and outputs deterministic audit artifacts.",
+    "It is not a platform, not a cloud service, not a workflow orchestrator — it runs locally and outputs deterministic audit artifacts.",
   ],
+  /** Explicit boundary — immediately after the architecture diagram */
+  noDashboard: [
+    "Dino does not include a dashboard.",
+    "It produces sealed proofs, export envelopes, and a universal proof index that your dashboards consume.",
+  ],
+  roles: "Engine in → Artifacts out → Dashboard renders.",
   flow: "pipeline → seal → export → index → compare → dashboard",
   blocks: [
     {
@@ -56,7 +62,25 @@ export const PRODUCT = {
       title: "changed: true",
       detail: "pipeline_version_diff",
     },
+    {
+      step: "Dashboard",
+      title: "Your UI",
+      detail: "reads proof_index.json / compare.json · Superset / Airflow / Custom",
+      consumer: true,
+    },
   ],
+};
+
+export const DASHBOARD = {
+  label: "# dashboard",
+  title: "Dashboard Integration (bring your own UI)",
+  lines: [
+    "Dashboards read Dino's artifacts.",
+    "proof_index.json and compare.json are designed for Superset, Airflow, MLflow, or your own UI.",
+    "Dino outputs the data — you choose the visualization.",
+  ],
+  example:
+    "Example: Superset reads proof_index.json via S3 or HTTP and renders drift charts.",
 };
 
 export const DEMO_COPY = {
@@ -65,6 +89,8 @@ export const DEMO_COPY = {
     "This is a documentary walkthrough — readable without Play. All artifacts come from tests/simulation/golden.",
   resultNote:
     "exit 1 when changed — CI gate. Local: make demo in tests/simulation.",
+  dashboardNote:
+    "The demo shows the engine output. Dashboards are built on top of these artifacts.",
 };
 
 /** From tests/simulation/golden/demo_excerpts.json — do not invent */
@@ -157,6 +183,7 @@ export const EARLY = {
   label: "# early access",
   title: "Free Mode. Proof Pack. 60 Days.",
   body: "Leakage scan stays free forever. Proof / index / export free for 60 days for Early Access teams. Email early@dinodevcli.dev — team or project name — receive a Team Key.",
+  note: "Early Access includes the engine and artifacts — dashboards are built by your team.",
   email: "early@dinodevcli.dev",
 };
 
