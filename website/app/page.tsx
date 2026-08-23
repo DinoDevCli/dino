@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CopyButton } from "@/components/CopyButton";
 import {
   ABOUT,
+  ARCH_FLOW,
   CLI_EXAMPLES,
   CONTRACT_FOOTNOTE,
   ENGINE_POINTS,
@@ -17,8 +18,10 @@ import {
   PAINPOINTS,
   PRICING_RULES,
   PRICING_UNLOCK,
+  QUICKSTART,
   SECTIONS,
   SITE,
+  WHY_LOCAL_FIRST,
 } from "@/lib/content";
 import { GITHUB, contactHref, packCheckoutHref } from "@/lib/site";
 
@@ -184,10 +187,10 @@ export default function Home() {
               </ExternalLink>
               <ExternalLink href={GITHUB.base}>GitHub</ExternalLink>
               <a
-                href="#cli"
+                href="#quickstart"
                 className="border-border hover:border-foreground border px-6 py-3 font-mono text-xs tracking-[0.15em] uppercase"
               >
-                CLI
+                Quickstart
               </a>
             </div>
           </div>
@@ -195,6 +198,50 @@ export default function Home() {
       </header>
 
       <main>
+        <SectionShell id="quickstart" compact>
+          <SectionHeader
+            label={SECTIONS.quickstart.label}
+            title={SECTIONS.quickstart.title}
+          />
+          <div className="border-border flex flex-col border-t border-l">
+            {QUICKSTART.map((ex) => (
+              <div key={ex.label} className="border-border border-r border-b">
+                <div className="border-border flex items-center justify-between border-b px-6 py-3">
+                  <p className="text-muted-foreground font-mono text-xs tracking-[0.2em] uppercase">
+                    {ex.label}
+                  </p>
+                  <CopyButton text={ex.code} />
+                </div>
+                <pre className="text-foreground overflow-x-auto px-6 py-6 font-mono text-sm leading-relaxed">
+                  <code>{ex.code}</code>
+                </pre>
+              </div>
+            ))}
+          </div>
+        </SectionShell>
+
+        <SectionShell id="flow" compact>
+          <SectionHeader
+            label={SECTIONS.flow.label}
+            title={SECTIONS.flow.title}
+          />
+          <pre className="border-border text-foreground overflow-x-auto border px-6 py-8 font-mono text-sm leading-relaxed tracking-wide md:text-base">
+            <code>{ARCH_FLOW}</code>
+          </pre>
+        </SectionShell>
+
+        <SectionShell id="why-local" compact>
+          <SectionHeader
+            label={SECTIONS.whyLocal.label}
+            title={SECTIONS.whyLocal.title}
+          />
+          <div className="border-border grid border-t border-l sm:grid-cols-3">
+            {WHY_LOCAL_FIRST.map((p) => (
+              <GridCard key={p.title} title={p.title} body={p.body} />
+            ))}
+          </div>
+        </SectionShell>
+
         <SectionShell id="engine" compact>
           <SectionHeader
             label={SECTIONS.about.label}

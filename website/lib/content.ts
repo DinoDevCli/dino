@@ -6,14 +6,45 @@ export const SITE = {
 };
 
 export const NAV = [
+  { href: "#quickstart", label: "Quickstart" },
   { href: "#engine", label: "Engine" },
   { href: "#export", label: "Export" },
   { href: "#index", label: "Index" },
   { href: "#integrate", label: "Integrate" },
-  { href: "#cli", label: "CLI" },
   { href: "#pricing", label: "Pricing" },
   { href: "#faq", label: "FAQ" },
   { href: "/docs", label: "Docs" },
+];
+
+/** Hero conversion block — install + first proof run */
+export const QUICKSTART = [
+  {
+    label: "install",
+    code: `pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"`,
+  },
+  {
+    label: "proof run + export",
+    code: `dino proof run --command "echo ok" --scan ./pipe.py \\
+  --output-dir ./proof_out --export ./archive`,
+  },
+];
+
+/** Architecture at a glance — ASCII, no dashboard UI */
+export const ARCH_FLOW = `seal → export → proof_index.json → your dashboard`;
+
+export const WHY_LOCAL_FIRST = [
+  {
+    title: "No data leaves",
+    body: "Proofs stay on your machine, CI, or your own path / S3 / HTTP endpoint.",
+  },
+  {
+    title: "No cloud dependency",
+    body: "Offline by default. Optional export is your integration — not a Dino SaaS.",
+  },
+  {
+    title: "Deterministic proofs",
+    body: "Content-addressed proof_hash, sealed replay, fail-closed leakage checks.",
+  },
 ];
 
 export const ABOUT = [
@@ -262,6 +293,9 @@ export const DOC_LINKS = [
 ];
 
 export const SECTIONS = {
+  quickstart: { label: "Quickstart", title: "Install and seal a run" },
+  flow: { label: "Architecture", title: "How Dino fits your stack" },
+  whyLocal: { label: "Why local-first", title: "Built for risk, fraud, and compliance" },
   about: { label: "Engine", title: "Local-First Audit Engine" },
   audience: { label: "Audience", title: "Built for risk, fraud, research, compliance" },
   features: { label: "Modules", title: "Seal, scan, prove, export, index" },
