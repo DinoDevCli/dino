@@ -1,0 +1,27 @@
+{
+  "capsule": {
+    "capsule_hash": "614965f8691b90b6a85ed03c08b1046f11e8b1243f7a1f5391dccf51a8d252bd",
+    "command": [
+      "echo",
+      "export_ok"
+    ],
+    "env": {},
+    "exit_code": 0,
+    "extra": {},
+    "output": "export_ok\n",
+    "schema": "dino.capsule.capsule.v1",
+    "stderr": "",
+    "stdin": ""
+  },
+  "exec_ok": true,
+  "expected_hash": "614965f8691b90b6a85ed03c08b1046f11e8b1243f7a1f5391dccf51a8d252bd",
+  "hash_ok": true,
+  "live": {
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "export_ok\n"
+  },
+  "recomputed_hash": "614965f8691b90b6a85ed03c08b1046f11e8b1243f7a1f5391dccf51a8d252bd",
+  "replay_ok": true,
+  "schema": "dino.capsule.replay.v1"
+}

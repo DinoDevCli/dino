@@ -153,8 +153,25 @@ def _proof(sub: argparse._SubParsersAction) -> None:
     run.add_argument("--repo", default="", help="Optional repo for map verify")
     run.add_argument("--scan", nargs="*", default=[], help="Optional paths for leakage scan")
     run.add_argument("--stdin", default="")
+    run.add_argument(
+        "--export",
+        default="",
+        help="Upload sealed proof: path | http(s)://… | s3://bucket/prefix",
+    )
     ver = s.add_parser("verify", help="Re-verify a proof.json bundle")
     ver.add_argument("--proof", required=True)
+    exp = s.add_parser("export", help="Upload an existing proof directory")
+    exp.add_argument(
+        "--proof-dir",
+        default="",
+        help="Directory containing proof.json (default: parent of --proof)",
+    )
+    exp.add_argument("--proof", default="", help="Path to proof.json (alternative to --proof-dir)")
+    exp.add_argument(
+        "--to",
+        required=True,
+        help="Destination: path | http(s)://… | s3://bucket/prefix",
+    )
     doc = s.add_parser("doctor", help="Proof-stack health checks")
     doc.add_argument("--output-dir", default="")
 
@@ -508,8 +525,37 @@ def _run_proof(args: argparse.Namespace, cmd: str, json_mode: bool) -> int:
             )
         except ValueError as exc:
             return _fail(out, "invalid_args", str(exc), 2)
+
+        export_dest = getattr(args, "export", "") or ""
+        if export_dest.strip():
+            from dino.domains.proof.export import export_proof_dir
+
+            try:
+                export_report = export_proof_dir(Path(args.output_dir), export_dest.strip())
+            except ValueError as exc:
+                return _fail(out, "export_failed", str(exc), 1)
+            proof = dict(proof)
+            proof["export"] = export_report
+
         _emit_proof_result(out, proof, json_mode=json_mode)
         return 0 if proof.get("ok") else 1
+    if cmd == "export":
+        from dino.domains.proof.export import export_proof_dir
+
+        proof_dir = getattr(args, "proof_dir", "") or ""
+        proof_path = getattr(args, "proof", "") or ""
+        if proof_dir:
+            base = Path(proof_dir)
+        elif proof_path:
+            base = Path(proof_path).resolve().parent
+        else:
+            return _fail(out, "invalid_args", "proof export requires --proof-dir or --proof", 2)
+        try:
+            report = export_proof_dir(base, args.to)
+        except ValueError as exc:
+            return _fail(out, "export_failed", str(exc), 1)
+        out.emit_success(report)
+        return 0 if report.get("ok") else 1
     if cmd == "verify":
         from dino.domains.proof.chain import verify_proof
 

@@ -1,0 +1,14 @@
+{
+  "capsule_hash": "614965f8691b90b6a85ed03c08b1046f11e8b1243f7a1f5391dccf51a8d252bd",
+  "command": [
+    "echo",
+    "export_ok"
+  ],
+  "env": {},
+  "exit_code": 0,
+  "extra": {},
+  "output": "export_ok\n",
+  "schema": "dino.capsule.capsule.v1",
+  "stderr": "",
+  "stdin": ""
+}

@@ -19,6 +19,17 @@ dino proof doctor
 
 `--command` is argv (`echo ok`). One quoted string (`"echo ok"`) also works.
 
+Export to a team store / dashboard ingest (no Dino dashboard — just upload):
+
+```bash
+dino proof run ... --export ./proofs_archive
+dino proof run ... --export https://internal-dashboard/api/proofs
+dino proof run ... --export s3://team-bucket/proofs
+dino proof export --proof-dir ./proof_out --to ./proofs_archive
+```
+
+Details: [`PROOF_EXPORT.md`](PROOF_EXPORT.md)
+
 ## Leakage (Free pack)
 
 ```bash

@@ -186,6 +186,10 @@ export const FAQ = [
     a: "Buy Indie/Team on Lemon Squeezy, copy the license key from the receipt email, then run: dino upgrade --pack proof --key YOUR_LICENSE_KEY",
   },
   {
+    q: "Can I push proofs into our dashboard?",
+    a: "Yes — dino proof run --export path|https://…/api/proofs|s3://bucket/prefix. Dino uploads sealed proof.json; you keep the dashboard.",
+  },
+  {
     q: "Is Dino on PyPI?",
     a: "No — the name dino is taken. Install from GitHub: pip install \"git+https://github.com/DinoDevCli/dino.git\".",
   },
@@ -193,6 +197,7 @@ export const FAQ = [
 
 export const DOC_LINKS = [
   { label: "Proof Contract", path: "docs/PROOF_CONTRACT.md" },
+  { label: "Proof Export", path: "docs/PROOF_EXPORT.md" },
   { label: "CLI Reference", path: "docs/CLI_E2E_REFERENCE.md" },
   { label: "Examples", path: "docs/EXAMPLES.md" },
   { label: "Lemon Squeezy", path: "docs/LEMON_SQUEEZY.md" },
