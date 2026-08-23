@@ -1,4 +1,4 @@
-/** Blueprint copy — precise, technical, no fluff. */
+/** Site copy + demo transcript for TerminalPlayer */
 
 export const SITE = {
   version: "0.3.1",
@@ -27,25 +27,25 @@ export const PROBLEM_SOLUTION = {
 
 export const FLOW = [
   {
-    step: "1. Seal",
+    step: "1 · Seal",
     title: "proof.json",
     detail: "Capsule + Scan + Hash",
     accent: true,
   },
   {
-    step: "2. Export",
+    step: "2 · Export",
     title: "export.v1",
     detail: "Path / HTTP / S3",
     accent: true,
   },
   {
-    step: "3. Index",
+    step: "3 · Index",
     title: "proof_index.json",
     detail: "Compare · Metrics · Layout",
     accent: true,
   },
   {
-    step: "4. Dashboard",
+    step: "4 · Dashboard",
     title: "Your UI",
     detail: "Superset / Airflow / Custom",
     accent: false,
@@ -55,78 +55,83 @@ export const FLOW = [
 export const USPS = [
   {
     label: "Local-First",
+    icon: "L",
     title: "No cloud. No platform.",
-    body: "No data leaves your infrastructure.",
+    body: "No data leaves your infrastructure. Offline by default.",
   },
   {
     label: "Deterministic",
+    icon: "D",
     title: "Content-addressed proof_hash.",
-    body: "Every sealed run is reproducible.",
+    body: "Same seal inputs → same hash. Capsule replay included.",
   },
   {
     label: "Universal Index",
+    icon: "I",
     title: "Dashboard-ready JSON.",
-    body: "One format for every consumer.",
+    body: "proof_index.json — one format for every consumer.",
   },
   {
     label: "Export Contracts",
+    icon: "E",
     title: "Path / HTTP / S3.",
-    body: "Integrate anywhere you already store artifacts.",
+    body: "dino.proof.export.v1 into your store or ingest API.",
+  },
+  {
+    label: "Compare & Metrics",
+    icon: "C",
+    title: "Drift between runs.",
+    body: "pipeline · verdict · leakage · artifacts deltas for CI gates.",
   },
 ];
 
-export const USP_WIDE = {
-  label: "Compare & Metrics",
-  title: "Drift analysis between runs.",
-  body: "See what changed — pipeline, verdict, leakage, artifacts.",
-};
+/** Line-by-line transcript for the embedded terminal player */
+export const DEMO_LINES = [
+  "$ dino proof run --command \"python pipeline/run.py --seed seed-42\" \\",
+  "    --scan ./pipeline --pipeline fraud_score_v1 \\",
+  "    --group risk-team --tag demo --export ./archive",
+  "",
+  "sealed  fraud_score_v1",
+  "proof_hash  fa7f1ccc86efbecd47674a659b2a04e3…",
+  "export     ./archive/fa7f1ccc86efbecd/",
+  "index      proof_index.json updated",
+  "",
+  "$ dino proof run --command \"python pipeline/run.py --seed seed-123\" \\",
+  "    --scan ./pipeline --pipeline fraud_score_v2 \\",
+  "    --group risk-team --tag demo --export ./archive",
+  "",
+  "sealed  fraud_score_v2",
+  "proof_hash  fc4a30f5bca098f4d3665242785ef779…",
+  "export     ./archive/fc4a30f5bca098f4/",
+  "index      proof_index.json updated",
+  "",
+  "$ dino proof index compare ./archive fa7f1ccc86efbecd fc4a30f5bca098f4",
+  "",
+  "{",
+  '  "schema": "dino.proof.index.compare.v1",',
+  '  "changed": true,',
+  '  "pipeline_version_diff": {',
+  '    "from": "fraud_score_v1",',
+  '    "to": "fraud_score_v2"',
+  "  },",
+  '  "drift_delta": { "from": "none", "to": "none" }',
+  "}",
+  "",
+  "# exit 1 — changed: true  (CI gate signal)",
+];
 
-export const DEMO = {
-  title: "Live Demo",
-  subtitle: "Two runs. One compare. The proof.",
-  transcript: `$ dino proof run --command "python pipeline/run.py --seed seed-42" \\
-    --scan ./pipeline --pipeline fraud_score_v1 \\
-    --group risk-team --export ./archive
-sealed  proof_hash=fa7f1ccc86efbecd…
-
-$ dino proof run --command "python pipeline/run.py --seed seed-123" \\
-    --scan ./pipeline --pipeline fraud_score_v2 \\
-    --group risk-team --export ./archive
-sealed  proof_hash=fc4a30f5bca098f4…
-
-$ dino proof index compare ./archive fa7f1ccc86efbecd fc4a30f5bca098f4
-{
-  "schema": "dino.proof.index.compare.v1",
-  "changed": true,
-  "pipeline_version_diff": {
-    "from": "fraud_score_v1",
-    "to": "fraud_score_v2"
-  }
-}`,
-};
-
-export const QUICKSTART = {
-  title: "Quickstart",
-  subtitle: "Install. Run. Get proofs.",
-  code: `pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
+export const QUICKSTART = `pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
 
 dino proof run \\
   --command "python3 train.py" \\
   --scan ./src \\
   --output-dir ./proof_out \\
-  --export ./archive`,
-};
+  --export ./archive`;
 
 export const EARLY = {
   label: "# early access",
   title: "Free Mode. Proof Pack. 60 Days.",
   body: "Leakage scan stays free forever. The full Proof pack (index, export, compare) is free for 60 days for Early Access teams.",
-  steps: [
-    "01. Email early@dinodevcli.dev",
-    "02. Name your team / project",
-    "03. Receive a Team Key",
-    "04. Upgrade & start sealing",
-  ],
   email: "early@dinodevcli.dev",
 };
 

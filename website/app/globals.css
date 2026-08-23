@@ -3,15 +3,34 @@
 @tailwind utilities;
 
 :root {
+  /* Palette */
   --background: #0a0a0e;
   --surface: #121216;
+  --surface-2: #16161a;
   --border: #1e1e26;
+  --border-strong: #2a2a32;
   --hover: #282830;
   --foreground: #e8e8ed;
   --muted: #8a8a99;
   --accent: #3b82f6;
   --accent-hover: #2563eb;
   --code-bg: #000000;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  /* Layout */
+  --content-max: 1100px;
+  --narrow-max: 900px;
+  --grid-gutter: 1.5rem;
 }
 
 html {
@@ -30,5 +49,45 @@ body {
 }
 
 a {
-  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* Animated technical grid — Hero background */
+.hero-grid {
+  background-color: var(--background);
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--border) 70%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--border) 70%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  animation: grid-drift 40s linear infinite;
+}
+
+.hero-grid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 70% 55% at 20% 30%,
+    color-mix(in srgb, var(--accent) 12%, transparent),
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+@keyframes grid-drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 48px 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-grid {
+    animation: none;
+  }
 }

@@ -10,7 +10,9 @@ module.exports = {
       colors: {
         background: "var(--background)",
         surface: "var(--surface)",
+        "surface-2": "var(--surface-2)",
         border: "var(--border)",
+        "border-strong": "var(--border-strong)",
         hover: "var(--hover)",
         foreground: "var(--foreground)",
         muted: "var(--muted)",
@@ -29,6 +31,10 @@ module.exports = {
       letterSpacing: {
         tightest: "-0.03em",
         tighter: "-0.02em",
+      },
+      spacing: {
+        section: "6rem",
+        gutter: "1.5rem",
       },
     },
   },

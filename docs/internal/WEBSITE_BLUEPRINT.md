@@ -53,16 +53,18 @@ Central story:
 
 ---
 
-## 2. Page structure
+## 2. Page map
 
-1. **Hero** — Local-First / Audit Engine · Live Demo + Early Access CTAs  
-2. **Problem ↔ Solution** — asymmetric 2+1+2 with vertical rule  
-3. **Engine flow** — Seal → Export → Index → Dashboard (dimmed)  
-4. **USPs** — two-column spec list (not cards)  
-5. **Live Demo** — black terminal transcript / player  
-6. **Quickstart** — black code block, no copy button  
-7. **Early Access** — copy left, mailto CTA right  
-8. **Footer** — name left, meta right  
+| Route | Role |
+|-------|------|
+| `/` | Marketing / science of product |
+| `/demo` | Live Action — TerminalPlayer (or asciinema via `NEXT_PUBLIC_ASCIINEMA_ID`) |
+| `/early-access` | Conversion — mailto CTA |
+| `/docs` | Doc index |
+
+### Components
+
+`Nav` · `Button` · `Container` · `Section` · `Tile` · `EngineFlow` · `TerminalPlayer` · `AsciinemaEmbed` · `Footer`
 
 ---
 
