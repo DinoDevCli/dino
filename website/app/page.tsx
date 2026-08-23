@@ -1,25 +1,16 @@
 import Link from "next/link";
 import { CopyButton } from "@/components/CopyButton";
 import {
-  ABOUT,
-  ARCH_FLOW,
-  CLI_EXAMPLES,
-  CONTRACT_FOOTNOTE,
+  ACCESS,
+  DEMO,
   EARLY_ACCESS,
-  ENGINE_POINTS,
-  EXPORT_CONTRACTS,
+  ENGINE,
   FAQ,
-  GUARANTEES,
-  ICPS,
-  INDEX_FEATURES,
-  INTEGRATE,
-  MODULES,
+  FOOTER,
+  MOMENT_OF_TRUTH,
   NAV,
-  PAINPOINTS,
-  QUICKSTART,
-  SECTIONS,
+  PROBLEM,
   SITE,
-  WHY_LOCAL_FIRST,
 } from "@/lib/content";
 import { GITHUB, earlyAccessMailto } from "@/lib/site";
 
@@ -42,66 +33,30 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 function SectionShell({
   id,
   children,
-  compact = false,
 }: {
   id?: string;
   children: React.ReactNode;
-  compact?: boolean;
 }) {
   return (
-    <section
-      id={id}
-      className={`border-border border-t px-6 md:px-10 ${
-        compact ? "py-16 md:py-20" : "py-20 md:py-28"
-      }`}
-    >
+    <section id={id} className="border-border border-t px-6 py-16 md:px-10 md:py-24">
       <div className="mx-auto flex max-w-6xl flex-col gap-10">{children}</div>
     </section>
   );
 }
 
-function SectionHeader({
-  label,
-  title,
-}: {
-  label: string;
-  title?: React.ReactNode;
-}) {
+function CodeBlock({ label, code }: { label: string; code: string }) {
   return (
-    <div className="flex flex-col gap-4">
-      <SectionLabel>{label}</SectionLabel>
-      {title ? <SectionTitle>{title}</SectionTitle> : null}
+    <div className="border-border border-r border-b">
+      <div className="border-border flex items-center justify-between border-b px-6 py-3">
+        <p className="text-muted-foreground font-mono text-xs tracking-[0.2em] uppercase">
+          {label}
+        </p>
+        <CopyButton text={code} />
+      </div>
+      <pre className="text-foreground overflow-x-auto px-6 py-6 font-mono text-sm leading-relaxed">
+        <code>{code}</code>
+      </pre>
     </div>
-  );
-}
-
-function GridCard({ title, body }: { title: string; body: string }) {
-  return (
-    <div className="border-border flex flex-col gap-3 border-r border-b p-6 md:p-8">
-      <h3 className="text-base tracking-tight">{title}</h3>
-      <p className="text-muted-foreground text-sm leading-relaxed">{body}</p>
-    </div>
-  );
-}
-
-function MonoList({ items }: { items: string[] }) {
-  return (
-    <ul className="border-border grid border-t sm:grid-cols-2">
-      {items.map((item) => (
-        <li
-          key={item}
-          className="border-border flex items-baseline gap-4 border-b px-1 py-5 sm:odd:border-r sm:odd:pr-8 sm:even:pl-8"
-        >
-          <span
-            aria-hidden="true"
-            className="text-muted-foreground font-mono text-xs"
-          >
-            —
-          </span>
-          <span className="font-mono text-sm leading-relaxed">{item}</span>
-        </li>
-      ))}
-    </ul>
   );
 }
 
@@ -109,25 +64,18 @@ function ExternalLink({
   href,
   children,
   primary = false,
-  className = "",
 }: {
   href: string;
   children: React.ReactNode;
   primary?: boolean;
-  className?: string;
 }) {
   const base =
     "border px-6 py-3 font-mono text-xs tracking-[0.15em] uppercase inline-block text-center";
   const cls = primary
-    ? `${base} border-foreground bg-foreground text-background hover:bg-foreground/90 ${className}`
-    : `${base} border-border text-foreground hover:border-foreground ${className}`;
+    ? `${base} border-foreground bg-foreground text-background hover:bg-foreground/90`
+    : `${base} border-border text-foreground hover:border-foreground`;
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={cls.trim()}
-    >
+    <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>
       {children}
     </a>
   );
@@ -139,14 +87,12 @@ export default function Home() {
       <div className="border-border bg-foreground/[0.03] border-b px-6 py-3 text-center font-mono text-xs tracking-[0.12em] uppercase md:px-10">
         {EARLY_ACCESS.banner}
       </div>
-      <header className="px-6 pt-10 pb-20 md:px-10 md:pt-14 md:pb-32">
+
+      <header className="px-6 pt-10 pb-16 md:px-10 md:pt-14 md:pb-28">
         <div className="mx-auto max-w-6xl">
-          <nav
-            className="flex items-center justify-between"
-            aria-label="Primary"
-          >
+          <nav className="flex items-center justify-between" aria-label="Primary">
             <span className="font-mono text-sm tracking-[0.3em] uppercase">
-              dino
+              {SITE.brand}
             </span>
             <ul className="text-muted-foreground hidden gap-8 font-mono text-xs tracking-[0.15em] uppercase md:flex">
               {NAV.map((item) => (
@@ -165,254 +111,256 @@ export default function Home() {
             </ul>
           </nav>
 
-          <div className="mt-24 flex max-w-4xl flex-col gap-8 md:mt-40">
+          <div className="mt-20 flex max-w-4xl flex-col gap-8 md:mt-32">
             <p className="text-muted-foreground font-mono text-xs tracking-[0.2em] uppercase">
-              Dino
+              v{SITE.version} · Early Access
             </p>
             <h1 className="text-4xl leading-[1.05] tracking-tight text-balance md:text-6xl lg:text-7xl">
               {SITE.tagline}
             </h1>
+            <p className="text-xl leading-relaxed tracking-tight md:text-2xl">
+              {SITE.promise}
+            </p>
             <p className="text-muted-foreground max-w-2xl text-lg leading-relaxed text-pretty">
               {SITE.subtitle}
             </p>
-            <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-              {SITE.earlyAccessCta}
-            </p>
             <div className="flex flex-wrap gap-3">
-              <ExternalLink href={GITHUB.earlyAccessIssue} primary>
+              <ExternalLink href={earlyAccessMailto()} primary>
                 Request Early Access
               </ExternalLink>
-              <ExternalLink href={earlyAccessMailto()}>
-                Email
-              </ExternalLink>
-              <ExternalLink href={GITHUB.base}>GitHub</ExternalLink>
               <a
-                href="#quickstart"
+                href="#demo"
                 className="border-border hover:border-foreground border px-6 py-3 font-mono text-xs tracking-[0.15em] uppercase"
               >
-                Quickstart
+                Live Demo
               </a>
+              <ExternalLink href={GITHUB.base}>GitHub</ExternalLink>
             </div>
           </div>
         </div>
       </header>
 
       <main>
-        <SectionShell id="quickstart" compact>
-          <SectionHeader
-            label={SECTIONS.quickstart.label}
-            title={SECTIONS.quickstart.title}
-          />
-          <div className="border-border flex flex-col border-t border-l">
-            {QUICKSTART.map((ex) => (
-              <div key={ex.label} className="border-border border-r border-b">
-                <div className="border-border flex items-center justify-between border-b px-6 py-3">
-                  <p className="text-muted-foreground font-mono text-xs tracking-[0.2em] uppercase">
-                    {ex.label}
-                  </p>
-                  <CopyButton text={ex.code} />
-                </div>
-                <pre className="text-foreground overflow-x-auto px-6 py-6 font-mono text-sm leading-relaxed">
-                  <code>{ex.code}</code>
-                </pre>
+        {/* Why now */}
+        <SectionShell id="why-now">
+          <SectionLabel>Why now</SectionLabel>
+          <p className="max-w-3xl text-2xl leading-snug tracking-tight text-balance md:text-3xl">
+            {MOMENT_OF_TRUTH}
+          </p>
+        </SectionShell>
+
+        {/* Problem */}
+        <SectionShell id="problem">
+          <div className="flex flex-col gap-4">
+            <SectionLabel>{PROBLEM.label}</SectionLabel>
+            <SectionTitle>{PROBLEM.title}</SectionTitle>
+            <p className="text-muted-foreground max-w-3xl text-lg leading-relaxed text-pretty">
+              {PROBLEM.body}
+            </p>
+          </div>
+          <div className="border-border grid border-t border-l sm:grid-cols-3">
+            {PROBLEM.pains.map((p) => (
+              <div
+                key={p.title}
+                className="border-border flex flex-col gap-3 border-r border-b p-6 md:p-8"
+              >
+                <h3 className="text-base tracking-tight">{p.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{p.body}</p>
               </div>
             ))}
           </div>
         </SectionShell>
 
-        <SectionShell id="flow" compact>
-          <SectionHeader
-            label={SECTIONS.flow.label}
-            title={SECTIONS.flow.title}
-          />
+        {/* Engine */}
+        <SectionShell id="engine">
+          <div className="flex flex-col gap-4">
+            <SectionLabel>{ENGINE.label}</SectionLabel>
+            <SectionTitle>{ENGINE.title}</SectionTitle>
+          </div>
           <pre className="border-border text-foreground overflow-x-auto border px-6 py-8 font-mono text-sm leading-relaxed tracking-wide md:text-base">
-            <code>{ARCH_FLOW}</code>
+            <code>{ENGINE.flow}</code>
           </pre>
-        </SectionShell>
-
-        <SectionShell id="why-local" compact>
-          <SectionHeader
-            label={SECTIONS.whyLocal.label}
-            title={SECTIONS.whyLocal.title}
-          />
           <div className="border-border grid border-t border-l sm:grid-cols-3">
-            {WHY_LOCAL_FIRST.map((p) => (
-              <GridCard key={p.title} title={p.title} body={p.body} />
-            ))}
-          </div>
-        </SectionShell>
-
-        <SectionShell id="engine" compact>
-          <SectionHeader
-            label={SECTIONS.about.label}
-            title={SECTIONS.about.title}
-          />
-          <div className="max-w-4xl space-y-4 text-lg leading-relaxed text-pretty md:text-xl">
-            {ABOUT.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </div>
-          <div className="border-border grid border-t border-l sm:grid-cols-3">
-            {ENGINE_POINTS.map((p) => (
-              <GridCard key={p.title} title={p.title} body={p.body} />
-            ))}
-          </div>
-        </SectionShell>
-
-        <SectionShell compact>
-          <SectionHeader
-            label={SECTIONS.audience.label}
-            title={SECTIONS.audience.title}
-          />
-          <div className="border-border grid border-t border-l sm:grid-cols-2">
-            {ICPS.map((icp) => (
-              <GridCard key={icp.title} title={icp.title} body={icp.body} />
-            ))}
-          </div>
-          <div className="border-border grid border-t border-l sm:grid-cols-2 lg:grid-cols-4">
-            {PAINPOINTS.map((p) => (
-              <GridCard key={p.title} title={p.title} body={p.body} />
-            ))}
-          </div>
-        </SectionShell>
-
-        <SectionShell id="features" compact>
-          <SectionHeader
-            label={SECTIONS.features.label}
-            title={SECTIONS.features.title}
-          />
-          <div className="border-border grid border-t border-l sm:grid-cols-2 lg:grid-cols-3">
-            {MODULES.map((m) => (
-              <GridCard key={m.title} title={m.title} body={m.body} />
-            ))}
-          </div>
-        </SectionShell>
-
-        <SectionShell id="export" compact>
-          <SectionHeader
-            label={SECTIONS.export.label}
-            title={SECTIONS.export.title}
-          />
-          <div className="border-border grid border-t border-l sm:grid-cols-3">
-            {EXPORT_CONTRACTS.map((c) => (
-              <GridCard key={c.title} title={c.title} body={c.body} />
-            ))}
-          </div>
-        </SectionShell>
-
-        <SectionShell id="index" compact>
-          <SectionHeader
-            label={SECTIONS.index.label}
-            title={SECTIONS.index.title}
-          />
-          <div className="border-border grid border-t border-l sm:grid-cols-2 lg:grid-cols-4">
-            {INDEX_FEATURES.map((f) => (
-              <GridCard key={f.title} title={f.title} body={f.body} />
-            ))}
-          </div>
-        </SectionShell>
-
-        <SectionShell id="integrate" compact>
-          <SectionHeader
-            label={SECTIONS.integrate.label}
-            title={SECTIONS.integrate.title}
-          />
-          <div className="border-border grid border-t border-l sm:grid-cols-3">
-            {INTEGRATE.map((i) => (
-              <GridCard key={i.title} title={i.title} body={i.body} />
-            ))}
-          </div>
-        </SectionShell>
-
-        <SectionShell id="contract" compact>
-          <SectionHeader
-            label={SECTIONS.contract.label}
-            title={SECTIONS.contract.title}
-          />
-          <MonoList items={GUARANTEES} />
-          <p className="text-muted-foreground max-w-3xl text-sm leading-relaxed">
-            {CONTRACT_FOOTNOTE}{" "}
-            <a
-              href={GITHUB.docs.proofContract}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-foreground font-mono underline underline-offset-4"
-            >
-              Proof Contract ↗
-            </a>
-          </p>
-        </SectionShell>
-
-        <SectionShell id="cli" compact>
-          <SectionHeader
-            label={SECTIONS.cli.label}
-            title={SECTIONS.cli.title}
-          />
-          <div className="border-border flex flex-col border-t border-l">
-            {CLI_EXAMPLES.map((ex) => (
-              <div key={ex.label} className="border-border border-r border-b">
-                <div className="border-border flex items-center justify-between border-b px-6 py-3">
-                  <p className="text-muted-foreground font-mono text-xs tracking-[0.2em] uppercase">
-                    {ex.label}
-                  </p>
-                  <CopyButton text={ex.code} />
-                </div>
-                <pre className="text-foreground overflow-x-auto px-6 py-6 font-mono text-sm leading-relaxed">
-                  <code>{ex.code}</code>
-                </pre>
+            {ENGINE.contracts.map((c) => (
+              <div
+                key={c.id}
+                className="border-border flex flex-col gap-3 border-r border-b p-6 md:p-8"
+              >
+                <h3 className="font-mono text-sm tracking-tight">{c.id}</h3>
+                <p className="text-muted-foreground font-mono text-xs">{c.schema}</p>
+                <p className="text-muted-foreground text-sm leading-relaxed">{c.body}</p>
               </div>
             ))}
           </div>
-          <p className="text-muted-foreground text-sm leading-relaxed">
-            {SECTIONS.cliHint}
-          </p>
-          <p className="text-muted-foreground text-sm leading-relaxed">
-            <Link
-              href="/docs"
-              className="text-foreground underline underline-offset-4"
-            >
-              {SECTIONS.docsHint}
-            </Link>{" "}
-            ·{" "}
+          <div className="border-border grid border-t border-l sm:grid-cols-3">
+            {ENGINE.localFirst.map((p) => (
+              <div
+                key={p.title}
+                className="border-border flex flex-col gap-3 border-r border-b p-6 md:p-8"
+              >
+                <h3 className="text-base tracking-tight">{p.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{p.body}</p>
+              </div>
+            ))}
+          </div>
+        </SectionShell>
+
+        {/* Live Demo */}
+        <SectionShell id="demo">
+          <div className="flex flex-col gap-4">
+            <SectionLabel>{DEMO.label}</SectionLabel>
+            <SectionTitle>{DEMO.title}</SectionTitle>
+            <p className="text-muted-foreground max-w-3xl text-lg leading-relaxed text-pretty">
+              {DEMO.intro}
+            </p>
+          </div>
+
+          <div className="border-border grid border-t border-l sm:grid-cols-2">
+            {[DEMO.runA, DEMO.runB].map((run) => (
+              <div
+                key={run.label}
+                className="border-border flex flex-col gap-2 border-r border-b p-6 md:p-8"
+              >
+                <h3 className="font-mono text-xs tracking-[0.15em] uppercase">
+                  {run.label}
+                </h3>
+                <p className="text-muted-foreground text-sm">{run.detail}</p>
+                <p className="font-mono text-sm">
+                  proof_hash {run.hash}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="border-border flex flex-col border-t border-l">
+            {DEMO.commands.map((ex) => (
+              <CodeBlock key={ex.label} label={ex.label} code={ex.code} />
+            ))}
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div className="border-border border">
+              <div className="border-border border-b px-6 py-3">
+                <p className="text-muted-foreground font-mono text-xs tracking-[0.2em] uppercase">
+                  proof.json (excerpt)
+                </p>
+              </div>
+              <pre className="overflow-x-auto px-6 py-6 font-mono text-xs leading-relaxed md:text-sm">
+                <code>{DEMO.proofExcerpt}</code>
+              </pre>
+            </div>
+            <div className="border-border border">
+              <div className="border-border border-b px-6 py-3">
+                <p className="text-muted-foreground font-mono text-xs tracking-[0.2em] uppercase">
+                  proof_index.json (excerpt)
+                </p>
+              </div>
+              <pre className="overflow-x-auto px-6 py-6 font-mono text-xs leading-relaxed md:text-sm">
+                <code>{DEMO.indexExcerpt}</code>
+              </pre>
+            </div>
+          </div>
+
+          <div className="border-border border">
+            <div className="border-border flex items-center justify-between border-b px-6 py-3">
+              <p className="text-muted-foreground font-mono text-xs tracking-[0.2em] uppercase">
+                compare result
+              </p>
+              <CopyButton text={DEMO.compareExcerpt} />
+            </div>
+            <pre className="overflow-x-auto px-6 py-6 font-mono text-xs leading-relaxed md:text-sm">
+              <code>{DEMO.compareExcerpt}</code>
+            </pre>
+            <p className="border-border text-muted-foreground border-t px-6 py-5 text-sm leading-relaxed">
+              {DEMO.compareCallout}
+            </p>
+          </div>
+
+          <p className="text-muted-foreground font-mono text-xs tracking-wide">
+            {DEMO.makeHint}{" "}
             <a
-              href={GITHUB.docs.cliReference}
+              href={`${GITHUB.base}/tree/main/tests/simulation`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-foreground underline underline-offset-4"
             >
-              {SECTIONS.cliRef}
+              tests/simulation ↗
             </a>
           </p>
         </SectionShell>
 
-        <SectionShell id="early-access" compact>
-          <SectionHeader
-            label={SECTIONS.earlyAccess.label}
-            title={SECTIONS.earlyAccess.title}
-          />
-          <ul className="text-muted-foreground max-w-3xl space-y-3 font-mono text-sm leading-relaxed">
-            {EARLY_ACCESS.bullets.map((item) => (
-              <li key={item} className="flex gap-3">
-                <span aria-hidden="true">—</span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="flex flex-wrap gap-3">
-            <ExternalLink href={GITHUB.earlyAccessIssue} primary>
-              Request Early Access
-            </ExternalLink>
-            <ExternalLink href={earlyAccessMailto()}>
-              {EARLY_ACCESS.email}
-            </ExternalLink>
+        {/* Early Access */}
+        <SectionShell id="early-access">
+          <div className="flex flex-col gap-4">
+            <SectionLabel>{ACCESS.label}</SectionLabel>
+            <SectionTitle>{ACCESS.title}</SectionTitle>
+          </div>
+
+          <div className="border-border grid border-t border-l sm:grid-cols-2">
+            <div className="border-border flex flex-col gap-6 border-r border-b p-6 md:p-10">
+              <h3 className="font-mono text-xs tracking-[0.2em] uppercase">
+                {ACCESS.free.name}
+              </h3>
+              <ul className="space-y-3">
+                {ACCESS.free.items.map((item) => (
+                  <li key={item} className="flex gap-3 text-sm leading-relaxed">
+                    <span className="text-muted-foreground font-mono" aria-hidden>
+                      —
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="border-border bg-foreground/[0.03] flex flex-col gap-6 border-r border-b p-6 md:p-10">
+              <h3 className="font-mono text-xs tracking-[0.2em] uppercase">
+                {ACCESS.early.name}
+              </h3>
+              <ul className="space-y-3">
+                {ACCESS.early.items.map((item) => (
+                  <li key={item} className="flex gap-3 text-sm leading-relaxed">
+                    <span className="text-muted-foreground font-mono" aria-hidden>
+                      —
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-6">
+            <h3 className="font-mono text-xs tracking-[0.2em] uppercase">
+              Next steps
+            </h3>
+            <ol className="border-border max-w-3xl space-y-0 border-t">
+              {ACCESS.checklist.map((step, i) => (
+                <li
+                  key={step}
+                  className="border-border flex gap-4 border-b py-5 text-sm leading-relaxed"
+                >
+                  <span className="text-muted-foreground font-mono text-xs">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
+            <div className="flex flex-wrap gap-3">
+              <ExternalLink href={earlyAccessMailto()} primary>
+                {ACCESS.cta}
+              </ExternalLink>
+              <ExternalLink href={GITHUB.earlyAccessIssue}>
+                Open GitHub Issue
+              </ExternalLink>
+            </div>
+            <p className="text-muted-foreground text-sm">{ACCESS.note}</p>
           </div>
         </SectionShell>
 
-        <SectionShell id="faq" compact>
-          <SectionHeader
-            label={SECTIONS.faq.label}
-            title={SECTIONS.faq.title}
-          />
+        {/* FAQ */}
+        <SectionShell id="faq">
+          <SectionLabel>FAQ</SectionLabel>
           <dl className="border-border border-t">
             {FAQ.map((item) => (
               <div
@@ -420,9 +368,7 @@ export default function Home() {
                 className="border-border grid gap-3 border-b py-8 md:grid-cols-2 md:gap-10"
               >
                 <dt className="text-lg tracking-tight">{item.q}</dt>
-                <dd className="text-muted-foreground text-sm leading-relaxed">
-                  {item.a}
-                </dd>
+                <dd className="text-muted-foreground text-sm leading-relaxed">{item.a}</dd>
               </div>
             ))}
           </dl>
@@ -441,39 +387,19 @@ export default function Home() {
             <nav aria-label="Footer">
               <ul className="text-muted-foreground flex flex-wrap gap-x-6 gap-y-3 font-mono text-xs tracking-[0.15em] uppercase">
                 <li>
-                  <Link className="hover:text-foreground" href="/docs">
-                    Docs
-                  </Link>
-                </li>
-                <li>
-                  <a
-                    className="hover:text-foreground"
-                    href={GITHUB.docs.proofContract}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Proof Contract
+                  <a className="hover:text-foreground" href="#demo">
+                    Demo
                   </a>
                 </li>
                 <li>
-                  <a
-                    className="hover:text-foreground"
-                    href={GITHUB.earlyAccessIssue}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a className="hover:text-foreground" href="#early-access">
                     Early Access
                   </a>
                 </li>
                 <li>
-                  <a
-                    className="hover:text-foreground"
-                    href={`${GITHUB.base}/blob/main/LICENSE`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    MIT
-                  </a>
+                  <Link className="hover:text-foreground" href="/docs">
+                    Docs
+                  </Link>
                 </li>
                 <li>
                   <a
@@ -485,11 +411,16 @@ export default function Home() {
                     GitHub
                   </a>
                 </li>
+                <li>
+                  <a className="hover:text-foreground" href={earlyAccessMailto()}>
+                    {EARLY_ACCESS.email}
+                  </a>
+                </li>
               </ul>
             </nav>
           </div>
           <p className="text-muted-foreground font-mono text-xs tracking-wide">
-            {SECTIONS.footerLine}
+            {FOOTER.line}
           </p>
         </div>
       </footer>

@@ -8,10 +8,18 @@ pipeline/extract.py → transform.py → model.py → report.py
             run.py (orchestrator)
 ```
 
+## One-command demo
+
+```bash
+cd tests/simulation
+make demo          # seal v1+v2, compare, check golden/
+make golden-update # refresh golden/demo_excerpts.json
+```
+
+## Pytest suite
+
 ```bash
 pytest tests/simulation -q
-# or focused:
-pytest tests/simulation/test_production_simulation.py -q
 ```
 
 Covers: full proof→export→index, HTTP/S3 export, 10× determinism,

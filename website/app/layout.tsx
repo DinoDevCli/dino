@@ -14,9 +14,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dino — Local-First Audit Engine (Early Access)",
+  title: "Dino — Local-First Audit Engine for Python Pipelines",
   description:
-    "Deterministic proofs, export contracts, and a universal proof index. Early Access — free Team Keys for evaluation teams.",
+    "No SaaS. No Cloud. Only Proofs. Deterministic proofs, export contracts, and a universal proof index. Early Access — free Team Keys.",
 };
 
 export default function RootLayout({

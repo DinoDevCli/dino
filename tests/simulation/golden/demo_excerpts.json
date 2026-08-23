@@ -1,0 +1,53 @@
+{
+  "compare_excerpt": {
+    "changed": true,
+    "drift_delta": {
+      "from": "none",
+      "to": "none"
+    },
+    "pipeline_version_diff": {
+      "from": "fraud_score_v1",
+      "to": "fraud_score_v2"
+    },
+    "schema": "dino.proof.index.compare.v1",
+    "verdict_diff": {
+      "from": "PROOF_PARTIAL",
+      "to": "PROOF_PARTIAL"
+    }
+  },
+  "index_excerpt": {
+    "pipelines": [
+      "fraud_score_v1",
+      "fraud_score_v2"
+    ],
+    "proof_count": 2,
+    "schema": "dino.proof.index.v1"
+  },
+  "metrics_excerpt": {
+    "passed": 2,
+    "pipelines": [
+      "fraud_score_v1",
+      "fraud_score_v2"
+    ],
+    "schema": "dino.proof.index.metrics.v1",
+    "total": 2
+  },
+  "proof_excerpt": {
+    "audit": {
+      "reasons": [
+        "capsule_sealed",
+        "scan_clean",
+        "map_skipped"
+      ],
+      "summary": "Capsule sealed; one or more optional parts were skipped.",
+      "verdict": "PROOF_PARTIAL"
+    },
+    "parts": {
+      "capsule_replay_ok": true,
+      "drift_bucket": "aligned",
+      "scan_ok": true
+    },
+    "schema": "dino.proof.bundle.v1",
+    "status": "partial"
+  }
+}

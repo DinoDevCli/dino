@@ -21,6 +21,7 @@ tests/dino/_new_domains_work/
 tests/dino/_proof_e2e/
 tests/dino/_regression_work/
 tests/e2e/matrix/_workdir/
+tests/simulation/_work/
 dino/domains/proof/_self_test_out/
 
 # Website
