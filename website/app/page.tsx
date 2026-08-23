@@ -3,11 +3,9 @@ import { DemoWalkthrough } from "@/components/DemoWalkthrough";
 import { Footer } from "@/components/Footer";
 import { Container, MonoLabel, Section } from "@/components/Layout";
 import { Nav } from "@/components/Nav";
-import { TerminalPlayer } from "@/components/TerminalPlayer";
 import { EngineFlow, UspList } from "@/components/Tiles";
 import {
   DEMO_COPY,
-  DEMO_LINES,
   DEMO_STEPS,
   EARLY,
   FLOW,
@@ -100,22 +98,7 @@ export default function Home() {
         </Container>
       </Section>
 
-      {/* 6. Slow replay (secondary) */}
-      <Section id="replay">
-        <Container narrow>
-          <p className="font-mono text-xs text-muted">{DEMO_COPY.replayLabel}</p>
-          <p className="mt-2 text-sm text-muted">{DEMO_COPY.replayHint}</p>
-          <div className="mt-8">
-            <TerminalPlayer
-              lines={DEMO_LINES}
-              intervalMs={400}
-              pauseOnComments
-            />
-          </div>
-        </Container>
-      </Section>
-
-      {/* 7. Early Access */}
+      {/* 6. Early Access */}
       <Section id="early-access">
         <Container narrow>
           <MonoLabel accent>{EARLY.label}</MonoLabel>

@@ -17,8 +17,7 @@ Central story:
 - No marketing tone / polished SaaS
 - Documentary: real commands, golden JSON, real hashes when present
 - One page, anchor navigation
-- **Primary demo** = `DemoWalkthrough` (readable without Play)
-- **Terminal replay** = optional, slow, never first impression
+- **Demo** = `DemoWalkthrough` only (readable without Play; no terminal replay)
 
 ---
 
@@ -73,9 +72,8 @@ Hash links use plain `<a href="{basePath}/#…">` (Next `Link` does not scroll s
 3. Engine Flow (Seal → Export → Index → Dashboard)
 4. USPs (5 tiles)
 5. DemoWalkthrough (`#demo`)
-6. Terminal Replay (`#replay`) — optional, slow
-7. Early Access (`#early-access`) — mailto only
-8. Footer — Early Access · MIT · v0.3.1
+6. Early Access (`#early-access`) — mailto only
+7. Footer — Early Access · MIT · v0.3.1
 
 ---
 
@@ -85,7 +83,6 @@ Hash links use plain `<a href="{basePath}/#…">` (Next `Link` does not scroll s
 - Excerpts from `tests/simulation/golden/demo_excerpts.json`
 - Final callout: `changed: true` + `pipeline_version_diff`
 - Fail-closed step (`EMPTY_SCAN_ROOTS`) kept for honesty
-- TerminalPlayer: `autoplay=false`, ~400ms/line, pause on `#`
 
 ---
 
@@ -97,8 +94,7 @@ Hash links use plain `<a href="{basePath}/#…">` (Next `Link` does not scroll s
 | `website/tailwind.config.js` | Token mapping |
 | `website/app/page.tsx` | Section order |
 | `website/lib/content.ts` | All copy + golden excerpts |
-| `website/components/DemoWalkthrough.tsx` | Primary demo |
-| `website/components/TerminalPlayer.tsx` | Optional replay |
+| `website/components/DemoWalkthrough.tsx` | Demo |
 | `website/components/Nav.tsx` | Anchor + GitHub |
 | `docs/internal/WEBSITE_BLUEPRINT.md` | This document |
 

@@ -86,8 +86,6 @@ export const DEMO_COPY = {
   resultLabel: "# result",
   resultNote:
     "exit 1 when changed — CI gate. Local: make demo in tests/simulation.",
-  replayLabel: "Optional terminal replay (slow)",
-  replayHint: "Same session, line reveal. Walkthrough above is the source of truth.",
 };
 
 /** From tests/simulation/golden/demo_excerpts.json — do not invent */
@@ -174,25 +172,6 @@ export const DEMO_STEPS = [
       "EMPTY_SCAN_ROOTS — no silent pass without a real scan target.",
     artifactExcerpt: FAIL_SNIPPET,
   },
-];
-
-/** Replay transcript — same story, for slow TerminalPlayer */
-export const DEMO_LINES = [
-  "# optional replay — fraud_score v1 then v2, then compare",
-  "",
-  "$ dino proof run --command \"python pipeline/run.py --seed seed-42\" \\",
-  "    --scan ./pipeline --pipeline fraud_score_v1 --export ./archive",
-  "sealed  fraud_score_v1  status=partial  scan_ok=true",
-  "",
-  "$ dino proof run --command \"python pipeline/run.py --seed seed-123\" \\",
-  "    --scan ./pipeline --pipeline fraud_score_v2 --export ./archive",
-  "sealed  fraud_score_v2  status=partial  scan_ok=true",
-  "",
-  "$ dino proof index compare ./archive <hash_v1> <hash_v2>",
-  "changed: true",
-  "pipeline_version_diff: fraud_score_v1 → fraud_score_v2",
-  "",
-  "# exit 1 — CI gate signal",
 ];
 
 export const EARLY = {
