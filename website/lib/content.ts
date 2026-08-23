@@ -171,8 +171,12 @@ export const DEMO_STEPS = [
       "→ Dino refuses a silent pass. EMPTY_SCAN_ROOTS / fail-closed — no proof without a real scan target.",
     artifactExcerpt: `{
   "ok": false,
-  "type": "EMPTY_SCAN_ROOTS",
-  "message": "scan roots resolved to zero .py files"
+  "files_scanned": 0,
+  "findings": [{
+    "rule": "EMPTY_SCAN_ROOTS",
+    "detail": "no .py files under scan roots (missing paths: ./does_not_exist)",
+    "severity": "FAIL"
+  }]
 }`,
   },
 ];
