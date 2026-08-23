@@ -1,8 +1,23 @@
 export const SITE = {
   version: "0.3.1",
-  tagline: "Dino — Local-First Audit Engine for Python Pipelines",
+  tagline: "Local-First Audit Engine (Early Access)",
   subtitle:
-    "Deterministic proofs, export contracts, and a universal proof index for your dashboards.",
+    "Deterministic proofs, export contracts, and a universal proof index — now onboarding teams.",
+  earlyAccessCta:
+    "Your team gets a free Team Key during the test phase.",
+};
+
+export const EARLY_ACCESS = {
+  email: "early@dinodevcli.dev",
+  issueTitle: "Early Access Request",
+  banner:
+    "Early Access: Dino is onboarding 5–10 teams. Free Team Keys.",
+  bullets: [
+    "Dino is free for teams during the test phase",
+    "Full engine: proof, export contracts, proof index",
+    "No checkout, no SaaS, no dashboard",
+    "Pricing will be introduced after Early Access",
+  ],
 };
 
 export const NAV = [
@@ -11,7 +26,7 @@ export const NAV = [
   { href: "#export", label: "Export" },
   { href: "#index", label: "Index" },
   { href: "#integrate", label: "Integrate" },
-  { href: "#pricing", label: "Pricing" },
+  { href: "#early-access", label: "Early Access" },
   { href: "#faq", label: "FAQ" },
   { href: "/docs", label: "Docs" },
 ];
@@ -113,7 +128,7 @@ export const INTEGRATE = [
   },
   {
     title: "No SaaS, no hosting",
-    body: "No Dino cloud, no lock-in. MIT core + optional paid unlock for the Proof pack.",
+    body: "No Dino cloud, no lock-in. MIT core — free Team Keys during Early Access.",
   },
 ];
 
@@ -210,47 +225,9 @@ export const CLI_EXAMPLES = [
   },
 ];
 
-export const PACKS = [
-  {
-    name: "Free",
-    price: "€0",
-    hint: "Leakage Scan",
-    cta: "Get started",
-    tier: "free" as const,
-  },
-  {
-    name: "Indie",
-    price: "€49",
-    hint: "One-time — Full Proof Pack",
-    cta: "Buy",
-    tier: "indie" as const,
-    featured: true,
-  },
-  {
-    name: "Team",
-    price: "€39",
-    hint: "Per seat (20% off) — Full Proof Pack",
-    cta: "Buy / Contact",
-    tier: "team" as const,
-  },
-  {
-    name: "Large Teams",
-    price: "Custom",
-    hint: "20+ seats, invoicing on request",
-    cta: "Contact",
-    tier: "large" as const,
-  },
-];
-
-export const PRICING_RULES = [
-  "Team pricing starts at 3 seats",
-  "Team pricing applies up to 20 seats",
-  "Above 20 seats → contact us",
-  "No Enterprise tier, no subscriptions, no lock-in",
-  "Checkout via Lemon Squeezy · unlock with: dino upgrade --pack proof --key YOUR_KEY",
-];
-
-export const PRICING_UNLOCK = "dino upgrade --pack proof --key YOUR_LICENSE_KEY";
+export const PACKS: never[] = [];
+export const PRICING_RULES: string[] = [];
+export const PRICING_UNLOCK = "";
 
 export const FAQ = [
   {
@@ -259,7 +236,7 @@ export const FAQ = [
   },
   {
     q: "Is Dino open source?",
-    a: "Yes — MIT on GitHub. Paid packs are optional commercial unlocks (local license file).",
+    a: "Yes — MIT on GitHub. During Early Access, Team Keys for the Proof pack are free.",
   },
   {
     q: "How do I feed our dashboard?",
@@ -274,8 +251,8 @@ export const FAQ = [
     a: "Yes — capsule + replay + proof_hash within a sealed environment.",
   },
   {
-    q: "How do I unlock the Proof Pack?",
-    a: "Buy Indie/Team on Lemon Squeezy, then: dino upgrade --pack proof --key YOUR_LICENSE_KEY",
+    q: "How do I get Early Access?",
+    a: "Open a GitHub issue titled “Early Access Request” or email early@dinodevcli.dev. We onboard 5–10 teams with free Team Keys.",
   },
   {
     q: "Is Dino on PyPI?",
@@ -289,7 +266,7 @@ export const DOC_LINKS = [
   { label: "Proof Index", path: "docs/PROOF_INDEX.md" },
   { label: "CLI Reference", path: "docs/CLI_E2E_REFERENCE.md" },
   { label: "Examples", path: "docs/EXAMPLES.md" },
-  { label: "Lemon Squeezy", path: "docs/LEMON_SQUEEZY.md" },
+  { label: "Integration", path: "docs/INTEGRATION_DASHBOARDS.md" },
 ];
 
 export const SECTIONS = {
@@ -304,11 +281,11 @@ export const SECTIONS = {
   integrate: { label: "Integrate", title: "Integrates into your dashboard" },
   contract: { label: "Contracts", title: "What Dino guarantees" },
   cli: { label: "CLI", title: "Engine commands" },
-  pricing: { label: "Pricing", title: "Simple packs" },
+  earlyAccess: { label: "Early Access", title: "Free Team Keys during the test phase" },
   faq: { label: "FAQ", title: "FAQ" },
   docsHint: "Full docs",
   cliRef: "CLI reference ↗",
   cliHint:
     "Always prefer --export with --pipeline / --group / --tag so proof_index.json stays useful.",
-  footerLine: "Dino is a local audit motor — not a platform.",
+  footerLine: "Early Access · MIT License",
 };

@@ -5,6 +5,7 @@ import {
   ARCH_FLOW,
   CLI_EXAMPLES,
   CONTRACT_FOOTNOTE,
+  EARLY_ACCESS,
   ENGINE_POINTS,
   EXPORT_CONTRACTS,
   FAQ,
@@ -14,16 +15,13 @@ import {
   INTEGRATE,
   MODULES,
   NAV,
-  PACKS,
   PAINPOINTS,
-  PRICING_RULES,
-  PRICING_UNLOCK,
   QUICKSTART,
   SECTIONS,
   SITE,
   WHY_LOCAL_FIRST,
 } from "@/lib/content";
-import { GITHUB, contactHref, packCheckoutHref } from "@/lib/site";
+import { GITHUB, earlyAccessMailto } from "@/lib/site";
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -112,42 +110,35 @@ function ExternalLink({
   children,
   primary = false,
   className = "",
-  lemon = false,
 }: {
   href: string;
   children: React.ReactNode;
   primary?: boolean;
   className?: string;
-  lemon?: boolean;
 }) {
   const base =
     "border px-6 py-3 font-mono text-xs tracking-[0.15em] uppercase inline-block text-center";
   const cls = primary
     ? `${base} border-foreground bg-foreground text-background hover:bg-foreground/90 ${className}`
     : `${base} border-border text-foreground hover:border-foreground ${className}`;
-  const lemonClass = lemon ? "lemonsqueezy-button" : "";
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`${cls} ${lemonClass}`.trim()}
+      className={cls.trim()}
     >
       {children}
     </a>
   );
 }
 
-function packHref(tier: "free" | "indie" | "team" | "large"): {
-  href: string;
-  lemon: boolean;
-} {
-  return packCheckoutHref(tier);
-}
-
 export default function Home() {
   return (
     <div className="min-h-screen">
+      <div className="border-border bg-foreground/[0.03] border-b px-6 py-3 text-center font-mono text-xs tracking-[0.12em] uppercase md:px-10">
+        {EARLY_ACCESS.banner}
+      </div>
       <header className="px-6 pt-10 pb-20 md:px-10 md:pt-14 md:pb-32">
         <div className="mx-auto max-w-6xl">
           <nav
@@ -175,15 +166,24 @@ export default function Home() {
           </nav>
 
           <div className="mt-24 flex max-w-4xl flex-col gap-8 md:mt-40">
+            <p className="text-muted-foreground font-mono text-xs tracking-[0.2em] uppercase">
+              Dino
+            </p>
             <h1 className="text-4xl leading-[1.05] tracking-tight text-balance md:text-6xl lg:text-7xl">
               {SITE.tagline}
             </h1>
             <p className="text-muted-foreground max-w-2xl text-lg leading-relaxed text-pretty">
               {SITE.subtitle}
             </p>
+            <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
+              {SITE.earlyAccessCta}
+            </p>
             <div className="flex flex-wrap gap-3">
-              <ExternalLink href={GITHUB.downloadZip} primary>
-                Download
+              <ExternalLink href={GITHUB.earlyAccessIssue} primary>
+                Request Early Access
+              </ExternalLink>
+              <ExternalLink href={earlyAccessMailto()}>
+                Email
               </ExternalLink>
               <ExternalLink href={GITHUB.base}>GitHub</ExternalLink>
               <a
@@ -385,64 +385,27 @@ export default function Home() {
           </p>
         </SectionShell>
 
-        <SectionShell id="pricing" compact>
+        <SectionShell id="early-access" compact>
           <SectionHeader
-            label={SECTIONS.pricing.label}
-            title={SECTIONS.pricing.title}
+            label={SECTIONS.earlyAccess.label}
+            title={SECTIONS.earlyAccess.title}
           />
-          <div className="border-border grid border-t border-l sm:grid-cols-2 lg:grid-cols-4">
-            {PACKS.map((pack) => {
-              const checkout = packHref(pack.tier);
-              return (
-                <div
-                  key={pack.name}
-                  className={`border-border flex flex-col gap-8 border-r border-b p-6 md:p-8 ${
-                    pack.featured ? "bg-foreground/[0.03]" : ""
-                  }`}
-                >
-                  <div className="flex flex-col gap-3">
-                    <h3 className="font-mono text-xs tracking-[0.2em] uppercase">
-                      {pack.name}
-                    </h3>
-                    <p className="text-4xl tracking-tight">{pack.price}</p>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      {pack.hint}
-                    </p>
-                  </div>
-                  <ExternalLink
-                    href={checkout.href}
-                    lemon={checkout.lemon}
-                    className="mt-auto px-5 py-3"
-                  >
-                    {pack.cta}
-                  </ExternalLink>
-                </div>
-              );
-            })}
-          </div>
-          <ul className="text-muted-foreground max-w-3xl space-y-2 font-mono text-sm leading-relaxed">
-            {PRICING_RULES.map((rule) => (
-              <li key={rule} className="flex gap-3">
+          <ul className="text-muted-foreground max-w-3xl space-y-3 font-mono text-sm leading-relaxed">
+            {EARLY_ACCESS.bullets.map((item) => (
+              <li key={item} className="flex gap-3">
                 <span aria-hidden="true">—</span>
-                <span>{rule}</span>
+                <span>{item}</span>
               </li>
             ))}
           </ul>
-          <p className="font-mono text-sm leading-relaxed">
-            Unlock:{" "}
-            <code className="text-foreground">{PRICING_UNLOCK}</code>
-            <br />
-            <span className="text-muted-foreground">
-              After Lemon Squeezy checkout, paste the license key into the
-              command above. Contact:{" "}
-              <a
-                href={contactHref()}
-                className="text-foreground underline underline-offset-4"
-              >
-                {GITHUB.contactEmail}
-              </a>
-            </span>
-          </p>
+          <div className="flex flex-wrap gap-3">
+            <ExternalLink href={GITHUB.earlyAccessIssue} primary>
+              Request Early Access
+            </ExternalLink>
+            <ExternalLink href={earlyAccessMailto()}>
+              {EARLY_ACCESS.email}
+            </ExternalLink>
+          </div>
         </SectionShell>
 
         <SectionShell id="faq" compact>
@@ -472,7 +435,7 @@ export default function Home() {
             <span className="font-mono text-sm tracking-[0.3em] uppercase">
               dino{" "}
               <span className="text-muted-foreground tracking-normal normal-case">
-                v{SITE.version}
+                Early Access · MIT · v{SITE.version}
               </span>
             </span>
             <nav aria-label="Footer">
@@ -495,6 +458,16 @@ export default function Home() {
                 <li>
                   <a
                     className="hover:text-foreground"
+                    href={GITHUB.earlyAccessIssue}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Early Access
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="hover:text-foreground"
                     href={`${GITHUB.base}/blob/main/LICENSE`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -510,16 +483,6 @@ export default function Home() {
                     rel="noopener noreferrer"
                   >
                     GitHub
-                  </a>
-                </li>
-                <li>
-                  <a className="hover:text-foreground" href="#pricing">
-                    Pricing
-                  </a>
-                </li>
-                <li>
-                  <a className="hover:text-foreground" href={contactHref()}>
-                    Contact
                   </a>
                 </li>
               </ul>

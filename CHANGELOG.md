@@ -2,6 +2,7 @@
 
 ## 0.3.1
 
+- **Early Access:** free Team Keys for evaluation teams; pricing deferred
 - **Public launch positioning:** local-first audit engine (not a platform)
 - Export contracts: path / HTTP / S3 (`dino.proof.export.v1`)
 - Proof index: `proof_index.json`, compare, metrics, layout (`dino.proof.index.v1`)

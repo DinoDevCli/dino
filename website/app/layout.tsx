@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -15,9 +14,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dino — Local-First Audit Engine for Python Pipelines",
+  title: "Dino — Local-First Audit Engine (Early Access)",
   description:
-    "Deterministic proofs, export contracts, and a universal proof index for your dashboards. Local audit motor — not a platform.",
+    "Deterministic proofs, export contracts, and a universal proof index. Early Access — free Team Keys for evaluation teams.",
 };
 
 export default function RootLayout({
@@ -30,13 +29,7 @@ export default function RootLayout({
       lang="en"
       className={`bg-background ${plexSans.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="font-sans antialiased">
-        {children}
-        <Script
-          src="https://app.lemonsqueezy.com/js/lemon.js"
-          strategy="afterInteractive"
-        />
-      </body>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   );
 }

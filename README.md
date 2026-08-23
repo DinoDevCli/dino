@@ -1,13 +1,22 @@
-# Dino
+# Dino — Local-First Audit Engine (Early Access)
 
 [![CI](https://github.com/DinoDevCli/dino/actions/workflows/ci.yml/badge.svg)](https://github.com/DinoDevCli/dino/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
 [![Local-First](https://img.shields.io/badge/Local--First-audit%20engine-0a0a0a)](docs/PROOF_INDEX.md)
 
-**Local-First Audit Engine for Python Pipelines**
+Dino is currently in **Early Access**.  
+We're onboarding 5–10 teams (risk, fraud, ML governance, research) to test the engine,
+integrate the export/index artifacts into their dashboards, and provide feedback.
 
-Deterministic proofs · export contracts · universal proof index — for **your** dashboards.
+During Early Access:
+
+- Dino is fully functional (proof engine, export contracts, proof index)
+- Team Keys are **free**
+- No checkout, no SaaS, no dashboard
+- We collect feedback + integration examples
+
+**Deterministic proofs · export contracts · universal proof index — for your dashboards.**
 
 > Dino is a local audit motor — not a platform. No hosted UI. No SaaS. No cloud product.
 
@@ -25,6 +34,11 @@ dino proof index metrics ./archive
 dino proof index compare ./archive <hash_a> <hash_b>
 dino proof index layout ./archive
 ```
+
+### Request Early Access
+
+Open an issue: https://github.com/DinoDevCli/dino/issues/new?title=Early%20Access%20Request  
+Or email: [early@dinodevcli.dev](mailto:early@dinodevcli.dev)
 
 ---
 
@@ -65,11 +79,11 @@ Not a general SAST suite, secret scanner, SBOM tool, or image provenance product
 ## Quickstart
 
 ```bash
-pip install "git+https://github.com/DinoDevCli/dino.git"
+pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
 dino scan leakage ./tests/e2e/pipe.py          # Free pack
 
-# Proof pack (after Lemon Squeezy purchase):
-dino upgrade --pack proof --key YOUR_LICENSE_KEY
+# Proof pack (Early Access — request a free Team Key):
+dino upgrade --pack proof --key YOUR_TEAM_KEY
 dino proof doctor
 
 dino proof run \
@@ -169,18 +183,7 @@ Canonical bundles are content-addressed. Browse folders are symlinks (or `.dino_
 
 ---
 
-## Pricing
-
-| Pack | Price | Includes |
-|------|-------|----------|
-| **Free** | €0 | Leakage Scan |
-| **Indie** | €49 one-time | Full Proof Pack |
-| **Team** | €39 per seat (20% off) | Full Proof Pack |
-| **Large Teams** | Custom | 20+ seats |
-
-Checkout via **Lemon Squeezy**; unlock with `dino upgrade --pack proof --key …` ([`docs/LEMON_SQUEEZY.md`](docs/LEMON_SQUEEZY.md)).
-
-Contact: [noahpeitz95@gmail.com](mailto:noahpeitz95@gmail.com)
+Pricing will be introduced after Early Access.
 
 ---
 
@@ -195,7 +198,6 @@ Contact: [noahpeitz95@gmail.com](mailto:noahpeitz95@gmail.com)
 | [`EXAMPLES.md`](docs/EXAMPLES.md) | Short examples |
 | [`INTEGRATION_DASHBOARDS.md`](docs/INTEGRATION_DASHBOARDS.md) | Airflow, MLflow, Superset, etc. |
 | [`website/`](website/) | Landing page |
-| [`docs/internal/LAUNCH_KIT.md`](docs/internal/LAUNCH_KIT.md) | Announcement copy (maintainers) |
 
 ---
 
