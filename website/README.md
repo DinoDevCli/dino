@@ -21,11 +21,20 @@ NEXT_PUBLIC_GITHUB_REPO=dino
 
 Optional: `NEXT_PUBLIC_CONTACT_EMAIL` (default `noahpeitz95@gmail.com`).
 
-## Deploy (Vercel)
+## Deploy
 
-- Root: `website`
-- Framework: Next.js (static export)
-- Env as above
+### Live (GitHub Pages)
+
+Push to `main` → [Deploy website](../../.github/workflows/deploy-website.yml) →  
+**https://dindevcli.github.io/dino/**
+
+Uses `NEXT_PUBLIC_BASE_PATH=/dino` in CI only.
+
+### Vercel (optional custom domain)
+
+- Import `DinoDevCli/dino`, root directory **`website`**
+- Env: `NEXT_PUBLIC_GITHUB_*`, optional Lemon checkout URLs (no `BASE_PATH`)
+- `vercel login && cd website && npx vercel --prod`
 
 ## Copy
 
