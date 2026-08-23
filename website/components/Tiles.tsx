@@ -1,36 +1,3 @@
-export function Tile({
-  label,
-  title,
-  body,
-  dimmed = false,
-  icon,
-}: {
-  label: string;
-  title: string;
-  body: string;
-  dimmed?: boolean;
-  icon?: React.ReactNode;
-}) {
-  return (
-    <div
-      className={`flex flex-col gap-3 border border-border bg-surface p-6 ${
-        dimmed ? "opacity-60" : ""
-      }`}
-    >
-      <div className="flex items-center gap-3">
-        {icon ? (
-          <span className="flex h-8 w-8 items-center justify-center border border-border-strong font-mono text-xs text-accent">
-            {icon}
-          </span>
-        ) : null}
-        <span className="font-mono text-sm text-accent">{label}</span>
-      </div>
-      <p className="font-medium text-foreground">{title}</p>
-      <p className="text-sm leading-relaxed text-muted">{body}</p>
-    </div>
-  );
-}
-
 export function EngineFlow({
   steps,
 }: {
@@ -41,25 +8,23 @@ export function EngineFlow({
       {steps.map((s, i) => (
         <div key={s.step} className="flex flex-1 items-stretch md:min-w-0">
           <div
-            className={`flex w-full flex-col gap-2 border border-border bg-surface p-5 ${
-              s.accent ? "" : "opacity-55"
+            className={`flex w-full flex-col gap-2 border border-border bg-surface p-6 ${
+              s.accent ? "" : "opacity-60"
             }`}
           >
             <span
-              className={`font-mono text-xs uppercase tracking-wider ${
+              className={`font-mono text-sm ${
                 s.accent ? "text-accent" : "text-muted"
               }`}
             >
               {s.step}
             </span>
-            <p className="font-mono text-sm font-medium text-foreground">
-              {s.title}
-            </p>
-            <p className="text-xs text-muted">{s.detail}</p>
+            <p className="font-medium text-foreground">{s.title}</p>
+            <p className="text-sm text-muted">{s.detail}</p>
           </div>
           {i < steps.length - 1 ? (
             <div
-              className="hidden shrink-0 items-center px-2 text-border-strong md:flex"
+              className="hidden shrink-0 items-center px-2 text-2xl text-border md:flex"
               aria-hidden
             >
               →
@@ -67,6 +32,32 @@ export function EngineFlow({
           ) : null}
         </div>
       ))}
+    </div>
+  );
+}
+
+/** Blueprint USP list — typography only, no icons */
+export function UspList({
+  items,
+  wide,
+}: {
+  items: { label: string; title: string; body: string }[];
+  wide: { label: string; title: string; body: string };
+}) {
+  return (
+    <div className="mt-12 grid grid-cols-1 gap-x-16 gap-y-8 sm:grid-cols-2">
+      {items.map((usp) => (
+        <div key={usp.label}>
+          <h3 className="font-mono text-sm text-accent">{usp.label}</h3>
+          <p className="mt-1 font-medium text-foreground">{usp.title}</p>
+          <p className="text-sm text-muted">{usp.body}</p>
+        </div>
+      ))}
+      <div className="col-span-1 border-t border-border pt-8 sm:col-span-2">
+        <h3 className="font-mono text-sm text-accent">{wide.label}</h3>
+        <p className="mt-1 font-medium text-foreground">{wide.title}</p>
+        <p className="text-sm text-muted">{wide.body}</p>
+      </div>
     </div>
   );
 }

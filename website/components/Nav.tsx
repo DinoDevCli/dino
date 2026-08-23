@@ -2,14 +2,14 @@ import Link from "next/link";
 
 const LINKS = [
   { href: "/", label: "Home" },
-  { href: "/demo", label: "Live Demo" },
-  { href: "/early-access", label: "Early Access" },
+  { href: "/#demo", label: "Demo" },
+  { href: "/#early-access", label: "Early Access" },
   { href: "/docs", label: "Docs" },
 ];
 
-export function Nav({ active }: { active?: "home" | "demo" | "early-access" | "docs" }) {
+export function Nav({ active = "home" }: { active?: "home" | "docs" }) {
   return (
-    <header className="relative z-20 border-b border-border bg-background/80 backdrop-blur-sm">
+    <header className="relative z-20 border-b border-border bg-background/90">
       <nav
         className="mx-auto flex max-w-content items-center justify-between px-gutter py-5"
         aria-label="Primary"
@@ -22,8 +22,9 @@ export function Nav({ active }: { active?: "home" | "demo" | "early-access" | "d
         </Link>
         <ul className="flex items-center gap-1 sm:gap-6">
           {LINKS.map((item) => {
-            const key = item.href === "/" ? "home" : item.href.slice(1);
-            const isActive = active === key;
+            const isActive =
+              (active === "home" && item.href === "/") ||
+              (active === "docs" && item.href === "/docs");
             return (
               <li key={item.href}>
                 <Link

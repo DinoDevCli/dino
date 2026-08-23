@@ -1,4 +1,4 @@
-/** Site copy + demo transcript for TerminalPlayer */
+/** Blueprint copy — single-page marketing story */
 
 export const SITE = {
   version: "0.3.1",
@@ -27,65 +27,62 @@ export const PROBLEM_SOLUTION = {
 
 export const FLOW = [
   {
-    step: "1 · Seal",
+    step: "1. Seal",
     title: "proof.json",
     detail: "Capsule + Scan + Hash",
     accent: true,
   },
   {
-    step: "2 · Export",
+    step: "2. Export",
     title: "export.v1",
     detail: "Path / HTTP / S3",
     accent: true,
   },
   {
-    step: "3 · Index",
+    step: "3. Index",
     title: "proof_index.json",
     detail: "Compare · Metrics · Layout",
     accent: true,
   },
   {
-    step: "4 · Dashboard",
+    step: "4. Dashboard",
     title: "Your UI",
     detail: "Superset / Airflow / Custom",
     accent: false,
   },
 ];
 
+/** First four USPs — two-column grid */
 export const USPS = [
   {
     label: "Local-First",
-    icon: "L",
     title: "No cloud. No platform.",
-    body: "No data leaves your infrastructure. Offline by default.",
+    body: "No data leaves your infrastructure.",
   },
   {
     label: "Deterministic",
-    icon: "D",
     title: "Content-addressed proof_hash.",
-    body: "Same seal inputs → same hash. Capsule replay included.",
+    body: "Every sealed run is reproducible.",
   },
   {
     label: "Universal Index",
-    icon: "I",
     title: "Dashboard-ready JSON.",
-    body: "proof_index.json — one format for every consumer.",
+    body: "One format for every consumer.",
   },
   {
     label: "Export Contracts",
-    icon: "E",
     title: "Path / HTTP / S3.",
-    body: "dino.proof.export.v1 into your store or ingest API.",
-  },
-  {
-    label: "Compare & Metrics",
-    icon: "C",
-    title: "Drift between runs.",
-    body: "pipeline · verdict · leakage · artifacts deltas for CI gates.",
+    body: "Integrate anywhere you already store artifacts.",
   },
 ];
 
-/** Line-by-line transcript for the embedded terminal player */
+/** Full-width fifth USP */
+export const USP_WIDE = {
+  label: "Compare & Metrics",
+  title: "Drift analysis between runs.",
+  body: "See what changed — pipeline, verdict, leakage, artifacts.",
+};
+
 export const DEMO_LINES = [
   "$ dino proof run --command \"python pipeline/run.py --seed seed-42\" \\",
   "    --scan ./pipeline --pipeline fraud_score_v1 \\",

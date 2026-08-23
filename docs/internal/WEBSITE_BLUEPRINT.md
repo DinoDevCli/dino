@@ -1,6 +1,6 @@
 # DINO WEBSITE BLUEPRINT
 
-**Version:** 1.0  
+**Version:** 1.1  
 **Target:** Developers, Data Engineers, ML Engineers, Compliance teams  
 **Tone:** Precise, direct, technical, calm, trust-building  
 **Aesthetic:** Purist, industrial, dark, content-first
@@ -42,42 +42,56 @@ Central story:
 - No box-shadow, no glow, no decorative icons/emojis
 - Left-aligned (docs feel, not sales)
 - Soft transitions `0.2s ease`
+- Subtle hero grid only (no radial glow)
 
 ### Voice
 
 - Precise — say exactly what it is
 - Direct — no filler
 - Technical — use real terms
-- Confident — no hype words (no “revolutionary”, “disruptive”)
+- Confident — no hype words
 - Short — every sentence earns its place
 
 ---
 
-## 2. Page map
+## 2. Page map (single marketing page)
 
 | Route | Role |
 |-------|------|
-| `/` | Marketing / science of product |
-| `/demo` | Live Action — TerminalPlayer (or asciinema via `NEXT_PUBLIC_ASCIINEMA_ID`) |
-| `/early-access` | Conversion — mailto CTA |
-| `/docs` | Doc index |
+| `/` | Full story — all sections via anchors |
+| `/docs` | Doc index (repo links) |
+
+### Anchors on `/`
+
+| Anchor | Section |
+|--------|---------|
+| (hero) | Local-First / Audit Engine + CTAs |
+| `#problem` | Problem ↔ Solution |
+| `#engine` | Seal → Export → Index → Dashboard |
+| `#capabilities` | USP spec list (no icons) |
+| `#demo` | Embedded TerminalPlayer |
+| `#quickstart` | Install code block |
+| `#early-access` | Mailto conversion |
+
+Nav: **Home · Demo · Early Access · Docs** → `/`, `/#demo`, `/#early-access`, `/docs`
 
 ### Components
 
-`Nav` · `Button` · `Container` · `Section` · `Tile` · `EngineFlow` · `TerminalPlayer` · `AsciinemaEmbed` · `Footer`
+`Nav` · `Button` · `Container` · `Section` · `EngineFlow` · `UspList` · `TerminalPlayer` · `Footer`
 
 ---
 
 ## 3. Rules checklist
 
-- [ ] No icon clusters in tiles
-- [ ] No rounded corners
-- [ ] No shadows
-- [ ] No generic marketing fluff
-- [ ] Max contrast: black / gray / white / one blue
-- [ ] Asymmetry over centered sales layouts
-- [ ] Mono for technical identifiers
-- [ ] Primary CTA is email (developers write mail)
+- [x] No icon clusters in USP tiles
+- [x] No rounded corners
+- [x] No shadows / no glow
+- [x] No generic marketing fluff
+- [x] Max contrast: black / gray / white / one blue
+- [x] Asymmetry over centered sales layouts
+- [x] Mono for technical identifiers
+- [x] Primary CTA is email
+- [x] One long page (not multi-route marketing)
 
 ---
 
@@ -85,9 +99,9 @@ Central story:
 
 | File | Role |
 |------|------|
-| `app/globals.css` | CSS variables (palette) |
+| `app/globals.css` | CSS variables + hero grid |
 | `tailwind.config.js` | Token mapping + fonts |
 | `app/layout.tsx` | Inter + JetBrains Mono |
-| `app/page.tsx` | Blueprint sections |
+| `app/page.tsx` | Single-page blueprint sections |
 | `lib/content.ts` | Copy source |
 | `docs/internal/WEBSITE_BLUEPRINT.md` | This document |
