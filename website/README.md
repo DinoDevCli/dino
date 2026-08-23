@@ -26,7 +26,7 @@ Optional: `NEXT_PUBLIC_CONTACT_EMAIL` (default `noahpeitz95@gmail.com`).
 ### Live (GitHub Pages)
 
 Push to `main` → [Deploy website](../../.github/workflows/deploy-website.yml) →  
-**https://dindevcli.github.io/dino/**
+**https://dinodevcli.github.io/dino/**
 
 Uses `NEXT_PUBLIC_BASE_PATH=/dino` in CI only.
 

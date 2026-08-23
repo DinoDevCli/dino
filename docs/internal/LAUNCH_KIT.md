@@ -6,7 +6,7 @@
 > Deterministic proofs, export contracts, and a universal proof index for your dashboards.  
 > Dino is a local audit motor — not a platform. No UI. No SaaS. No cloud.
 
-**Links:** GitHub https://github.com/DinoDevCli/dino · Release https://github.com/DinoDevCli/dino/releases/tag/v0.3.1 · Website https://dindevcli.github.io/dino/
+**Links:** GitHub https://github.com/DinoDevCli/dino · Release https://github.com/DinoDevCli/dino/releases/tag/v0.3.1 · Website https://dinodevcli.github.io/dino/
 
 ---
 
@@ -15,7 +15,7 @@
 | # | Action | Status |
 |---|--------|--------|
 | 01 | GitHub Release v0.3.1 | Done — https://github.com/DinoDevCli/dino/releases/tag/v0.3.1 |
-| 02 | Website live | GitHub Pages — https://dindevcli.github.io/dino/ (Vercel optional for custom domain) |
+| 02 | Website live | **https://dinodevcli.github.io/dino/** (Vercel optional for custom domain) |
 | 03 | Post X / LinkedIn / Reddit / HN (copy below) | Manual |
 | 04 | DM 5–10 teams (Risk, Fraud, ML, Research) — template below | Manual |
 | 05 | Share integration doc with teams using Superset/Airflow/etc. | [`INTEGRATION_DASHBOARDS.md`](../INTEGRATION_DASHBOARDS.md) |
@@ -214,7 +214,7 @@ Teams wire Dino into Airflow/Prefect post-task hooks → S3 archive → Superset
 ```bash
 gh repo edit DinoDevCli/dino \
   --description "Local-first audit engine for Python pipelines — proofs, export contracts, proof index" \
-  --homepage "https://dindevcli.github.io/dino/"
+  --homepage "https://dinodevcli.github.io/dino/"
 
 gh repo edit DinoDevCli/dino --add-topic python --add-topic mlops --add-topic audit --add-topic local-first
 ```
