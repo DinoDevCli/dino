@@ -8,7 +8,7 @@
 
 ## Reporting a vulnerability
 
-Email **noahpeitz95@gmail.com** with subject `Dino security`. Do not open a public issue for exploitable defects.
+Email **early@dinodevcli.dev** with subject `Dino security`. Do not open a public issue for exploitable defects.
 
 We aim to acknowledge within 72 hours.
 

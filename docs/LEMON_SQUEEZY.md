@@ -1,56 +1,40 @@
-# Lemon Squeezy setup (Dino Proof Pack)
+# License unlock (Proof Pack)
 
-Payment + license keys for the paid **Proof** pack.
+**Current phase: Early Access — no checkout.**
 
-## Store products
-
-Create two products (one-time, license keys enabled):
-
-| Product | Price | Activations | Notes |
-|---------|-------|-------------|-------|
-| Dino Indie | €49 | 1–3 seats | Variant for solo / small |
-| Dino Team | €39 / seat | Match seat count | Or one product with quantity |
-
-In Lemon Squeezy:
-
-1. **Products → New** → enable **Generate license keys**
-2. Set activation limit (Indie: `1`, Team: seat count)
-3. **Share → Buy** → copy the checkout URL  
-   Form: `https://YOURSTORE.lemonsqueezy.com/checkout/buy/VARIANT_ID`
-
-## Website env
-
-In Vercel / `website/.env.local`:
+| Pack | Access |
+|------|--------|
+| Free (scan) | Forever |
+| Proof | Free Team Key via [early@dinodevcli.dev](mailto:early@dinodevcli.dev) or [GitHub issue](https://github.com/DinoDevCli/dino/issues/new?title=Early%20Access%20Request) |
 
 ```bash
-NEXT_PUBLIC_LEMONSQUEEZY_CHECKOUT_INDIE=https://YOURSTORE.lemonsqueezy.com/checkout/buy/XXXXXXXX
-NEXT_PUBLIC_LEMONSQUEEZY_CHECKOUT_TEAM=https://YOURSTORE.lemonsqueezy.com/checkout/buy/YYYYYYYY
-```
-
-If unset, Indie/Team CTAs fall back to mailto contact. Lemon.js is already loaded for overlay checkout (`.lemonsqueezy-button`).
-
-## Customer unlock
-
-```bash
-pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.0"
-dino upgrade --pack proof --key PASTE_LICENSE_KEY_HERE
+pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
+dino scan leakage ./tests/e2e/pipe.py          # free forever
+dino upgrade --pack proof --key YOUR_TEAM_KEY  # Early Access
 dino proof doctor
 ```
 
-The CLI calls Lemon Squeezy `POST /v1/licenses/activate` (no API token required for License API). On success it writes `~/.dino/license.json`.
-
-## Dev / CI without Lemon
+Early Access keys are HMAC-signed (`dinoea.v1.*`) with expiry. Maintainers issue them with:
 
 ```bash
-export DINO_OFFLINE_LICENSE_KEYS=dev-key-1
-dino upgrade --pack proof --key dev-key-1
+dino issue-key --team risk-lab --days 90
 ```
 
-Or (local only): `DINO_LICENSE_SKIP_REMOTE=1`.
+Engine only — dashboards are external. Website: https://dinodevcli.github.io/dino/
 
-## Checklist before going live
+---
 
-- [ ] Indie + Team products created with license keys
-- [ ] Checkout URLs in Vercel env
-- [ ] Test purchase → key email → `dino upgrade --pack proof --key …`
-- [ ] Confirm activation limit matches seats
+## Deferred: Lemon Squeezy (post–Early Access)
+
+Commercial Lemon Squeezy license activation remains in the CLI as a fallback path
+after Early Access Team Keys. **Do not advertise checkout or prices during Early Access.**
+
+When pricing returns:
+
+1. Create Lemon products with license keys
+2. Customers: `dino upgrade --pack proof --key <lemon_key>`
+3. CLI calls `POST /v1/licenses/activate` and writes `~/.dino/license.json`
+
+### Dev / CI without Lemon
+
+Use Early Access keys, or set `DINO_LICENSE_ALLOWLIST` / offline fixtures as documented in tests.

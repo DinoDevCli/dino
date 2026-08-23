@@ -18,7 +18,8 @@ During Early Access:
 
 **Deterministic proofs · export contracts · universal proof index — for your dashboards.**
 
-> Dino is a local audit motor — not a platform. No hosted UI. No SaaS. No cloud product.
+> Dino is a local-first audit engine that produces sealed proofs, export envelopes, and a universal proof index for your dashboards.  
+> Dino outputs audit artifacts — dashboards render them. No hosted UI. No SaaS. No cloud product.
 
 ```bash
 dino proof run \
@@ -184,9 +185,16 @@ Canonical bundles are content-addressed. Browse folders are symlinks (or `.dino_
 | **Verify** | Proof | Drift, supersession, attest |
 | **Proof** | Proof | Chain + export + index |
 
----
+## Packs
 
-Pricing will be introduced after Early Access.
+| Pack | Access | Role |
+|------|--------|------|
+| **Free** | Forever | Leakage scan (`dino scan leakage`) |
+| **Proof** | Early Access Team Key | Capsule, map, bundle, flight, verify, proof chain + export/index |
+
+Request a free Team Key: [issue](https://github.com/DinoDevCli/dino/issues/new?title=Early%20Access%20Request) · [early@dinodevcli.dev](mailto:early@dinodevcli.dev)
+
+Engine only — dashboards are external.
 
 ---
 

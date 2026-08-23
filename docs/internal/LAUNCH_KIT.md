@@ -22,34 +22,46 @@
 | 06 | Collect 3–5 case studies — template below | Ongoing |
 | 07 | Pitch newsletters — templates below | Manual |
 
-**Pricing (Phase 1 — do not change):** Free scan · Indie €49 one-time · Team €39/seat · No Enterprise push.
+**Early Access (current):** Free scan forever · Proof pack via free Team Key ·  
+[early@dinodevcli.dev](mailto:early@dinodevcli.dev) · no checkout · dashboards external.
 
 ---
 
 ## GitHub Release notes (paste into v0.3.1)
 
 ```markdown
+## Early Access
+
+Dino v0.3.1 enters **Early Access**.
+Team Keys are free. No checkout.
+
+**Request Early Access:** [Open an issue](https://github.com/DinoDevCli/dino/issues/new?title=Early%20Access%20Request) · [early@dinodevcli.dev](mailto:early@dinodevcli.dev)
+
+---
+
 ## Dino v0.3.1 — Local-First Audit Engine
 
 **Dino — Local-First Audit Engine for Python Pipelines**  
-Deterministic proofs, export contracts, and a universal proof index for your dashboards.
+Deterministic proofs, export envelopes, and a universal proof index for your dashboards.
 
-Not a platform. Not SaaS. Not a hosted dashboard. An engine your team integrates.
+Dino outputs audit artifacts — dashboards render them. Engine only.
 
 ### What's new since v0.3.0
 
 - **Export contracts** — path / HTTP / S3 (`dino.proof.export.v1`)
 - **Proof index** — `proof_index.json` (`dino.proof.index.v1`)
-- **Compare / Metrics / Layout** — CLI-only governance JSON for your dashboards
+- **Compare / Metrics / Layout** — governance JSON for your dashboards
 - **Archive layout** — `pipelines/` · `groups/` · `tags/` browse links
 - **Full E2E test suite** — `tests/e2e/`
-- **Lemon Squeezy** license key unlock for Proof pack
+- **Early Access Team Keys** — free unlock for Proof pack
 
 ### Quickstart
 
 pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
-dino scan leakage ./tests/e2e/pipe.py
-dino upgrade --pack proof --key YOUR_KEY   # after purchase
+dino scan leakage ./tests/e2e/pipe.py          # free forever
+
+# Early Access — request a free Team Key:
+dino upgrade --pack proof --key YOUR_TEAM_KEY
 
 dino proof run \
   --command echo ok \
@@ -68,11 +80,11 @@ dino proof index metrics ./archive
 - [PROOF_EXPORT](https://github.com/DinoDevCli/dino/blob/main/docs/PROOF_EXPORT.md)
 - [PROOF_INDEX](https://github.com/DinoDevCli/dino/blob/main/docs/PROOF_INDEX.md)
 - [Dashboard integration](https://github.com/DinoDevCli/dino/blob/main/docs/INTEGRATION_DASHBOARDS.md)
+- [Website](https://dinodevcli.github.io/dino/)
 
-### Pricing (adoption phase)
+### Packs
 
-Free €0 · Indie €49 · Team €39/seat · Large Teams custom  
-No subscriptions. No lock-in. Local license file.
+Free scan forever · Proof pack via Early Access Team Key · Engine only — dashboards external.
 ```
 
 ---
@@ -213,17 +225,10 @@ Teams wire Dino into Airflow/Prefect post-task hooks → S3 archive → Superset
 
 ```bash
 gh repo edit DinoDevCli/dino \
-  --description "Local-first audit engine for Python pipelines — proofs, export contracts, proof index" \
+  --description "Local-first audit engine for Python pipelines — proofs, export contracts, proof index. Early Access: free scan + free Team Keys." \
   --homepage "https://dinodevcli.github.io/dino/"
 
 gh repo edit DinoDevCli/dino --add-topic python --add-topic mlops --add-topic audit --add-topic local-first
 ```
 
-### Lemon checkout (GitHub Actions secrets or Vercel env)
-
-Repo → Settings → Secrets → Actions:
-
-- `LEMONSQUEEZY_CHECKOUT_INDIE`
-- `LEMONSQUEEZY_CHECKOUT_TEAM`
-
-Without these, Indie/Team buttons fall back to mailto (OK for launch).
+Contact: **early@dinodevcli.dev** (same as website). No Lemon checkout during Early Access.

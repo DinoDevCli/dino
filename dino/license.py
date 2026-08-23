@@ -19,7 +19,8 @@ DEFAULT_LICENSE: dict[str, Any] = {
 }
 
 BUY_HINT = (
-    "Early Access: request a free Team Key (GitHub issue / early@dinodevcli.dev), then:\n"
+    "Early Access: request a free Team Key → early@dinodevcli.dev\n"
+    "  (or GitHub issue: Early Access Request), then:\n"
     "  dino upgrade --pack proof --key YOUR_TEAM_KEY"
 )
 
@@ -143,7 +144,7 @@ def activate_pack(pack: str, key: str = "") -> dict[str, Any]:
     Activate a pack locally.
 
     - ``free``: always available, key optional.
-    - ``proof``: requires a Lemon Squeezy license key (``--key``).
+    - ``proof``: requires an Early Access Team Key (``--key``).
     """
     name = resolve_pack_name(pack)
     if name not in PACKS:
@@ -158,7 +159,7 @@ def activate_pack(pack: str, key: str = "") -> dict[str, Any]:
     if name == "proof":
         if not key:
             raise ValueError(
-                "Proof pack requires a Lemon Squeezy license key.\n" + BUY_HINT
+                "Proof pack requires an Early Access Team Key.\n" + BUY_HINT
             )
         # Idempotent: same key already stored → re-check Early Access expiry
         if keys.get("proof") == key and "proof" in packs:

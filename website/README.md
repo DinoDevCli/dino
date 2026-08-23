@@ -1,6 +1,9 @@
 # Website
 
-Landing page for Dino — aligned with the root [README](../README.md).
+Documentary landing page for Dino — aligned with the root [README](../README.md).
+
+**Story:** local-first audit engine · Free scan forever · Proof pack via Early Access ·  
+`early@dinodevcli.dev` · no checkout · dashboards external.
 
 ## Local
 
@@ -17,28 +20,19 @@ npm run dev
 ```
 NEXT_PUBLIC_GITHUB_OWNER=DinoDevCli
 NEXT_PUBLIC_GITHUB_REPO=dino
+NEXT_PUBLIC_CONTACT_EMAIL=early@dinodevcli.dev
 ```
 
-Optional: `NEXT_PUBLIC_CONTACT_EMAIL` (default `noahpeitz95@gmail.com`).
-
 ## Deploy
-
-### Live (GitHub Pages)
 
 Push to `main` → [Deploy website](../../.github/workflows/deploy-website.yml) →  
 **https://dinodevcli.github.io/dino/**
 
 Uses `NEXT_PUBLIC_BASE_PATH=/dino` in CI only.
 
-### Vercel (optional custom domain)
-
-- Import `DinoDevCli/dino`, root directory **`website`**
-- Env: `NEXT_PUBLIC_GITHUB_*`, optional Lemon checkout URLs (no `BASE_PATH`)
-- `vercel login && cd website && npx vercel --prod`
-
 ## Copy
 
 | File | Role |
 |------|------|
-| `lib/content.ts` | Copy, modules, pricing, FAQ |
-| `lib/site.ts` | GitHub URLs, CTAs |
+| `lib/content.ts` | Documentary copy + Early Access |
+| `lib/site.ts` | GitHub URLs, `early@dinodevcli.dev` mailto |

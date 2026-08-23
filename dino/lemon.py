@@ -1,4 +1,4 @@
-"""Lemon Squeezy license validation for paid Dino packs."""
+"""License validation: Early Access Team Keys first, Lemon Squeezy as deferred fallback."""
 
 from __future__ import annotations
 

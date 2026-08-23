@@ -4,8 +4,8 @@ const repo = process.env.NEXT_PUBLIC_GITHUB_REPO ?? "dino";
 const base = `https://github.com/${owner}/${repo}`;
 const blob = (path: string) => `${base}/blob/main/${path}`;
 
-/** Interim contact — override via NEXT_PUBLIC_CONTACT_EMAIL */
-const DEFAULT_CONTACT = "noahpeitz95@gmail.com";
+/** Public contact — Early Access (same as website mailto) */
+const DEFAULT_CONTACT = "early@dinodevcli.dev";
 
 export const GITHUB = {
   owner,

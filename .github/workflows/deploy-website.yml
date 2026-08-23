@@ -33,9 +33,7 @@ jobs:
           NEXT_PUBLIC_BASE_PATH: /dino
           NEXT_PUBLIC_GITHUB_OWNER: DinoDevCli
           NEXT_PUBLIC_GITHUB_REPO: dino
-          NEXT_PUBLIC_CONTACT_EMAIL: noahpeitz95@gmail.com
-          NEXT_PUBLIC_LEMONSQUEEZY_CHECKOUT_INDIE: ${{ secrets.LEMONSQUEEZY_CHECKOUT_INDIE }}
-          NEXT_PUBLIC_LEMONSQUEEZY_CHECKOUT_TEAM: ${{ secrets.LEMONSQUEEZY_CHECKOUT_TEAM }}
+          NEXT_PUBLIC_CONTACT_EMAIL: early@dinodevcli.dev
         run: |
           npm ci
           npm run build

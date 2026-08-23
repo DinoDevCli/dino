@@ -59,15 +59,16 @@ dino packs
 ```
 Dino packs (free + proof)
 
-[*] free       free   €0
-    Free — research integrity scanners (grammar smoke + causal leakage). Worth downloading because generic SAST/secret tools do not cover this.
+[*] free       free   forever
+    Free forever — grammar smoke + causal leakage scan for research pipelines.
     domains: scan
 
-[*] proof      paid   €49 once / €39 per seat (team)
-    Paid flagship — sealed execution capsules, structural map/verify, evidence bundles, canary flight, attestation drift/supersession, and the unique proof chain CLI.
+[*] proof      ea     Early Access · free Team Key
+    Proof Pack (Early Access) — capsule, map, bundle, flight, verify, proof chain, export, and index. Request a free Team Key.
     domains: capsule, map, bundle, flight, verify, proof
 
-Unlock:  dino upgrade --pack proof
+Unlock:  dino upgrade --pack proof --key YOUR_TEAM_KEY
+         (request key: early@dinodevcli.dev)
 ```
 
 **exit:** 0

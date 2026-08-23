@@ -1,4 +1,4 @@
-"""Dino packs — free (unique niche) + proof (sellable)."""
+"""Dino packs — free scan forever + Proof via Early Access Team Key."""
 
 from __future__ import annotations
 
@@ -13,18 +13,19 @@ from typing import Any
 PACKS: dict[str, dict[str, Any]] = {
     "free": {
         "tier": "free",
-        "price_hint": "€0",
+        "price_hint": "forever",
         "domains": ["scan"],
         "description": (
-            "Free — grammar smoke + causal leakage scan for research pipelines."
+            "Free forever — grammar smoke + causal leakage scan for research pipelines."
         ),
     },
     "proof": {
-        "tier": "paid",
-        "price_hint": "€49 once / €39 per seat (team)",
+        "tier": "ea",
+        "price_hint": "Early Access · free Team Key",
         "domains": ["capsule", "map", "bundle", "flight", "verify", "proof"],
         "description": (
-            "Proof Pack — capsule, map, bundle, flight, verify, and proof chain."
+            "Proof Pack (Early Access) — capsule, map, bundle, flight, verify, "
+            "proof chain, export, and index. Request a free Team Key."
         ),
     },
 }
