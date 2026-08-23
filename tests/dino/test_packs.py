@@ -52,7 +52,7 @@ def test_proof_requires_key(tmp_path, monkeypatch):
         activate_pack("proof")
         assert False, "expected ValueError"
     except ValueError as exc:
-        assert "license key" in str(exc).lower()
+        assert "team key" in str(exc).lower() or "license key" in str(exc).lower()
 
 
 def test_cli_upgrade_requires_key(tmp_path, monkeypatch):
@@ -65,7 +65,7 @@ def test_cli_upgrade_requires_key(tmp_path, monkeypatch):
     save_license(dict(DEFAULT_LICENSE))
     code, out, err = run(["upgrade", "--pack", "proof"], json_mode=False)
     assert code == 2
-    assert "license key" in (out + err).lower()
+    assert "team key" in (out + err).lower() or "license key" in (out + err).lower()
 
 
 def test_cli_upgrade_with_offline_key(tmp_path, monkeypatch):

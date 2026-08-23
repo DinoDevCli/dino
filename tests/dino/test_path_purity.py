@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
+import re
+
 import pytest
 
 from tests.dino.conftest import DINO_ROOT
 
+# Old brand / path leftovers — "dinodev" must not appear except as dinodevcli
 FORBIDDEN = ["dinodev", "archovive", "brain_tools", "causal_features", "run_v20_causal"]
 
 
@@ -19,6 +22,10 @@ def test_no_forbidden_strings_in_dino_tree(needle: str) -> None:
             text = path.read_text(encoding="utf-8")
         except UnicodeDecodeError:
             continue
-        if needle in text:
+        if needle == "dinodev":
+            # Allow current org/domain dinodevcli; ban bare dinodev
+            if re.search(r"dinodev(?!cli)", text, flags=re.IGNORECASE):
+                hits.append(str(path.relative_to(DINO_ROOT)))
+        elif needle in text:
             hits.append(str(path.relative_to(DINO_ROOT)))
     assert hits == [], f"{needle} found in: {hits}"
