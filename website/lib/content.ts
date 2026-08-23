@@ -55,10 +55,12 @@ export const PRODUCT = {
   ],
   noDashboard:
     "Dino does not include a dashboard — your UI consumes the artifacts (proof_index.json, compare.json).",
+  roles: "Dino outputs audit artifacts — dashboards render them.",
+  wiringLabel: "Dashboard Integration",
   wiring: [
     "Dashboards read Dino's artifacts via Path, HTTP, or S3.",
     "Superset, Airflow, MLflow, or your own UI can render drift, verdicts, and metrics.",
-    "Dino outputs the data — you choose the visualization.",
+    "Dino provides the data — you choose the visualization.",
   ],
   benefits: [
     "Deterministic CI gate: changed: true/false",
@@ -82,7 +84,7 @@ export const EARLY = {
     "Proof / index / export — free for 60 days",
     "Team Key by email — name your team or project",
   ],
-  note: "Early Access includes the engine and artifacts — dashboards are external.",
+  note: "Engine only — dashboards are external.",
   cta: "Request a Team Key",
   email: "early@dinodevcli.dev",
 };

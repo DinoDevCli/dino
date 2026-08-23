@@ -56,10 +56,10 @@ export default function Home() {
           <h1 className="max-w-hero text-4xl font-bold leading-[1.1] tracking-tightest md:text-5xl lg:text-[3.4rem]">
             {HERO.title}
           </h1>
-          <p className="mt-6 max-w-hero text-base leading-relaxed text-muted md:text-lg">
+          <p className="mt-6 max-w-hero text-lg leading-relaxed text-foreground md:text-xl">
             <MonoBody text={HERO.definition} />
           </p>
-          <p className="mt-5 font-mono text-xs text-muted">{HERO.meta}</p>
+          <p className="mt-4 font-mono text-xs text-muted">{HERO.meta}</p>
         </Container>
       </section>
 
@@ -94,12 +94,13 @@ export default function Home() {
 
           <div className="mt-12 max-w-narrow">
             <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">
-              Dashboard
+              {PRODUCT.wiringLabel}
             </p>
             <p className="mt-3 leading-relaxed text-foreground">
               <MonoBody text={PRODUCT.noDashboard} />
             </p>
-            <div className="mt-5 space-y-2 text-sm leading-relaxed text-muted">
+            <p className="mt-2 font-mono text-sm text-muted">{PRODUCT.roles}</p>
+            <div className="mt-6 space-y-2 text-sm leading-relaxed text-muted">
               {PRODUCT.wiring.map((line) => (
                 <p key={line}>
                   <MonoBody text={line} />
