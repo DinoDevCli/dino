@@ -1,11 +1,14 @@
 import { Button } from "@/components/Button";
+import { DemoWalkthrough } from "@/components/DemoWalkthrough";
 import { Footer } from "@/components/Footer";
-import { Container, Heading, MonoLabel, Section } from "@/components/Layout";
+import { Container, MonoLabel, Section } from "@/components/Layout";
 import { Nav } from "@/components/Nav";
 import { TerminalPlayer } from "@/components/TerminalPlayer";
 import { EngineFlow, UspList } from "@/components/Tiles";
 import {
+  DEMO_COPY,
   DEMO_LINES,
+  DEMO_STEPS,
   EARLY,
   FLOW,
   HERO,
@@ -21,36 +24,24 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground">
       <Nav active="home" />
 
-      {/* 1. Hero */}
+      {/* 1. Hero — static CLI prompt */}
       <section className="relative isolate overflow-hidden">
         <div className="hero-grid absolute inset-0 -z-10" aria-hidden />
         <Container className="flex min-h-[70vh] flex-col items-start justify-center py-section">
-          <span className="font-mono text-sm uppercase tracking-wider text-accent">
-            {HERO.badge}
-          </span>
-          <Heading as="h1">
-            <span className="mt-4 block text-foreground">{HERO.line1}</span>
-            <span className="block text-accent">{HERO.line2}</span>
-          </Heading>
-          <p className="mt-6 max-w-[600px] text-xl leading-relaxed text-muted">
+          <p className="font-mono text-sm text-muted">{HERO.prompt}</p>
+          <h1 className="mt-4 text-5xl font-bold leading-[1.1] tracking-tightest text-foreground md:text-6xl lg:text-7xl">
+            {HERO.title}
+          </h1>
+          <p className="mt-6 max-w-[560px] text-lg leading-relaxed text-muted md:text-xl">
             {HERO.subtitle}
           </p>
           <div className="mt-12 flex flex-wrap gap-4">
-            <Button href="#demo">▶ Live Demo</Button>
+            <Button href="#demo">Live Demo</Button>
             <Button href="#early-access" variant="secondary">
               Early Access →
             </Button>
           </div>
-          <p className="mt-16 font-mono text-sm text-muted">
-            <a
-              href={GITHUB.base}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-accent"
-            >
-              {HERO.footnote}
-            </a>
-          </p>
+          <p className="mt-16 font-mono text-sm text-muted">{HERO.meta}</p>
         </Container>
       </section>
 
@@ -81,7 +72,7 @@ export default function Home() {
         </Container>
       </Section>
 
-      {/* 3. Engine flow */}
+      {/* 3. Engine */}
       <Section id="engine">
         <Container>
           <h2 className="text-3xl font-bold tracking-tighter">How Dino works</h2>
@@ -92,42 +83,58 @@ export default function Home() {
         </Container>
       </Section>
 
-      {/* 4. USPs — spec list */}
+      {/* 4. USPs */}
       <Section id="capabilities">
         <Container>
           <UspList items={USPS} wide={USP_WIDE} />
         </Container>
       </Section>
 
-      {/* 5. Live Demo */}
+      {/* 5. Demo walkthrough (primary) */}
       <Section id="demo">
         <Container narrow>
-          <h2 className="text-3xl font-bold tracking-tighter">Live Demo</h2>
-          <p className="mt-2 text-muted">Two runs. One compare. The proof.</p>
+          <h2 className="text-3xl font-bold tracking-tighter">
+            {DEMO_COPY.title}
+          </h2>
+          <p className="mt-2 text-muted">{DEMO_COPY.intro}</p>
           <div className="mt-12">
-            <TerminalPlayer lines={DEMO_LINES} />
+            <DemoWalkthrough steps={DEMO_STEPS} />
           </div>
-          <p className="mt-4 font-mono text-xs text-muted">
-            Reproduce:{" "}
+          <p className="mt-8 font-mono text-xs text-muted">
+            {DEMO_COPY.resultNote}{" "}
             <a
               href={`${GITHUB.base}/tree/main/tests/simulation`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-accent hover:underline"
             >
-              make demo
-            </a>{" "}
-            in tests/simulation
+              make demo ↗
+            </a>
           </p>
         </Container>
       </Section>
 
-      {/* 6. Quickstart */}
+      {/* 6. Slow replay (secondary) */}
+      <Section id="replay">
+        <Container narrow>
+          <p className="font-mono text-sm text-muted">{DEMO_COPY.replayLabel}</p>
+          <p className="mt-2 text-sm text-muted">{DEMO_COPY.replayHint}</p>
+          <div className="mt-8">
+            <TerminalPlayer
+              lines={DEMO_LINES}
+              intervalMs={400}
+              pauseOnComments
+            />
+          </div>
+        </Container>
+      </Section>
+
+      {/* 7. Quickstart */}
       <Section id="quickstart">
         <Container narrow>
           <h2 className="text-3xl font-bold tracking-tighter">Quickstart</h2>
-          <p className="mt-2 text-muted">Install. Run. Get proofs.</p>
-          <div className="mt-12 overflow-x-auto border border-border bg-code-bg p-6">
+          <p className="mt-2 text-muted">Install. Seal. Export.</p>
+          <div className="mt-10 overflow-x-auto border border-border bg-black p-6">
             <pre className="font-mono text-sm leading-relaxed text-foreground">
               <code>{QUICKSTART}</code>
             </pre>
@@ -135,7 +142,7 @@ export default function Home() {
         </Container>
       </Section>
 
-      {/* 7. Early Access */}
+      {/* 8. Early Access */}
       <Section id="early-access">
         <Container className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16">
           <div>

@@ -75,9 +75,12 @@ Central story:
 
 Nav: **Home · Demo · Early Access · Docs** → `/`, `/#demo`, `/#early-access`, `/docs`
 
-### Components
+### Documentary demo
 
-`Nav` · `Button` · `Container` · `Section` · `EngineFlow` · `UspList` · `TerminalPlayer` · `Footer`
+- **Walkthrough first** (`DemoWalkthrough`) — comment, black code, explanation, golden artifact
+- **Replay second** (`TerminalPlayer`, slow, `autoplay=false`) — not the first impression
+- Artifacts from `tests/simulation/golden/demo_excerpts.json`
+- Hero: static muted `$ dino version` — no blink, autotype, or accent color
 
 ---
 

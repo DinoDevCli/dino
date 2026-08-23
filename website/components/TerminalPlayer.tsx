@@ -5,24 +5,34 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 type Props = {
   lines: string[];
   title?: string;
+  /** Base ms per line; default 400 (~0.35× vs old 90ms) */
+  intervalMs?: number;
+  /** Extra linger on lines starting with # */
+  pauseOnComments?: boolean;
 };
 
 export function TerminalPlayer({
   lines,
-  title = "dino — fraud pipeline audit",
+  title = "dino — replay",
+  intervalMs = 400,
+  pauseOnComments = true,
 }: Props) {
   const [playing, setPlaying] = useState(false);
   const [cursor, setCursor] = useState(0);
-  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const visible = useMemo(() => lines.slice(0, cursor), [lines, cursor]);
   const done = cursor >= lines.length;
 
-  const stop = useCallback(() => {
-    if (timer.current) clearInterval(timer.current);
+  const clearTimer = useCallback(() => {
+    if (timer.current) clearTimeout(timer.current);
     timer.current = null;
-    setPlaying(false);
   }, []);
+
+  const stop = useCallback(() => {
+    clearTimer();
+    setPlaying(false);
+  }, [clearTimer]);
 
   const play = useCallback(() => {
     if (done) setCursor(0);
@@ -31,63 +41,63 @@ export function TerminalPlayer({
 
   useEffect(() => {
     if (!playing) return;
-    timer.current = setInterval(() => {
+
+    const line = lines[cursor];
+    const isComment = pauseOnComments && typeof line === "string" && line.trim().startsWith("#");
+    const delay = isComment ? intervalMs * 2.2 : intervalMs;
+
+    timer.current = setTimeout(() => {
       setCursor((c) => {
         if (c >= lines.length) {
-          stop();
+          setPlaying(false);
           return c;
         }
-        return c + 1;
+        const next = c + 1;
+        if (next >= lines.length) setPlaying(false);
+        return next;
       });
-    }, 90);
-    return () => {
-      if (timer.current) clearInterval(timer.current);
-    };
-  }, [playing, lines.length, stop]);
+    }, delay);
+
+    return clearTimer;
+  }, [playing, cursor, lines, intervalMs, pauseOnComments, clearTimer]);
 
   return (
-    <div className="overflow-hidden border border-border-strong bg-code-bg">
-      <div className="flex items-center gap-3 border-b border-border bg-surface px-4 py-3">
-        <div className="flex gap-1.5" aria-hidden>
-          <span className="h-2.5 w-2.5 rounded-full bg-[#3a3a42]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#3a3a42]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#3a3a42]" />
-        </div>
+    <div className="overflow-hidden border border-border bg-black">
+      <div className="flex items-center gap-3 border-b border-border px-4 py-3">
         <span className="font-mono text-xs text-muted">{title}</span>
       </div>
 
-      <div className="relative min-h-[320px] md:min-h-[420px]">
-        <pre className="max-h-[420px] overflow-auto p-5 font-mono text-[13px] leading-relaxed text-foreground md:text-sm">
+      <div className="relative min-h-[280px] md:min-h-[360px]">
+        <pre className="max-h-[360px] overflow-auto p-5 font-mono text-[13px] leading-relaxed text-foreground md:text-sm">
           <code>
             {visible.map((line, i) => (
-              <span key={`${i}-${line.slice(0, 24)}`} className="block whitespace-pre-wrap">
+              <span
+                key={`${i}-${line.slice(0, 24)}`}
+                className="block whitespace-pre-wrap"
+              >
                 {line.startsWith("$") ? (
                   <>
-                    <span className="text-accent">$</span>
-                    {line.slice(1)}
+                    <span className="text-muted">$</span>
+                    <span className="text-foreground">{line.slice(1)}</span>
                   </>
+                ) : line.trim().startsWith("#") ? (
+                  <span className="text-muted">{line}</span>
                 ) : (
                   <span className="text-muted">{line}</span>
                 )}
               </span>
             ))}
-            {playing && !done ? (
-              <span className="ml-0.5 inline-block h-4 w-2 animate-pulse bg-accent align-middle" />
-            ) : null}
           </code>
         </pre>
 
         {!playing && cursor === 0 ? (
-          <div className="absolute inset-0 flex items-center justify-center bg-code-bg/75">
+          <div className="absolute inset-0 flex items-center justify-center bg-black/80">
             <button
               type="button"
               onClick={play}
-              className="flex items-center gap-3 border border-border-strong bg-surface px-8 py-4 font-mono text-sm uppercase tracking-wider text-foreground hover:border-accent hover:text-accent"
+              className="border border-border px-6 py-3 font-mono text-xs uppercase tracking-wider text-muted hover:border-foreground hover:text-foreground"
             >
-              <span className="text-accent" aria-hidden>
-                ▶
-              </span>
-              Play demo
+              ▶ Replay
             </button>
           </div>
         ) : null}
@@ -98,7 +108,7 @@ export function TerminalPlayer({
           {done
             ? "complete"
             : playing
-              ? `playing · ${cursor}/${lines.length}`
+              ? `${cursor}/${lines.length}`
               : cursor > 0
                 ? "paused"
                 : "ready"}
@@ -108,9 +118,9 @@ export function TerminalPlayer({
             <button
               type="button"
               onClick={play}
-              className="font-mono text-xs uppercase tracking-wider text-accent hover:underline"
+              className="font-mono text-xs uppercase tracking-wider text-muted hover:text-foreground"
             >
-              ▶ Resume
+              Resume
             </button>
           ) : null}
           {playing ? (

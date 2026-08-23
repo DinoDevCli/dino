@@ -1,28 +1,27 @@
-/** Blueprint copy — single-page marketing story */
+/** Documentary single-page copy — walkthrough first, golden artifacts */
 
 export const SITE = {
   version: "0.3.1",
   brand: "Dino",
 };
 
+/** Static CLI prompt — muted only, no animation */
 export const HERO = {
-  badge: "v0.3.1 · Early Access",
-  line1: "Local-First",
-  line2: "Audit Engine",
-  subtitle:
-    "Deterministic proofs, export contracts, and a universal proof index for your Python pipelines.",
-  footnote: "MIT · GitHub · Python 3.10+",
+  prompt: "$ dino version",
+  title: "Local-First Audit Engine",
+  subtitle: "How did fraud_score change between v1 and v2?",
+  meta: "v0.3.1 · Early Access · MIT · Python 3.10+",
 };
 
 export const PROBLEM_SOLUTION = {
   problemLabel: "# problem",
-  problemTitle: "Pipelines are black boxes.",
+  problemTitle: "How does fraud_score v1 differ from v2?",
   problemBody:
-    "Non-deterministic runs, silent drift, and no standard audit trail. Every team builds its own fragile workaround.",
+    "You shipped a new seed, a new pipeline label, maybe a new feature set. Regulators and risk ask: what changed? Without a sealed proof and compare, the answer is guesswork.",
   solutionLabel: "# solution",
-  solutionTitle: "Dino is the engine.",
+  solutionTitle: "Seal both runs. Read changed: true.",
   solutionBody:
-    "Seal. Export. Index. Deterministic. Local. Reproducible. One universal format for every dashboard.",
+    "Dino seals each run into proof.json, exports into an archive, and compares. pipeline_version_diff and artifact deltas are the audit signal — not a vendor dashboard.",
 };
 
 export const FLOW = [
@@ -52,7 +51,6 @@ export const FLOW = [
   },
 ];
 
-/** First four USPs — two-column grid */
 export const USPS = [
   {
     label: "Local-First",
@@ -76,45 +74,126 @@ export const USPS = [
   },
 ];
 
-/** Full-width fifth USP */
 export const USP_WIDE = {
   label: "Compare & Metrics",
-  title: "Drift analysis between runs.",
-  body: "See what changed — pipeline, verdict, leakage, artifacts.",
+  title: "Why is changed: true?",
+  body: "pipeline_version_diff, verdict_diff, leakage, artifacts — the fields your CI gate reads.",
 };
 
+export const DEMO_COPY = {
+  title: "Live Demo",
+  intro:
+    "We audit a fraud-score pipeline. Two runs — v1 and v2. Dino shows the diff.",
+  resultLabel: "# result",
+  resultNote:
+    "exit 1 when changed — use as a CI gate. Reproduce locally: make demo in tests/simulation.",
+  replayLabel: "# replay (optional)",
+  replayHint: "Same session, slow line reveal. Walkthrough above is the source of truth.",
+};
+
+/** From tests/simulation/golden/demo_excerpts.json — do not invent */
+const GOLDEN_PROOF = `{
+  "schema": "dino.proof.bundle.v1",
+  "status": "partial",
+  "parts": {
+    "capsule_replay_ok": true,
+    "scan_ok": true,
+    "drift_bucket": "aligned"
+  },
+  "audit": {
+    "verdict": "PROOF_PARTIAL",
+    "reasons": ["capsule_sealed", "scan_clean", "map_skipped"]
+  }
+}`;
+
+const GOLDEN_COMPARE = `{
+  "schema": "dino.proof.index.compare.v1",
+  "changed": true,
+  "pipeline_version_diff": {
+    "from": "fraud_score_v1",
+    "to": "fraud_score_v2"
+  },
+  "drift_delta": { "from": "none", "to": "none" },
+  "verdict_diff": {
+    "from": "PROOF_PARTIAL",
+    "to": "PROOF_PARTIAL"
+  }
+}`;
+
+const GOLDEN_INDEX = `{
+  "schema": "dino.proof.index.v1",
+  "proof_count": 2,
+  "pipelines": ["fraud_score_v1", "fraud_score_v2"]
+}`;
+
+export const DEMO_RESULT = GOLDEN_COMPARE;
+
+export const DEMO_STEPS = [
+  {
+    title: "# 1. Run A — baseline fraud_score_v1",
+    command: `dino proof run \\
+  --command "python pipeline/run.py --seed seed-42" \\
+  --scan ./pipeline \\
+  --pipeline fraud_score_v1 \\
+  --group risk-team --tag demo \\
+  --export ./archive`,
+    explanation:
+      "→ Seals the baseline run. Capsule replay + leakage scan land in proof.json (golden excerpt below).",
+    artifactExcerpt: GOLDEN_PROOF,
+  },
+  {
+    title: "# 2. Run B — fraud_score_v2 (new seed)",
+    command: `dino proof run \\
+  --command "python pipeline/run.py --seed seed-123" \\
+  --scan ./pipeline \\
+  --pipeline fraud_score_v2 \\
+  --group risk-team --tag demo \\
+  --export ./archive`,
+    explanation:
+      "→ Second seal into the same archive. proof_index.json now lists both pipelines.",
+    artifactExcerpt: GOLDEN_INDEX,
+  },
+  {
+    title: "# 3. Compare — what changed?",
+    command: `dino proof index compare ./archive \\
+  <hash_v1> <hash_v2>`,
+    explanation:
+      "→ changed: true because pipeline_version_diff moves fraud_score_v1 → fraud_score_v2.",
+    artifactExcerpt: GOLDEN_COMPARE,
+  },
+  {
+    title: "# 4. Fail-closed — empty scan roots",
+    command: `dino proof run \\
+  --command "echo ok" \\
+  --scan ./does_not_exist \\
+  --output-dir ./proof_out`,
+    explanation:
+      "→ Dino refuses a silent pass. EMPTY_SCAN_ROOTS / fail-closed — no proof without a real scan target.",
+    artifactExcerpt: `{
+  "ok": false,
+  "type": "EMPTY_SCAN_ROOTS",
+  "message": "scan roots resolved to zero .py files"
+}`,
+  },
+];
+
+/** Replay transcript — same story, for slow TerminalPlayer */
 export const DEMO_LINES = [
-  "$ dino proof run --command \"python pipeline/run.py --seed seed-42\" \\",
-  "    --scan ./pipeline --pipeline fraud_score_v1 \\",
-  "    --group risk-team --tag demo --export ./archive",
+  "# replay — fraud_score v1 then v2, then compare",
   "",
-  "sealed  fraud_score_v1",
-  "proof_hash  fa7f1ccc86efbecd47674a659b2a04e3…",
-  "export     ./archive/fa7f1ccc86efbecd/",
-  "index      proof_index.json updated",
+  "$ dino proof run --command \"python pipeline/run.py --seed seed-42\" \\",
+  "    --scan ./pipeline --pipeline fraud_score_v1 --export ./archive",
+  "sealed  fraud_score_v1  status=partial  scan_ok=true",
   "",
   "$ dino proof run --command \"python pipeline/run.py --seed seed-123\" \\",
-  "    --scan ./pipeline --pipeline fraud_score_v2 \\",
-  "    --group risk-team --tag demo --export ./archive",
+  "    --scan ./pipeline --pipeline fraud_score_v2 --export ./archive",
+  "sealed  fraud_score_v2  status=partial  scan_ok=true",
   "",
-  "sealed  fraud_score_v2",
-  "proof_hash  fc4a30f5bca098f4d3665242785ef779…",
-  "export     ./archive/fc4a30f5bca098f4/",
-  "index      proof_index.json updated",
+  "$ dino proof index compare ./archive <hash_v1> <hash_v2>",
+  'changed: true',
+  'pipeline_version_diff: fraud_score_v1 → fraud_score_v2',
   "",
-  "$ dino proof index compare ./archive fa7f1ccc86efbecd fc4a30f5bca098f4",
-  "",
-  "{",
-  '  "schema": "dino.proof.index.compare.v1",',
-  '  "changed": true,',
-  '  "pipeline_version_diff": {',
-  '    "from": "fraud_score_v1",',
-  '    "to": "fraud_score_v2"',
-  "  },",
-  '  "drift_delta": { "from": "none", "to": "none" }',
-  "}",
-  "",
-  "# exit 1 — changed: true  (CI gate signal)",
+  "# exit 1 — CI gate signal",
 ];
 
 export const QUICKSTART = `pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
