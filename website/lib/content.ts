@@ -187,7 +187,7 @@ export const FAQ = [
   },
   {
     q: "Can I push proofs into our dashboard?",
-    a: "Yes — dino proof run --export path|https://…/api/proofs|s3://bucket/prefix. Each export updates proof_index.json so your dashboard can list/compare proofs.",
+    a: "Yes — dino proof run --export … updates proof_index.json. Use proof index compare / metrics / layout for diffs, health numbers, and browse folders — still no Dino dashboard.",
   },
   {
     q: "Is Dino on PyPI?",

@@ -184,6 +184,14 @@ def _proof(sub: argparse._SubParsersAction) -> None:
     idx_show.add_argument("archive", help="Archive directory containing proof_index.json")
     idx_rebuild = idx_sub.add_parser("rebuild", help="Rebuild index from archive subfolders")
     idx_rebuild.add_argument("archive", help="Archive root to scan")
+    idx_cmp = idx_sub.add_parser("compare", help="Compare two proofs by hash/prefix")
+    idx_cmp.add_argument("archive", help="Archive directory")
+    idx_cmp.add_argument("hash_a", help="First proof hash (or prefix / path)")
+    idx_cmp.add_argument("hash_b", help="Second proof hash (or prefix / path)")
+    idx_metrics = idx_sub.add_parser("metrics", help="Aggregate health summary JSON")
+    idx_metrics.add_argument("archive", help="Archive directory")
+    idx_layout = idx_sub.add_parser("layout", help="Refresh pipelines/groups/tags browse links")
+    idx_layout.add_argument("archive", help="Archive directory")
     doc = s.add_parser("doctor", help="Proof-stack health checks")
     doc.add_argument("--output-dir", default="")
 
@@ -573,7 +581,15 @@ def _run_proof(args: argparse.Namespace, cmd: str, json_mode: bool) -> int:
         out.emit_success(report)
         return 0 if report.get("ok") else 1
     if cmd == "index":
-        from dino.domains.proof.index import index_file_path, load_index, rebuild_index_from_archive, save_index
+        from dino.domains.proof.index import (
+            compare_refs,
+            index_file_path,
+            load_index,
+            metrics_summary,
+            rebuild_index_from_archive,
+            refresh_layout,
+            save_index,
+        )
 
         archive = Path(args.archive)
         if args.index_cmd == "show":
@@ -588,14 +604,58 @@ def _run_proof(args: argparse.Namespace, cmd: str, json_mode: bool) -> int:
         if args.index_cmd == "rebuild":
             index = rebuild_index_from_archive(archive)
             path = save_index(index_file_path(archive), index)
-            payload = {"ok": True, "index_path": str(path), "proof_count": len(index.get("proofs") or [])}
+            layout = refresh_layout(archive, index)
+            payload = {
+                "ok": True,
+                "index_path": str(path),
+                "proof_count": len(index.get("proofs") or []),
+                "layout": {"linked": layout.get("linked")},
+            }
             if json_mode:
                 out.emit_success(payload)
             else:
                 import sys
 
-                sys.stdout.write(f"Rebuilt {path} ({payload['proof_count']} proofs)\n")
+                sys.stdout.write(
+                    f"Rebuilt {path} ({payload['proof_count']} proofs, "
+                    f"{layout.get('linked')} layout links)\n"
+                )
             return 0
+        if args.index_cmd == "compare":
+            index = load_index(index_file_path(archive))
+            try:
+                report = compare_refs(index, args.hash_a, args.hash_b)
+            except ValueError as exc:
+                return _fail(out, "not_found", str(exc), 2)
+            if json_mode:
+                out.emit_success(report)
+            else:
+                import sys
+
+                sys.stdout.write(json.dumps(report, indent=2, sort_keys=True, ensure_ascii=False) + "\n")
+            return 0 if not report.get("changed") else 1
+        if args.index_cmd == "metrics":
+            index = load_index(index_file_path(archive))
+            report = metrics_summary(index)
+            if json_mode:
+                out.emit_success(report)
+            else:
+                import sys
+
+                sys.stdout.write(json.dumps(report, indent=2, sort_keys=True, ensure_ascii=False) + "\n")
+            return 0
+        if args.index_cmd == "layout":
+            index = load_index(index_file_path(archive))
+            report = refresh_layout(archive, index)
+            if json_mode:
+                out.emit_success(report)
+            else:
+                import sys
+
+                sys.stdout.write(
+                    f"Layout refreshed: {report.get('linked')} linked under {archive}\n"
+                )
+            return 0 if report.get("ok") else 1
         return _fail(out, "unknown_command", f"unknown proof index command: {args.index_cmd}", 2)
     if cmd == "verify":
         from dino.domains.proof.chain import verify_proof

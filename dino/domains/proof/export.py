@@ -147,15 +147,19 @@ def _make_index_entry(
 
 
 def _update_file_index(archive_root: Path, entry: dict[str, Any]) -> dict[str, Any]:
+    from .index import link_layout_entry
+
     idx_path = index_file_path(archive_root)
     index = load_index(idx_path)
     upsert_entry(index, entry)
     save_index(idx_path, index)
+    layout = link_layout_entry(archive_root, entry)
     return {
         "ok": True,
         "index_path": str(idx_path),
         "proof_count": len(index.get("proofs") or []),
         "entry": entry,
+        "layout": layout,
     }
 
 

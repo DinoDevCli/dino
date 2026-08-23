@@ -29,6 +29,9 @@ dino proof run ... --export ./proofs_archive \
   --pipeline fraud_score_v4 --group risk-team --tag prod
 
 dino proof index show ./proofs_archive
+dino proof index metrics ./proofs_archive
+dino proof index compare ./proofs_archive <hash_a> <hash_b>
+dino proof index layout ./proofs_archive
 dino proof index rebuild ./proofs_archive
 ```
 
