@@ -8,6 +8,8 @@ export const SITE = {
 export const HERO = {
   prompt: "$ dino version",
   title: "Local-First Audit Engine for Python Pipelines",
+  definition:
+    "Dino is a local-first audit engine that produces sealed proofs, export envelopes, and a universal proof index for your dashboards.",
   meta: "v0.3.1 · Early Access",
 };
 
@@ -28,11 +30,7 @@ export const HOW = {
 export const PRODUCT = {
   label: "# product",
   title: "Product Architecture",
-  lines: [
-    "Dino is a local-first audit engine for Python pipelines.",
-    "Not a platform. Not a cloud service. Not a workflow orchestrator — a local engine that emits deterministic audit artifacts.",
-  ],
-  flow: "pipeline → seal → export → index → compare → your dashboard",
+  flow: "pipeline → seal → export → index → compare → dashboard",
   blocks: [
     {
       step: "Seal",
@@ -55,23 +53,23 @@ export const PRODUCT = {
       detail: "pipeline_version_diff",
     },
   ],
-  /** Said once — then benefits, not more “no dashboard” talk */
-  boundary:
-    "Dino does not ship a dashboard. It outputs sealed proofs, export envelopes, and a universal proof index — your UI (Superset, Airflow, MLflow, or custom) consumes them.",
+  noDashboard:
+    "Dino does not include a dashboard — your UI consumes the artifacts (proof_index.json, compare.json).",
+  wiring: [
+    "Dashboards read Dino's artifacts via Path, HTTP, or S3.",
+    "Superset, Airflow, MLflow, or your own UI can render drift, verdicts, and metrics.",
+    "Dino outputs the data — you choose the visualization.",
+  ],
   benefits: [
     "Deterministic CI gate: changed: true/false",
-    "Export anywhere: Path / HTTP / S3",
-    "One index format for every consumer",
     "Local-first — data never leaves your infra",
   ],
-  example:
-    "e.g. Superset reads proof_index.json from S3/HTTP and charts drift.",
 };
 
 export const DEMO_COPY = {
   title: "Demo",
   intro:
-    "Documentary walkthrough — readable without Play. Artifacts from tests/simulation/golden.",
+    "Documentary walkthrough — real commands, real hashes, real JSON. Readable without pressing Play.",
   resultNote:
     "exit 1 when changed — CI gate. Local: make demo in tests/simulation.",
 };
@@ -84,6 +82,7 @@ export const EARLY = {
     "Proof / index / export — free for 60 days",
     "Team Key by email — name your team or project",
   ],
+  note: "Early Access includes the engine and artifacts — dashboards are external.",
   cta: "Request a Team Key",
   email: "early@dinodevcli.dev",
 };

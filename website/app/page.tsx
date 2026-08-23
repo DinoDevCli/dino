@@ -56,11 +56,13 @@ export default function Home() {
           <h1 className="max-w-hero text-4xl font-bold leading-[1.1] tracking-tightest md:text-5xl lg:text-[3.4rem]">
             {HERO.title}
           </h1>
-          <p className="mt-6 font-mono text-xs text-muted">{HERO.meta}</p>
+          <p className="mt-6 max-w-hero text-base leading-relaxed text-muted md:text-lg">
+            <MonoBody text={HERO.definition} />
+          </p>
+          <p className="mt-5 font-mono text-xs text-muted">{HERO.meta}</p>
         </Container>
       </section>
 
-      {/* Problem */}
       <Section id="problem">
         <Container narrow>
           <MonoLabel accent>{PROBLEM.label}</MonoLabel>
@@ -72,7 +74,6 @@ export default function Home() {
         </Container>
       </Section>
 
-      {/* How */}
       <Section id="how">
         <Container narrow>
           <MonoLabel>{HOW.label}</MonoLabel>
@@ -82,26 +83,30 @@ export default function Home() {
         </Container>
       </Section>
 
-      {/* Product */}
       <Section id="product">
         <Container>
           <MonoLabel>{PRODUCT.label}</MonoLabel>
           <h2 className="mt-3 text-3xl font-bold tracking-tight">
             {PRODUCT.title}
           </h2>
-          <div className="mt-5 max-w-narrow space-y-3 text-muted">
-            {PRODUCT.lines.map((line) => (
-              <p key={line}>{line}</p>
-            ))}
-          </div>
 
           <ArchitectureFlow flow={PRODUCT.flow} blocks={PRODUCT.blocks} />
 
           <div className="mt-12 max-w-narrow">
-            <p className="leading-relaxed text-foreground">
-              <MonoBody text={PRODUCT.boundary} />
+            <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">
+              Dashboard
             </p>
-            <ul className="mt-6 space-y-2 border-t border-border pt-6">
+            <p className="mt-3 leading-relaxed text-foreground">
+              <MonoBody text={PRODUCT.noDashboard} />
+            </p>
+            <div className="mt-5 space-y-2 text-sm leading-relaxed text-muted">
+              {PRODUCT.wiring.map((line) => (
+                <p key={line}>
+                  <MonoBody text={line} />
+                </p>
+              ))}
+            </div>
+            <ul className="mt-8 space-y-2 border-t border-border pt-6">
               {PRODUCT.benefits.map((item) => (
                 <li
                   key={item}
@@ -116,14 +121,10 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-            <p className="mt-5 font-mono text-xs text-muted">
-              {PRODUCT.example}
-            </p>
           </div>
         </Container>
       </Section>
 
-      {/* Demo */}
       <Section id="demo">
         <Container narrow>
           <MonoLabel accent># {DEMO_COPY.title}</MonoLabel>
@@ -137,7 +138,6 @@ export default function Home() {
         </Container>
       </Section>
 
-      {/* Early Access */}
       <Section id="early-access">
         <Container narrow>
           <MonoLabel accent>{EARLY.label}</MonoLabel>
@@ -154,7 +154,8 @@ export default function Home() {
               </li>
             ))}
           </ul>
-          <a href={earlyAccessMailto()} className="mailto-cta mt-10">
+          <p className="mt-6 font-mono text-xs text-muted">{EARLY.note}</p>
+          <a href={earlyAccessMailto()} className="mailto-cta mt-8">
             <span className="cta-label">{EARLY.cta}</span>
             <span className="cta-email">{EARLY.email}</span>
           </a>
