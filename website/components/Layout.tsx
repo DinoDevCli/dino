@@ -57,19 +57,43 @@ export function MonoLabel({
   );
 }
 
-export function Heading({
+export function Label({
   children,
-  as: Tag = "h2",
+  as: Tag = "p",
   className = "",
 }: {
   children: React.ReactNode;
-  as?: "h1" | "h2" | "h3";
+  as?: "p" | "h1" | "h2" | "h3";
   className?: string;
 }) {
   return (
     <Tag
-      className={`text-2xl font-bold tracking-tight text-foreground ${className}`}
+      className={`font-mono text-sm text-accent ${className}`}
     >
+      {children}
+    </Tag>
+  );
+}
+
+export function Display({
+  children,
+  as: Tag = "h2",
+  size = "section",
+  className = "",
+}: {
+  children: React.ReactNode;
+  as?: "h1" | "h2" | "h3" | "p";
+  size?: "hero" | "section" | "compact";
+  className?: string;
+}) {
+  const scale =
+    size === "hero"
+      ? "text-4xl leading-[1.12] tracking-tightest md:text-5xl"
+      : size === "compact"
+        ? "text-xl leading-snug tracking-tight md:text-2xl"
+        : "text-3xl leading-snug tracking-tight md:text-4xl";
+  return (
+    <Tag className={`font-bold text-foreground ${scale} ${className}`}>
       {children}
     </Tag>
   );

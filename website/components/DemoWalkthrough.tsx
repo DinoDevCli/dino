@@ -1,3 +1,5 @@
+import { Label } from "@/components/Layout";
+
 export type DemoArtifact = {
   name: string;
   json: string;
@@ -17,20 +19,16 @@ export function DemoWalkthrough({ steps }: { steps: DemoStep[] }) {
     <div className="mx-auto flex w-full flex-col gap-16">
       {steps.map((step) => (
         <div key={step.id} className="flex flex-col gap-4">
-          <p className="text-2xl font-bold tracking-tight text-foreground">
-            {step.label}
-          </p>
+          <Label as="h3">{step.label}</Label>
           <pre className="overflow-x-auto border border-border bg-black p-4 font-mono text-sm leading-relaxed text-foreground">
             <code>{step.command}</code>
           </pre>
           {step.note ? (
-            <p className="font-mono text-sm text-foreground">{step.note}</p>
+            <p className="text-sm leading-relaxed text-foreground">{step.note}</p>
           ) : null}
           {step.artifacts.map((art) => (
             <div key={art.name}>
-              <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
-                {art.name}
-              </p>
+              <p className="mb-2 font-mono text-xs text-muted">{art.name}</p>
               <pre className="overflow-x-auto border border-border bg-[#111118] p-4 font-mono text-xs leading-relaxed text-muted md:text-sm">
                 <code>
                   {art.emphasize ? highlightCompare(art.json) : art.json}

@@ -15,20 +15,22 @@ export const HERO = {
 
 export const PROBLEM = {
   title: "Problem",
+  lead: "Two fraud-score runs — v1 and v2.",
   lines: [
-    "Two fraud-score runs — v1 and v2. You do not know what differs.",
-    "Drift is invisible: no sealed artifacts, no machine-readable delta.",
+    "You do not know what differs. Drift is invisible: no sealed artifacts, no machine-readable delta.",
     "CI cannot decide if a run changed. Audits stay manual and inconsistent.",
   ],
 };
 
 export const HOW = {
   title: "How it works",
+  lead: "Seal. Export. Index. Compare.",
   body: "Dino seals each run into a proof bundle (capsule + scan + hash), exports the bundle (Path / HTTP / S3), builds a proof index (proof_index.json), and compares two proofs deterministically. The verdict is changed: true/false.",
 };
 
 export const PRODUCT = {
   title: "Engine",
+  lead: "pipeline → seal → export → index → compare → dashboard",
   determinism:
     "All proof bundles and indexes are deterministic and reproducible (content-addressed).",
   flow: "pipeline → seal → export → index → compare → dashboard",
