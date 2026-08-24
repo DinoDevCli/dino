@@ -80,9 +80,9 @@ export const QUICKSTART = {
 export const DEMO_COPY = {
   title: "Demo",
   intro:
-    "Documentary walkthrough — real commands, real hashes, real JSON. Readable without pressing Play.",
-  resultNote:
-    "exit 1 when changed — CI gate. Local: make demo in tests/simulation.",
+    "We audit a fraud-score pipeline. Two runs — v1 and v2. Dino seals both, exports them, builds a proof index, and compares them. The walkthrough shows the exact diff.",
+  source:
+    "All demo artifacts come from tests/simulation/golden in the GitHub repository.",
 };
 
 export const EARLY = {
@@ -99,41 +99,50 @@ export const EARLY = {
 };
 
 /** From tests/simulation/golden/demo_excerpts.json — do not invent */
-const GOLDEN_PROOF = `{
-  "schema": "dino.proof.bundle.v1",
-  "status": "partial",
+export const GOLDEN_PROOF = `{
+  "audit": {
+    "reasons": [
+      "capsule_sealed",
+      "scan_clean",
+      "map_skipped"
+    ],
+    "summary": "Capsule sealed; one or more optional parts were skipped.",
+    "verdict": "PROOF_PARTIAL"
+  },
   "parts": {
     "capsule_replay_ok": true,
-    "scan_ok": true,
-    "drift_bucket": "aligned"
+    "drift_bucket": "aligned",
+    "scan_ok": true
   },
-  "audit": {
-    "verdict": "PROOF_PARTIAL",
-    "reasons": ["capsule_sealed", "scan_clean", "map_skipped"]
-  }
+  "schema": "dino.proof.bundle.v1",
+  "status": "partial"
 }`;
 
-const GOLDEN_COMPARE = `{
-  "schema": "dino.proof.index.compare.v1",
+export const GOLDEN_INDEX = `{
+  "pipelines": [
+    "fraud_score_v1",
+    "fraud_score_v2"
+  ],
+  "proof_count": 2,
+  "schema": "dino.proof.index.v1"
+}`;
+
+export const GOLDEN_COMPARE = `{
   "changed": true,
+  "drift_delta": {
+    "from": "none",
+    "to": "none"
+  },
   "pipeline_version_diff": {
     "from": "fraud_score_v1",
     "to": "fraud_score_v2"
   },
-  "drift_delta": { "from": "none", "to": "none" },
+  "schema": "dino.proof.index.compare.v1",
   "verdict_diff": {
     "from": "PROOF_PARTIAL",
     "to": "PROOF_PARTIAL"
   }
 }`;
-
-const GOLDEN_INDEX = `{
-  "schema": "dino.proof.index.v1",
-  "proof_count": 2,
-  "pipelines": ["fraud_score_v1", "fraud_score_v2"]
-}`;
-
-export const DEMO_RESULT = GOLDEN_COMPARE;
 
 export const FAIL_SNIPPET = `{
   "ok": false,
@@ -147,40 +156,40 @@ export const FAIL_SNIPPET = `{
 
 export const DEMO_STEPS = [
   {
-    title: "Run A — fraud_score_v1",
+    id: "run-a",
+    label: "1. Run A — baseline",
     command: `dino proof run \\
   --command "python pipeline/run.py --seed seed-42" \\
   --scan ./pipeline \\
   --pipeline fraud_score_v1 \\
   --export ./archive`,
-    explanation:
-      "Seals the baseline run. Capsule replay + leakage scan land in proof.json (golden excerpt).",
-    artifactExcerpt: GOLDEN_PROOF,
+    artifacts: [{ name: "proof.json", json: GOLDEN_PROOF }],
   },
   {
-    title: "Run B — fraud_score_v2",
+    id: "run-b",
+    label: "2. Run B — updated",
     command: `dino proof run \\
   --command "python pipeline/run.py --seed seed-123" \\
   --scan ./pipeline \\
   --pipeline fraud_score_v2 \\
   --export ./archive`,
-    explanation:
-      "Second seal into the same archive. proof_index.json lists both pipelines.",
-    artifactExcerpt: GOLDEN_INDEX,
+    artifacts: [
+      { name: "proof.json", json: GOLDEN_PROOF },
+      { name: "proof_index.json", json: GOLDEN_INDEX },
+    ],
   },
   {
-    title: "Compare",
+    id: "compare",
+    label: "3. Compare",
     command: `dino proof index compare ./archive <hash_v1> <hash_v2>`,
-    explanation:
-      "Shows the diff. changed: true because pipeline_version_diff moves fraud_score_v1 → fraud_score_v2.",
-    artifactExcerpt: GOLDEN_COMPARE,
+    artifacts: [{ name: "compare.json", json: GOLDEN_COMPARE, emphasize: true }],
   },
   {
-    title: "Fail-closed",
+    id: "fail-closed",
+    label: "4. Fail-closed",
     command: `dino proof run --command "echo ok" --scan ./does_not_exist`,
-    explanation:
-      "EMPTY_SCAN_ROOTS — no silent pass without a real scan target.",
-    artifactExcerpt: FAIL_SNIPPET,
+    note: "Dino refuses to pass a run with missing scan roots.",
+    artifacts: [{ name: "scan.json", json: FAIL_SNIPPET }],
   },
 ];
 

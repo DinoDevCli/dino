@@ -142,16 +142,18 @@ export default function Home() {
       </Section>
 
       <Section id="demo">
-        <Container narrow>
+        <div className="mx-auto w-full max-w-[800px] px-gutter">
           <MonoLabel accent># {DEMO_COPY.title}</MonoLabel>
-          <p className="mt-3 text-sm text-muted">{DEMO_COPY.intro}</p>
+          <p className="mt-4 text-base leading-relaxed text-foreground">
+            {DEMO_COPY.intro}
+          </p>
           <div className="mt-12">
             <DemoWalkthrough steps={DEMO_STEPS} />
           </div>
-          <p className="mt-8 font-mono text-xs text-muted">
-            {DEMO_COPY.resultNote}
+          <p className="mt-12 font-mono text-xs text-muted">
+            {DEMO_COPY.source}
           </p>
-        </Container>
+        </div>
       </Section>
 
       <Section id="early-access">
