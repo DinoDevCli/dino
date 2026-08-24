@@ -8,7 +8,23 @@ Early Access is open. Any team can request a key. 60-day Proof Pack. No “5–1
 
 ---
 
-## Short message
+## Kurztext (DE)
+
+Hallo, wir bauen Dino — eine Audit-Engine für Python-Pipelines.  
+Wenn ihr Fraud-Scores oder Risk-Pipelines habt, könnt ihr damit deterministisch prüfen, ob ein Run sich geändert hat.  
+Demo + Codespaces + Starter Kit: https://dinodevcli.github.io/dino  
+Wenn ihr testen wollt, schicke ich euch KEY.txt + Quickstart.  
+Early Access ist offen — 60 Tage Proof Pack.
+
+Codespaces (ohne Setup): https://codespaces.new/DinoDevCli/dino → `cd tests/simulation && make demo`
+
+Key anfordern: Teamnamen an dinodevcli@gmail.com (oder GitHub Issue „Early Access Request“).
+
+Wert in einem Satz: deterministischer Diff zwischen zwei Pipeline-Läufen (`changed: true/false`).
+
+---
+
+## Short message (EN)
 
 Subject: Dino — deterministic diff between two pipeline runs
 
