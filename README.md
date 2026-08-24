@@ -103,7 +103,7 @@ All demo artifacts come from [`tests/simulation/golden`](tests/simulation/golden
 **Request a Team Key — Start your 60-day Proof Pack trial.**  
 Email your team name to [dinodevcli@gmail.com](mailto:dinodevcli@gmail.com).
 
-Early Access is open — any team can request a key.
+Open Early Access. Any team can request a key. No limited “5–10 teams.”
 
 - Leakage scan — free forever
 - Proof pack — free Team Key, 60 days
@@ -142,7 +142,7 @@ Start at [`docs/index.md`](docs/index.md).
 | [`EXAMPLES.md`](docs/EXAMPLES.md) | Short examples |
 | [`INTEGRATION_DASHBOARDS.md`](docs/INTEGRATION_DASHBOARDS.md) | Airflow, MLflow, Superset |
 | [`LICENSING.md`](docs/LICENSING.md) | MIT + Proof Pack |
-| [`ROADMAP.md`](docs/ROADMAP.md) | Developer Mode |
+| [`ROADMAP.md`](docs/ROADMAP.md) | Developer Mode, contract v2, runners |
 | [`tests/simulation/`](tests/simulation/) | Production-grade team E2E simulation |
 
 ## Development

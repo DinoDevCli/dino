@@ -9,7 +9,7 @@ Start here: **[`index.md`](index.md)**
 | [`index.md`](index.md) | Docs landing |
 | [`QUICKSTART.md`](QUICKSTART.md) | Install, first seal, `--dev` |
 | [`LICENSING.md`](LICENSING.md) | MIT + Proof Pack license |
-| [`ROADMAP.md`](ROADMAP.md) | Developer Mode and later |
+| [`ROADMAP.md`](ROADMAP.md) | Developer Mode, contract v2, runners |
 | [`PROOF_CONTRACT.md`](PROOF_CONTRACT.md) | What Dino guarantees |
 | [`PROOF_EXPORT.md`](PROOF_EXPORT.md) | Path / HTTP / S3 |
 | [`PROOF_INDEX.md`](PROOF_INDEX.md) | Index / compare / metrics |
@@ -20,4 +20,4 @@ Start here: **[`index.md`](index.md)**
 
 ## Internal
 
-[`internal/`](internal/) — ops, customer pack, evaluation logs.
+[`internal/`](internal/) — ops, customer pack, outreach, evaluation logs.
