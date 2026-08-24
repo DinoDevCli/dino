@@ -15,7 +15,7 @@ export function Nav({ active: _active = "home" }: { active?: "home" | "docs" }) 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
       <nav
-        className="mx-auto flex max-w-content items-center justify-between px-gutter py-4"
+        className="mx-auto flex max-w-narrow items-center justify-between px-gutter py-4"
         aria-label="Primary"
       >
         <Link

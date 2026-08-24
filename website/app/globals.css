@@ -3,22 +3,22 @@
 @tailwind utilities;
 
 :root {
-  --background: #0b0a09;
-  --surface: #141210;
-  --surface-2: #1a1714;
-  --border: #2a2622;
-  --border-strong: #3d3730;
-  --hover: #2e2924;
+  --background: #0a0a0f;
+  --surface: #111118;
+  --surface-2: #16161e;
+  --border: #1e1e26;
+  --border-strong: #2a2a32;
+  --hover: #282830;
   --foreground: #f4f1ec;
-  --muted: #9c958c;
+  --muted: #a0a0b0;
   --accent: #ff6b00;
-  --accent-hover: #e85f00;
-  --accent-dim: color-mix(in srgb, #ff6b00 18%, transparent);
+  --accent-hover: #e55f00;
+  --accent-dim: color-mix(in srgb, #ff6b00 14%, transparent);
   --code-bg: #000000;
-  --json-bg: #12100e;
+  --json-bg: #111118;
 
-  --content-max: 1120px;
-  --narrow-max: 760px;
+  --content-max: 800px;
+  --narrow-max: 800px;
   --grid-gutter: 1.5rem;
 }
 
@@ -87,7 +87,7 @@ pre.json-panel {
   gap: 0.35rem;
   padding: 1.25rem 1.5rem;
   background: var(--accent);
-  color: #0b0a09;
+  color: #0a0a0f;
   border: 1px solid var(--accent);
   text-decoration: none;
   transition: background-color 0.15s ease;

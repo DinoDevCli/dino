@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
-import { Container, MonoLabel } from "@/components/Layout";
+import { Container } from "@/components/Layout";
 import { Nav } from "@/components/Nav";
 import { DOC_LINKS } from "@/lib/content";
 import { GITHUB } from "@/lib/site";
@@ -12,8 +12,7 @@ export default function DocsPage() {
 
       <main className="py-section">
         <Container>
-          <MonoLabel accent># docs</MonoLabel>
-          <h1 className="mt-4 text-4xl font-bold tracking-tightest">
+          <h1 className="text-4xl font-bold tracking-tightest">
             Documentation
           </h1>
           <p className="mt-4 max-w-xl text-muted">

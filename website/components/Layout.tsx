@@ -60,15 +60,21 @@ export function MonoLabel({
 export function Heading({
   children,
   as: Tag = "h2",
+  className = "",
 }: {
   children: React.ReactNode;
   as?: "h1" | "h2" | "h3";
+  className?: string;
 }) {
   const size =
     Tag === "h1"
-      ? "text-5xl md:text-6xl lg:text-7xl tracking-tightest leading-[1.1]"
+      ? "text-4xl md:text-5xl tracking-tightest leading-[1.1]"
       : Tag === "h2"
-        ? "text-3xl tracking-tighter"
-        : "text-xl tracking-tighter";
-  return <Tag className={`font-bold ${size}`}>{children}</Tag>;
+        ? "text-2xl tracking-tight"
+        : "text-lg tracking-tight";
+  return (
+    <Tag className={`font-bold text-foreground ${size} ${className}`}>
+      {children}
+    </Tag>
+  );
 }

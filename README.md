@@ -22,6 +22,13 @@ During Early Access:
 > Dino outputs audit artifacts — dashboards render them. No hosted UI. No SaaS. No cloud product.
 
 ```bash
+pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
+dino proof run --help
+```
+
+Not on PyPI as `dino` (name collision). Install from GitHub.
+
+```bash
 dino proof run \
   --command echo ok \
   --scan ./tests/e2e/pipe.py \

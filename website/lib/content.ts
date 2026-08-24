@@ -14,7 +14,7 @@ export const HERO = {
 };
 
 export const PROBLEM = {
-  label: "# problem",
+  title: "Problem",
   lines: [
     "Two fraud-score runs — v1 and v2. You do not know what differs.",
     "Drift is invisible: no sealed artifacts, no machine-readable delta.",
@@ -23,13 +23,14 @@ export const PROBLEM = {
 };
 
 export const HOW = {
-  label: "# how",
+  title: "How it works",
   body: "Dino seals each run into a proof bundle (capsule + scan + hash), exports the bundle (Path / HTTP / S3), builds a proof index (proof_index.json), and compares two proofs deterministically. The verdict is changed: true/false.",
 };
 
 export const PRODUCT = {
-  label: "# product",
-  title: "Product Architecture",
+  title: "Engine",
+  determinism:
+    "All proof bundles and indexes are deterministic and reproducible (content-addressed).",
   flow: "pipeline → seal → export → index → compare → dashboard",
   blocks: [
     {
@@ -53,28 +54,19 @@ export const PRODUCT = {
       detail: "pipeline_version_diff",
     },
   ],
-  noDashboard:
-    "Dino does not include a dashboard — dashboards consume the artifacts (proof_index.json, compare.json).",
-  roles: "Dino outputs audit artifacts — dashboards render them.",
-  repoBridge:
-    "The website demo uses the same artifacts found in tests/simulation/golden in the GitHub repository.",
-  wiringLabel: "Dashboard Integration",
+  wiringTitle: "Dashboard integration",
   wiring: [
-    "Dashboards read Dino's artifacts via Path, HTTP, or S3.",
+    "Dashboards consume Dino's artifacts (proof_index.json, compare.json) via Path, HTTP, or S3.",
     "Superset, Airflow, MLflow, or your own UI can render drift, verdicts, and metrics.",
-    "Dino provides the data — you choose the visualization.",
-  ],
-  benefits: [
-    "Deterministic CI gate: changed: true/false",
-    "Local-first — data never leaves your infra",
+    "Dino outputs the data — you choose the visualization.",
   ],
 };
 
 /** Real install — not on PyPI as `dino` (name collision) */
 export const QUICKSTART = {
-  label: "# install",
+  label: "Install",
   line: `pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"`,
-  hint: "Then: dino scan leakage --help · dino proof run --help",
+  hint: "dino proof run --help",
 };
 
 export const DEMO_COPY = {
@@ -86,8 +78,8 @@ export const DEMO_COPY = {
 };
 
 export const EARLY = {
-  label: "# early access",
-  title: "Free Mode. Proof Pack. 60 Days.",
+  title: "Early Access",
+  subtitle: "Free Mode. Proof Pack. 60 Days.",
   benefits: [
     "Leakage scan — free forever",
     "Proof pack — free Team Key, 60 days",

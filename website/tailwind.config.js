@@ -22,9 +22,9 @@ module.exports = {
         "json-bg": "var(--json-bg)",
       },
       maxWidth: {
-        content: "1200px",
+        content: "800px",
         narrow: "800px",
-        hero: "900px",
+        hero: "800px",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
