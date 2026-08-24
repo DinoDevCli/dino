@@ -66,14 +66,10 @@ export function Heading({
   as?: "h1" | "h2" | "h3";
   className?: string;
 }) {
-  const size =
-    Tag === "h1"
-      ? "text-4xl md:text-5xl tracking-tightest leading-[1.1]"
-      : Tag === "h2"
-        ? "text-2xl tracking-tight"
-        : "text-lg tracking-tight";
   return (
-    <Tag className={`font-bold text-foreground ${size} ${className}`}>
+    <Tag
+      className={`text-2xl font-bold tracking-tight text-foreground ${className}`}
+    >
       {children}
     </Tag>
   );

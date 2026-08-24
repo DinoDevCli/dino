@@ -17,7 +17,9 @@ export function DemoWalkthrough({ steps }: { steps: DemoStep[] }) {
     <div className="mx-auto flex w-full flex-col gap-16">
       {steps.map((step) => (
         <div key={step.id} className="flex flex-col gap-4">
-          <p className="font-mono text-xs text-muted">{step.label}</p>
+          <p className="text-2xl font-bold tracking-tight text-foreground">
+            {step.label}
+          </p>
           <pre className="overflow-x-auto border border-border bg-black p-4 font-mono text-sm leading-relaxed text-foreground">
             <code>{step.command}</code>
           </pre>

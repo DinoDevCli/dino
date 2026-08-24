@@ -6,7 +6,7 @@ export const SITE = {
 };
 
 export const HERO = {
-  prompt: "$ dino version",
+  kicker: "Version",
   title: "Local-First Audit Engine for Python Pipelines",
   definition:
     "Dino is a local-first audit engine that produces sealed proofs, export envelopes, and a universal proof index for your dashboards.",
@@ -70,7 +70,7 @@ export const QUICKSTART = {
 };
 
 export const DEMO_COPY = {
-  title: "Demo",
+  title: "Demo: Audit Log",
   intro:
     "We audit a fraud-score pipeline. Two runs — v1 and v2. Dino seals both, exports them, builds a proof index, and compares them. The walkthrough shows the exact diff.",
   source:
@@ -149,7 +149,7 @@ export const FAIL_SNIPPET = `{
 export const DEMO_STEPS = [
   {
     id: "run-a",
-    label: "1. Run A — baseline",
+    label: "Run A — baseline",
     command: `dino proof run \\
   --command "python pipeline/run.py --seed seed-42" \\
   --scan ./pipeline \\
@@ -159,7 +159,7 @@ export const DEMO_STEPS = [
   },
   {
     id: "run-b",
-    label: "2. Run B — updated",
+    label: "Run B — updated",
     command: `dino proof run \\
   --command "python pipeline/run.py --seed seed-123" \\
   --scan ./pipeline \\
@@ -172,13 +172,13 @@ export const DEMO_STEPS = [
   },
   {
     id: "compare",
-    label: "3. Compare",
+    label: "Compare",
     command: `dino proof index compare ./archive <hash_v1> <hash_v2>`,
     artifacts: [{ name: "compare.json", json: GOLDEN_COMPARE, emphasize: true }],
   },
   {
     id: "fail-closed",
-    label: "4. Fail-closed",
+    label: "Fail-closed",
     command: `dino proof run --command "echo ok" --scan ./does_not_exist`,
     note: "Dino refuses to pass a run with missing scan roots.",
     artifacts: [{ name: "scan.json", json: FAIL_SNIPPET }],

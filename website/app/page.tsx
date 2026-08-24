@@ -54,18 +54,18 @@ export default function Home() {
       <section className="relative isolate overflow-hidden border-b border-border">
         <div className="hero-grid absolute inset-0 -z-10" aria-hidden />
         <Container className="flex min-h-[44vh] flex-col justify-center py-24">
-          <p className="mb-5 font-mono text-xs text-muted">{HERO.prompt}</p>
-          <h1 className="text-4xl font-bold leading-[1.1] tracking-tightest md:text-5xl">
-            {HERO.title}
-          </h1>
+          <Heading as="h1">{HERO.kicker}</Heading>
           <p className="mt-6 text-lg leading-relaxed text-muted">
+            {HERO.title}
+          </p>
+          <p className="mt-4 leading-relaxed text-muted">
             <MonoBody text={HERO.definition} />
           </p>
-          <div className="mt-8 border border-border bg-black px-4 py-3">
-            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
-              {QUICKSTART.label}
-            </p>
-            <p className="mt-2 overflow-x-auto font-mono text-sm text-foreground">
+          <Heading as="h2" className="mt-12">
+            {QUICKSTART.label}
+          </Heading>
+          <div className="mt-6 border border-border bg-black px-4 py-3">
+            <p className="overflow-x-auto font-mono text-sm text-foreground">
               {QUICKSTART.line}
             </p>
             <p className="mt-2 font-mono text-xs text-muted">{QUICKSTART.hint}</p>
@@ -104,7 +104,7 @@ export default function Home() {
           <Heading as="h3" className="mt-12">
             {PRODUCT.wiringTitle}
           </Heading>
-          <div className="mt-4 space-y-2 leading-relaxed text-muted">
+          <div className="mt-6 space-y-2 leading-relaxed text-muted">
             {PRODUCT.wiring.map((line) => (
               <p key={line}>
                 <MonoBody text={line} />
@@ -128,7 +128,7 @@ export default function Home() {
       <Section id="early-access">
         <Container>
           <Heading>{EARLY.title}</Heading>
-          <p className="mt-2 text-muted">{EARLY.subtitle}</p>
+          <p className="mt-6 leading-relaxed text-muted">{EARLY.subtitle}</p>
           <ul className="mt-8 space-y-3 text-muted">
             {EARLY.benefits.map((item) => (
               <li key={item} className="flex gap-3">
@@ -139,7 +139,7 @@ export default function Home() {
               </li>
             ))}
           </ul>
-          <p className="mt-6 text-sm text-muted">{EARLY.note}</p>
+          <p className="mt-6 leading-relaxed text-muted">{EARLY.note}</p>
           <a href={earlyAccessMailto()} className="mailto-cta mt-8">
             <span className="cta-label">{EARLY.cta}</span>
             <span className="cta-email">{EARLY.email}</span>

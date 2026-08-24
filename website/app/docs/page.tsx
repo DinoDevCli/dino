@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
-import { Container } from "@/components/Layout";
+import { Container, Heading } from "@/components/Layout";
 import { Nav } from "@/components/Nav";
 import { DOC_LINKS } from "@/lib/content";
 import { GITHUB } from "@/lib/site";
@@ -12,10 +12,8 @@ export default function DocsPage() {
 
       <main className="py-section">
         <Container>
-          <h1 className="text-4xl font-bold tracking-tightest">
-            Documentation
-          </h1>
-          <p className="mt-4 max-w-xl text-muted">
+          <Heading as="h1">Documentation</Heading>
+          <p className="mt-6 leading-relaxed text-muted">
             Same documents as the repository — contracts, CLI, integration,
             simulation.
           </p>
