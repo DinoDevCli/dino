@@ -3,7 +3,7 @@
 Documentary landing page for Dino — aligned with the root [README](../README.md).
 
 **Story:** local-first audit engine · Free scan forever · Proof pack via Early Access ·  
-`early@dinodevcli.dev` · no checkout · dashboards external.
+Early Access is open — any team can request a key · `dinodevcli@gmail.com` · no checkout · dashboards external.
 
 ## Local
 
@@ -20,7 +20,7 @@ npm run dev
 ```
 NEXT_PUBLIC_GITHUB_OWNER=DinoDevCli
 NEXT_PUBLIC_GITHUB_REPO=dino
-NEXT_PUBLIC_CONTACT_EMAIL=early@dinodevcli.dev
+NEXT_PUBLIC_CONTACT_EMAIL=dinodevcli@gmail.com
 ```
 
 ## Deploy
@@ -35,4 +35,4 @@ Uses `NEXT_PUBLIC_BASE_PATH=/dino` in CI only.
 | File | Role |
 |------|------|
 | `lib/content.ts` | Documentary copy + Early Access |
-| `lib/site.ts` | GitHub URLs, `early@dinodevcli.dev` mailto |
+| `lib/site.ts` | GitHub URLs, `dinodevcli@gmail.com` mailto |

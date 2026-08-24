@@ -1,6 +1,6 @@
 # License unlock (Proof Pack)
 
-**Current phase: Early Access — no checkout.**
+**Current phase: Early Access is open — any team can request a key. No checkout.**
 
 | Pack | Access |
 |------|--------|

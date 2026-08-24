@@ -2,9 +2,10 @@
 
 ## 0.3.1
 
-- **Early Access:** free Team Keys (`dinodevcli@gmail.com` / GitHub issue); no checkout
+- **Early Access is open** — any team can request a free Team Key ([dinodevcli@gmail.com](mailto:dinodevcli@gmail.com) / GitHub issue); no checkout
 - **Early Access keys:** HMAC-signed `dinoea.v1.*` with expiry (`dino issue-key`, auto-deactivate)
 - **Packs:** Free scan forever · Proof pack via Early Access Team Key
+- **Determinism:** All proof bundles and indexes are deterministic and reproducible (content-addressed)
 - **Production simulation:** `tests/simulation/` — fraud pipeline + full Dino team workflow
 - **Positioning:** local-first audit engine — outputs artifacts; dashboards are external
 - Export contracts: path / HTTP / S3 (`dino.proof.export.v1`)

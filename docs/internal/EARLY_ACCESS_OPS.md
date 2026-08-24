@@ -1,8 +1,11 @@
-# Early Access Ops — issue Team Keys + customer pack
+# Early Access Ops — issue Team Keys + customer pack ZIP
 
 **Contact (public):** [dinodevcli@gmail.com](mailto:dinodevcli@gmail.com)  
 **Website:** https://dinodevcli.github.io/dino/  
-**Repo:** https://github.com/DinoDevCli/dino
+**Repo:** https://github.com/DinoDevCli/dino  
+**Pack spec:** [`customer_pack/README.md`](customer_pack/README.md) (`customer-pack.v1`)
+
+Early Access is open — any team can request a key.
 
 ## Packs (what customers get)
 
@@ -13,34 +16,45 @@
 
 Engine only — dashboards are external. Customers bring Superset / Airflow / MLflow / custom UI.
 
-## Maintainer: issue a key
+## When a customer writes
+
+Example: *We are ACME Risk, team size 4, want Early Access.*
 
 ```bash
-# Production: set a strong secret (same secret must verify on customer machines
-# only if you distribute online verify — currently keys are HMAC with this secret).
-export DINO_EA_SIGNING_SECRET='replace-with-long-random-secret'
-
-# Issue (default 90 days)
-dino issue-key --team "acme-risk" --days 90
-
-# Or helper script (prints key + email body)
-./scripts/issue-early-access.sh acme-risk 90
+export DINO_EA_SIGNING_SECRET='prod-secret'
+./scripts/issue-early-access.sh acme-risk 60
+# optional: --name "Alex"
 ```
 
-Record each issuance: team, days, date, contact email, key prefix (`dinoea.v1.…` first 24 chars).
+The script issues the key and writes:
 
-## Customer pack (send together)
+```
+dist/customer-packs/dino-ea-acme-risk-v0.3.1-<stamp>.zip
+```
 
-1. **Team Key** — full `dinoea.v1.…` string  
-2. **Email** — paste from [`customer_pack/EMAIL_TEMPLATE.md`](customer_pack/EMAIL_TEMPLATE.md)  
-3. **Quickstart** — attach or link [`customer_pack/QUICKSTART.md`](customer_pack/QUICKSTART.md)  
-4. Links: website · README · `docs/INTEGRATION_DASHBOARDS.md` · `tests/simulation/`
+Inner layout:
+
+```
+acme-risk/
+  KEY.txt
+  QUICKSTART.md
+  EMAIL.txt
+  LICENSE
+  VERSION
+  examples/
+    proof_index.json
+    compare.json
+```
+
+Send `EMAIL.txt` from dinodevcli@gmail.com and attach the ZIP.
+
+Record: team, days, date, contact email, key prefix (`dinoea.v1.` + first 24 chars), ZIP name.
 
 ## Customer activate
 
 ```bash
 pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
-dino upgrade --pack proof --key 'dinoea.v1.…'
+dino upgrade --pack proof --key "$(cat KEY.txt)"
 dino proof doctor
 dino packs
 ```
@@ -53,13 +67,15 @@ dino scan leakage ./path/to/pipeline
 
 ## Expiry
 
-Keys embed `exp` (unix). After expiry, `dino upgrade` / proof domains fail closed until a new key is issued.
+Keys embed `exp` (unix). After expiry, `dino upgrade` / proof domains fail closed until a new key is issued. Re-run the script and send a **new** ZIP (do not reuse the old KEY.txt).
 
 ## Checklist before send
 
-- [ ] Team name matches their project  
-- [ ] Days = 60 or 90 (website says 60-day Proof pack)  
-- [ ] Key issued with production `DINO_EA_SIGNING_SECRET`  
-- [ ] Email uses dinodevcli@gmail.com  
-- [ ] No pricing / checkout language  
-- [ ] Remind: engine + artifacts only; dashboards are theirs  
+- [ ] `DINO_EA_SIGNING_SECRET` is the production secret (not `--allow-sim`)
+- [ ] Team slug matches their project (`acme-risk`)
+- [ ] Days = 60 (website) unless you agreed otherwise
+- [ ] Email body is the generated `EMAIL.txt` (dinodevcli@gmail.com)
+- [ ] ZIP attached
+- [ ] No pricing / checkout language
+- [ ] Ledger line copied
+- [ ] Remind: engine + artifacts only; dashboards are theirs

@@ -1,0 +1,52 @@
+{
+  "schema": "dino.proof.index.compare.v1",
+  "a": {
+    "hash": "b9f1892e7b78d78f5be9e6b68a112572b8e48db9169171be9f90f72505c9458e",
+    "path": "b9f1892e7b78d78f",
+    "timestamp": "2026-08-23T11:00:00Z"
+  },
+  "b": {
+    "hash": "c94659554e362ee33a0ed2d6b1e88a7b44ea1bf995c41f7cf384d19cbeac7686",
+    "path": "c94659554e362ee3",
+    "timestamp": "2026-08-23T12:00:00Z"
+  },
+  "changed": true,
+  "drift_delta": {
+    "from": "none",
+    "to": "none"
+  },
+  "leakage_delta": {
+    "from": "none",
+    "to": "none"
+  },
+  "supersede_status": {
+    "a": false,
+    "b": false
+  },
+  "artifacts_diff": {
+    "only_a": [],
+    "only_b": [],
+    "shared": ["capsule/capsule.json", "proof.json", "scan.json"]
+  },
+  "pipeline_version_diff": {
+    "from": "fraud_score_v1",
+    "to": "fraud_score_v2"
+  },
+  "verdict_diff": {
+    "from": "PROOF_PARTIAL",
+    "to": "PROOF_PARTIAL"
+  },
+  "status_diff": {
+    "from": "partial",
+    "to": "partial"
+  },
+  "group_diff": {
+    "from": "risk-team",
+    "to": "risk-team"
+  },
+  "tags_diff": {
+    "only_a": [],
+    "only_b": [],
+    "shared": ["demo"]
+  }
+}

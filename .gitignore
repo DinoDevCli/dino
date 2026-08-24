@@ -3,6 +3,8 @@ __pycache__/
 *.egg-info/
 build/
 dist/
+# Issued EA ZIPs contain live Team Keys
+dist/customer-packs/
 *.spec
 .pytest_cache/
 .env

@@ -17,25 +17,25 @@
 | 01 | GitHub Release v0.3.1 | Done — https://github.com/DinoDevCli/dino/releases/tag/v0.3.1 |
 | 02 | Website live | **https://dinodevcli.github.io/dino/** (Vercel optional for custom domain) |
 | 03 | Post X / LinkedIn / Reddit / HN (copy below) | Manual |
-| 04 | DM 5–10 teams (Risk, Fraud, ML, Research) — template below | Manual |
+| 04 | Early Access is open — any team can request a key (copy below) | Manual |
 | 05 | Share integration doc with teams using Superset/Airflow/etc. | [`INTEGRATION_DASHBOARDS.md`](../INTEGRATION_DASHBOARDS.md) |
 | 06 | Collect 3–5 case studies — template below | Ongoing |
 | 07 | Pitch newsletters — templates below | Manual |
 
-**Early Access (current):** Free scan forever · Proof pack via free Team Key ·  
+**Early Access (current):** Open — any team can request a key. Free scan forever · Proof pack via free Team Key ·  
 [dinodevcli@gmail.com](mailto:dinodevcli@gmail.com) · no checkout · dashboards external.
 
 ---
 
 ## GitHub Release notes (paste into v0.3.1)
 
-```markdown
+~~~~markdown
 ## Early Access
 
-Dino v0.3.1 enters **Early Access**.
+Early Access is open — any team can request a key.
 Team Keys are free. No checkout.
 
-**Request Early Access:** [Open an issue](https://github.com/DinoDevCli/dino/issues/new?title=Early%20Access%20Request) · [dinodevcli@gmail.com](mailto:dinodevcli@gmail.com)
+**Request a Team Key:** [Open an issue](https://github.com/DinoDevCli/dino/issues/new?title=Early%20Access%20Request) · [dinodevcli@gmail.com](mailto:dinodevcli@gmail.com)
 
 ---
 
@@ -43,6 +43,8 @@ Team Keys are free. No checkout.
 
 **Dino — Local-First Audit Engine for Python Pipelines**  
 Deterministic proofs, export envelopes, and a universal proof index for your dashboards.
+
+All proof bundles and indexes are deterministic and reproducible (content-addressed).
 
 Dino outputs audit artifacts — dashboards render them. Engine only.
 
@@ -54,25 +56,14 @@ Dino outputs audit artifacts — dashboards render them. Engine only.
 - **Archive layout** — `pipelines/` · `groups/` · `tags/` browse links
 - **Full E2E test suite** — `tests/e2e/`
 - **Early Access Team Keys** — free unlock for Proof pack
+- **Determinism** — all proof bundles and indexes are deterministic and reproducible
 
-### Quickstart
+### Install
 
+```bash
 pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
-dino scan leakage ./tests/e2e/pipe.py          # free forever
-
-# Early Access — request a free Team Key:
-dino upgrade --pack proof --key YOUR_TEAM_KEY
-
-dino proof run \
-  --command echo ok \
-  --scan ./tests/e2e/pipe.py \
-  --output-dir ./proof_out \
-  --pipeline fraud_score_v4 \
-  --group risk-team \
-  --tag prod --tag v4 \
-  --export ./archive
-
-dino proof index metrics ./archive
+dino proof run --help
+```
 
 ### Docs
 
@@ -85,7 +76,7 @@ dino proof index metrics ./archive
 ### Packs
 
 Free scan forever · Proof pack via Early Access Team Key · Engine only — dashboards external.
-```
+~~~~
 
 ---
 
@@ -118,7 +109,7 @@ Dino feeds the artifacts.
 Local-first. MIT. Python pipelines. No cloud product.
 
 Try it: https://github.com/DinoDevCli/dino
-Looking for 5–10 early-adopter teams (risk, fraud, research, ML governance) — reply or DM.
+Early Access is open — any team can request a key. Reply or DM.
 ```
 
 ## Hacker News — Show HN title + post
@@ -163,7 +154,7 @@ https://github.com/DinoDevCli/dino
 ```
 Subject: Early access — Dino (local audit engine for Python pipelines)
 
-Hi — we're looking for 5–10 small teams (risk, fraud, ML governance, research) to try Dino.
+Hi — Early Access is open. Any team can request a key (risk, fraud, ML governance, research).
 
 Dino is NOT a dashboard or SaaS. It's a local CLI that:
 - seals pipeline runs (deterministic proof.json)
