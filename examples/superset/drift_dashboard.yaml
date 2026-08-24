@@ -1,0 +1,52 @@
+# Starter kit — visualize Dino proof_index.json in Apache Superset.
+# Not a Dino product. Not a hosted UI. Copy into your own Superset.
+#
+# Source: <archive>/proof_index.json  (schema dino.proof.index.v1)
+# Flatten: proofs[] → one row per sealed run
+
+schema: dino.dashboard.starter.v1
+title: Dino drift
+dataset:
+  from: proof_index.json
+  rows: proofs
+  columns:
+    - hash
+    - timestamp
+    - pipeline
+    - group
+    - drift
+    - leakage
+    - verdict
+    - status
+    - path
+
+charts:
+  - id: drift_by_pipeline
+    title: Drift by pipeline
+    viz: bar
+    x: pipeline
+    y: count
+    filter: drift != none
+
+  - id: leakage_failed
+    title: Leakage failures
+    viz: big_number
+    metric: count
+    filter: leakage == failed
+
+  - id: recent_proofs
+    title: Recent proofs
+    viz: table
+    columns:
+      - timestamp
+      - pipeline
+      - drift
+      - leakage
+      - verdict
+      - hash
+    order_by: timestamp desc
+    limit: 50
+
+notes:
+  - Wire compare.json (dino.proof.index.compare.v1) to a CI tile: changed == true.
+  - Dino outputs the data — you choose the visualization.

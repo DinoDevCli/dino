@@ -5,7 +5,13 @@
 # Requires: Python 3.10+, dino installed editable (pip install -e ".[dev]")
 
 ROOT := $(abspath ../..)
-PY ?= $(ROOT)/.venv/bin/python
+ifndef PY
+  ifneq ($(wildcard $(ROOT)/.venv/bin/python),)
+    PY := $(ROOT)/.venv/bin/python
+  else
+    PY := python3
+  endif
+endif
 export DINO_EA_SIGNING_SECRET ?= dino-demo-makefile
 export PYTHONPATH := $(ROOT)
 

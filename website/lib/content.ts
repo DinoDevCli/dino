@@ -60,7 +60,7 @@ export const PRODUCT = {
   wiring: [
     "Dashboards consume Dino's artifacts (proof_index.json, compare.json) via Path, HTTP, or S3.",
     "Superset, Airflow, MLflow, or your own UI can render drift, verdicts, and metrics.",
-    "Dino outputs the data — you choose the visualization.",
+    "Dino outputs the data — you choose the visualization. Starter kit: examples/superset/drift_dashboard.yaml.",
   ],
 };
 
@@ -81,16 +81,46 @@ export const DEMO_COPY = {
 
 export const EARLY = {
   title: "Early Access",
-  subtitle: "Free Mode. Proof Pack. 60 Days.",
+  subtitle: "Request a Team Key — Start your 60-day Proof Pack trial.",
+  steps: [
+    "Email your team name to dinodevcli@gmail.com.",
+    "Receive KEY.txt, Quickstart, and examples.",
+    "dino upgrade --pack proof --key …",
+  ],
   benefits: [
     "Leakage scan — free forever",
     "Proof pack — free Team Key, 60 days",
-    "Email dinodevcli@gmail.com — name your team or project",
   ],
   note: "Engine only — dashboards are external.",
   cta: "Request a Team Key",
   email: "dinodevcli@gmail.com",
+  flow: "Email your team name to dinodevcli@gmail.com.",
 };
+
+export const LICENSING = {
+  title: "Pricing & Licensing",
+  lead: "MIT core. Proof Pack license after Early Access.",
+  lines: [
+    "Dino is MIT-licensed.",
+    "The core engine is free.",
+    "Advanced audit features (Proof Pack) require a license.",
+    "After Early Access, Proof Pack will be available as a one-time purchase per seat or team.",
+    "No subscriptions. No cloud fees.",
+  ],
+};
+
+export const CODESPACES = {
+  label: "Try it",
+  title: "Open in GitHub Codespaces",
+  body: "Clones the repo, installs Python and Dino, and opens a terminal. Then: cd tests/simulation && make demo",
+  cta: "Open in GitHub Codespaces",
+};
+
+export const SUPPORT =
+  "Questions or issues? Open an Issue or Discussion on GitHub.";
+
+export const ROADMAP_DEV =
+  "Roadmap: Developer Mode (--dev) for relaxed scanning during development.";
 
 /** From tests/simulation/golden/demo_excerpts.json — do not invent */
 export const GOLDEN_PROOF = `{
@@ -182,18 +212,20 @@ export const DEMO_STEPS = [
     id: "fail-closed",
     label: "Fail-closed",
     command: `dino proof run --command "echo ok" --scan ./does_not_exist`,
-    note: "Dino refuses to pass a run with missing scan roots.",
+    note: "Dino refuses to pass a run with missing scan roots. Roadmap: Developer Mode (--dev) for relaxed scanning during development.",
     artifacts: [{ name: "scan.json", json: FAIL_SNIPPET }],
   },
 ];
 
 export const DOC_LINKS = [
-  { label: "Proof Contract", path: "docs/PROOF_CONTRACT.md" },
-  { label: "Proof Export", path: "docs/PROOF_EXPORT.md" },
-  { label: "Proof Index", path: "docs/PROOF_INDEX.md" },
-  { label: "CLI Reference", path: "docs/CLI_E2E_REFERENCE.md" },
+  { label: "Engine", path: "docs/PROOF_CONTRACT.md" },
+  { label: "Proof Pack", path: "docs/index.md#proof-pack" },
+  { label: "Contracts", path: "docs/PROOF_INDEX.md" },
+  { label: "Quickstart", path: "docs/QUICKSTART.md" },
   { label: "Examples", path: "docs/EXAMPLES.md" },
+  { label: "Early Access", path: "docs/index.md#early-access" },
+  { label: "Pricing & Licensing", path: "docs/LICENSING.md" },
+  { label: "Roadmap", path: "docs/ROADMAP.md" },
   { label: "Dashboard Integration", path: "docs/INTEGRATION_DASHBOARDS.md" },
-  { label: "Production Simulation", path: "tests/simulation/README.md" },
-  { label: "Website Blueprint", path: "docs/internal/WEBSITE_BLUEPRINT.md" },
+  { label: "CLI Reference", path: "docs/CLI_E2E_REFERENCE.md" },
 ];

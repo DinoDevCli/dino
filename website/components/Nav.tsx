@@ -3,11 +3,13 @@ import { GITHUB, siteHash } from "@/lib/site";
 
 type NavItem =
   | { kind: "hash"; href: string; label: string }
+  | { kind: "internal"; href: string; label: string }
   | { kind: "external"; href: string; label: string };
 
 const LINKS: NavItem[] = [
   { kind: "hash", href: siteHash("demo"), label: "Demo" },
   { kind: "hash", href: siteHash("early-access"), label: "Early Access" },
+  { kind: "internal", href: "/docs", label: "Docs" },
   { kind: "external", href: GITHUB.base, label: "GitHub" },
 ];
 
@@ -40,6 +42,16 @@ export function Nav({ active: _active = "home" }: { active?: "home" | "docs" }) 
                   >
                     {item.label}
                   </a>
+                </li>
+              );
+            }
+
+            if (item.kind === "internal") {
+              return (
+                <li key={item.href}>
+                  <Link href={item.href} className={className}>
+                    {item.label}
+                  </Link>
                 </li>
               );
             }

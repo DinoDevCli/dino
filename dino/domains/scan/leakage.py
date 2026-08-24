@@ -25,15 +25,19 @@ class ScanReport:
     findings: list[ScanFinding]
     files_scanned: int = 0
     rules: list[str] | None = None
+    dev: bool = False
 
     def to_dict(self) -> dict:
-        return {
+        payload = {
             "schema": "dino.scan.leakage.v1",
             "ok": self.ok,
             "files_scanned": self.files_scanned,
             "rules": self.rules or RULE_IDS,
             "findings": [asdict(f) for f in self.findings],
         }
+        if self.dev:
+            payload["dev"] = True
+        return payload
 
 
 RULE_IDS = [
@@ -143,7 +147,7 @@ def _scan_tree(path: str, tree: ast.AST, text: str, findings: list[ScanFinding])
         findings.append(ScanFinding(path, "SHIFT_NEGATIVE", "negative shift (future peek)"))
 
 
-def scan_paths(roots: list[Path]) -> ScanReport:
+def scan_paths(roots: list[Path], *, dev: bool = False) -> ScanReport:
     findings: list[ScanFinding] = []
     resolved = [Path(r) for r in roots]
     missing = [str(r) for r in resolved if not r.exists()]
@@ -152,18 +156,22 @@ def scan_paths(roots: list[Path]) -> ScanReport:
         detail = "no .py files under scan roots"
         if missing:
             detail += f" (missing paths: {', '.join(missing)})"
+        if dev:
+            detail += " (relaxed in --dev; not for production proofs)"
         findings.append(
             ScanFinding(
                 path=str(resolved[0]) if resolved else ".",
                 rule="EMPTY_SCAN_ROOTS",
                 detail=detail,
+                severity="WARN" if dev else "FAIL",
             )
         )
         return ScanReport(
-            ok=False,
+            ok=bool(dev),
             findings=findings,
             files_scanned=0,
             rules=list(RULE_IDS),
+            dev=dev,
         )
     for path in files:
         text = path.read_text(encoding="utf-8", errors="replace")
@@ -180,6 +188,7 @@ def scan_paths(roots: list[Path]) -> ScanReport:
         findings=findings,
         files_scanned=len(files),
         rules=list(RULE_IDS),
+        dev=dev,
     )
 
 

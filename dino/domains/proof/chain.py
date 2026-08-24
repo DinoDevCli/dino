@@ -59,6 +59,7 @@ def build_proof(
     repo: Path | None = None,
     scan_roots: list[Path] | None = None,
     stdin: str = "",
+    dev: bool = False,
 ) -> dict[str, Any]:
     from dino.domains.capsule.execute import execute, normalize_command
     from dino.domains.map.verify import verify_repo
@@ -78,7 +79,7 @@ def build_proof(
     scan_report: dict[str, Any] | None = None
     scan_ok: bool | None = None
     if scan_roots:
-        report = run_scan([Path(p) for p in scan_roots])
+        report = run_scan([Path(p) for p in scan_roots], dev=dev)
         scan_report = report.to_dict()
         scan_report["schema"] = SCHEMAS["scan"]
         write_json(output_dir / "scan.json", scan_report)
@@ -113,6 +114,8 @@ def build_proof(
         "map_graph_hash": None if map_report is None else map_report.get("graph_hash"),
         "drift_bucket": drift_bucket,
     }
+    if dev:
+        parts["dev_mode"] = True
     artifacts = {
         "capsule": "capsule/capsule.json",
         "scan": "scan.json" if scan_report is not None else None,

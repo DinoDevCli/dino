@@ -1,0 +1,11 @@
+{
+  "name": "Dino",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "postCreateCommand": "python3 -m pip install -e '.[dev]'",
+  "postStartCommand": "echo && echo 'Dino is installed. Next:' && echo '  cd tests/simulation && make demo' && echo '  dino proof run --help' && echo",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python"]
+    }
+  }
+}

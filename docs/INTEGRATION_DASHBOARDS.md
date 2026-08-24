@@ -99,8 +99,10 @@ Store `proof_hash` on MLflow run; link to `./archive/<hash16>/proof.json` in art
 
 ## Superset / Metabase
 
+Starter kit (not a Dino UI): [`examples/superset/drift_dashboard.yaml`](../examples/superset/drift_dashboard.yaml)
+
 1. Mount or sync `./archive/proof_index.json` to a database (ETL script below).
-2. Build charts from flattened index rows.
+2. Build charts from flattened index rows — or import the starter YAML mapping.
 
 Minimal ETL (Python):
 

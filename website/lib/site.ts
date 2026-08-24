@@ -14,8 +14,12 @@ export const GITHUB = {
   readme: `${base}#install`,
   downloadZip: `${base}/archive/refs/heads/main.zip`,
   releases: `${base}/releases/latest`,
-  issuesNew: `${base}/issues/new`,
   earlyAccessIssue: `${base}/issues/new?title=${encodeURIComponent("Early Access Request")}`,
+  issues: `${base}/issues`,
+  issuesNew: `${base}/issues/new`,
+  discussions: `${base}/discussions`,
+  codespaces: `https://codespaces.new/${owner}/${repo}`,
+  docsIndex: blob("docs/index.md"),
   docs: {
     proofContract: blob("docs/PROOF_CONTRACT.md"),
     cliReference: blob("docs/CLI_E2E_REFERENCE.md"),
@@ -41,7 +45,9 @@ export function siteHash(id: string): string {
 }
 
 export function earlyAccessMailto(): string {
-  return `mailto:${EARLY_ACCESS_EMAIL}?subject=${encodeURIComponent("Early Access Request")}`;
+  const subject = encodeURIComponent("Early Access Request");
+  const body = encodeURIComponent("Team name:\n");
+  return `mailto:${EARLY_ACCESS_EMAIL}?subject=${subject}&body=${body}`;
 }
 
 export function contactHref(subject = "Dino — contact"): string {

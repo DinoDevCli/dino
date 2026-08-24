@@ -12,9 +12,13 @@ from dino import __version__
 from dino.common.output import Output
 
 
+def _pop_flag(argv: list[str], flag: str) -> tuple[list[str], bool]:
+    present = flag in argv
+    return [a for a in argv if a != flag], present
+
+
 def _pop_json_flag(argv: list[str]) -> tuple[list[str], bool]:
-    json_mode = "--json" in argv
-    return [a for a in argv if a != "--json"], json_mode
+    return _pop_flag(argv, "--json")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -24,7 +28,8 @@ def build_parser() -> argparse.ArgumentParser:
         epilog=(
             "Meta: dino version | packs | status | upgrade --pack proof --key KEY | "
             "issue-key --team NAME [--days N] | init-license. Global: --json for "
-            "machine-readable envelopes."
+            "machine-readable envelopes. --dev relaxes EMPTY_SCAN_ROOTS (not for "
+            "production proofs)."
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -33,6 +38,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--json",
         action="store_true",
         help="Emit JSON envelopes (also accepted before the domain)",
+    )
+    p.add_argument(
+        "--dev",
+        action="store_true",
+        help="Developer Mode: relax EMPTY_SCAN_ROOTS (not for production proofs)",
     )
     sub = p.add_subparsers(dest="domain", required=True)
 
@@ -212,6 +222,12 @@ def _out(domain: str, command: str, json_mode: bool) -> Output:
 def _fail(out: Output, error_type: str, detail: str, code: int = 1) -> int:
     out.emit_error(error_type, detail)
     return code
+
+
+def _dev_warn() -> None:
+    sys.stderr.write(
+        "Developer Mode: EMPTY_SCAN_ROOTS relaxed — not for production proofs.\n"
+    )
 
 
 def dispatch(args: argparse.Namespace, json_mode: bool) -> int:
@@ -504,7 +520,12 @@ def _run_scan(args: argparse.Namespace, cmd: str, json_mode: bool) -> int:
     if cmd == "leakage":
         from dino.domains.scan.leakage import scan_paths
 
-        report = scan_paths([Path(p) for p in args.paths])
+        report = scan_paths(
+            [Path(p) for p in args.paths],
+            dev=bool(getattr(args, "dev", False)),
+        )
+        if getattr(args, "dev", False):
+            _dev_warn()
         out.emit_success(report.to_dict())
         return 0 if report.ok else 1
     return _fail(out, "unknown_command", f"unknown scan command: {cmd}", 2)
@@ -537,12 +558,15 @@ def _run_proof(args: argparse.Namespace, cmd: str, json_mode: bool) -> int:
         repo = Path(args.repo) if args.repo else None
         scan_roots = [Path(p) for p in (args.scan or [])] or None
         try:
+            if getattr(args, "dev", False):
+                _dev_warn()
             proof = build_proof(
                 output_dir=Path(args.output_dir),
                 command=list(args.command),
                 repo=repo,
                 scan_roots=scan_roots,
                 stdin=args.stdin,
+                dev=bool(getattr(args, "dev", False)),
             )
         except ValueError as exc:
             return _fail(out, "invalid_args", str(exc), 2)
@@ -827,6 +851,7 @@ def main(argv: list[str] | None = None) -> int:
         sys.stdout.write(f"{__version__}\n")
         return 0
     argv, json_mode = _pop_json_flag(argv)
+    argv, dev_mode = _pop_flag(argv, "--dev")
     if argv and argv[0] in {"packs", "upgrade", "status", "init-license", "issue-key"}:
         return _run_meta(argv, json_mode)
     parser = build_parser()
@@ -835,6 +860,7 @@ def main(argv: list[str] | None = None) -> int:
     except SystemExit as exc:
         code = exc.code
         return 0 if code is None else int(code) if isinstance(code, int) else 1
+    args.dev = dev_mode or bool(getattr(args, "dev", False))
     return dispatch(args, json_mode)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- **Developer Mode:** `dino --dev` relaxes `EMPTY_SCAN_ROOTS` for local iteration (not for production proofs)
+- **Docs landing:** [`docs/index.md`](docs/index.md)
+- **Codespaces:** `.devcontainer/` — Open in GitHub Codespaces
+- **Dashboard starter:** [`examples/superset/drift_dashboard.yaml`](examples/superset/drift_dashboard.yaml)
+
 ## 0.3.1
 
 - **Early Access is open** — any team can request a free Team Key ([dinodevcli@gmail.com](mailto:dinodevcli@gmail.com) / GitHub issue); no checkout

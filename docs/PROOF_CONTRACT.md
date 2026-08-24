@@ -334,6 +334,7 @@ dino proof run \
 # exit 0 + audit.verdict PROOF_PASSED|PROOF_PARTIAL
 # Note: put flags inside one --command string (or argv tokens without leading --).
 # If --scan paths resolve to zero .py files, scan fails (EMPTY_SCAN_ROOTS).
+# dino --dev relaxes EMPTY_SCAN_ROOTS only (not for production proofs).
 dino proof verify --proof ./proof_out/proof.json
 # exit 0 + PROOF_VERIFY_PASSED
 ```
