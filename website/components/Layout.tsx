@@ -39,24 +39,7 @@ export function Section({
   );
 }
 
-export function MonoLabel({
-  children,
-  accent = false,
-}: {
-  children: React.ReactNode;
-  accent?: boolean;
-}) {
-  return (
-    <span
-      className={`font-mono text-sm tracking-wider ${
-        accent ? "text-accent" : "text-muted"
-      }`}
-    >
-      {children}
-    </span>
-  );
-}
-
+/** Small orange section label — same on every block */
 export function Label({
   children,
   as: Tag = "p",
@@ -68,13 +51,14 @@ export function Label({
 }) {
   return (
     <Tag
-      className={`font-mono text-sm text-accent ${className}`}
+      className={`font-mono text-xs uppercase tracking-[0.16em] text-accent ${className}`}
     >
       {children}
     </Tag>
   );
 }
 
+/** Large title under Label — section size by default, hero only for product name */
 export function Display({
   children,
   as: Tag = "h2",
@@ -88,10 +72,10 @@ export function Display({
 }) {
   const scale =
     size === "hero"
-      ? "text-4xl leading-[1.12] tracking-tightest md:text-5xl"
+      ? "text-3xl leading-[1.15] tracking-tight md:text-4xl"
       : size === "compact"
-        ? "text-xl leading-snug tracking-tight md:text-2xl"
-        : "text-3xl leading-snug tracking-tight md:text-4xl";
+        ? "text-lg leading-snug tracking-tight md:text-xl"
+        : "text-xl leading-snug tracking-tight md:text-2xl";
   return (
     <Tag className={`font-bold text-foreground ${scale} ${className}`}>
       {children}

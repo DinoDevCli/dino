@@ -13,7 +13,7 @@
   --muted: #a0a0b0;
   --accent: #ff6b00;
   --accent-hover: #e55f00;
-  --accent-dim: color-mix(in srgb, #ff6b00 14%, transparent);
+  --accent-dim: color-mix(in srgb, #ff6b00 22%, transparent);
   --code-bg: #000000;
   --json-bg: #111118;
 
@@ -46,14 +46,14 @@ a {
     background-color 0.15s ease;
 }
 
-/* Warm, quiet field — no glow */
+/* Hero field — stronger accent wash so the top stands out */
 .hero-grid {
   background-color: var(--background);
   background-image:
     radial-gradient(
-      ellipse 80% 50% at 15% 0%,
+      ellipse 90% 70% at 0% 0%,
       var(--accent-dim),
-      transparent 55%
+      transparent 60%
     ),
     linear-gradient(
       to right,
@@ -69,6 +69,12 @@ a {
     auto,
     40px 40px,
     40px 40px;
+}
+
+.hero-rule {
+  width: 3rem;
+  height: 2px;
+  background: var(--accent);
 }
 
 pre.code-panel {

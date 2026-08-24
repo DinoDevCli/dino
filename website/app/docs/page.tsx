@@ -13,7 +13,9 @@ export default function DocsPage() {
       <main className="py-section">
         <Container>
           <Label as="h1">Documentation</Label>
-          <Display className="mt-4">Contracts, CLI, integration</Display>
+          <Display size="compact" className="mt-3">
+            Contracts, CLI, integration
+          </Display>
           <p className="mt-6 leading-relaxed text-muted">
             Same documents as the repository — contracts, CLI, integration,
             simulation.

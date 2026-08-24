@@ -53,32 +53,35 @@ export default function Home() {
 
       <section className="relative isolate overflow-hidden border-b border-border">
         <div className="hero-grid absolute inset-0 -z-10" aria-hidden />
-        <Container className="flex min-h-[44vh] flex-col justify-center py-24">
+        <Container className="flex min-h-[48vh] flex-col justify-center py-24 md:py-28">
           <Label>{HERO.kicker}</Label>
-          <Display as="h1" size="hero" className="mt-4">
+          <div className="hero-rule mt-4" aria-hidden />
+          <Display as="h1" size="hero" className="mt-5">
             {HERO.title}
           </Display>
-          <p className="mt-6 leading-relaxed text-muted">
+          <p className="mt-6 max-w-[36rem] leading-relaxed text-muted">
             <MonoBody text={HERO.definition} />
           </p>
-          <Label as="h2" className="mt-12">
+          <Label as="h2" className="mt-14">
             {QUICKSTART.label}
           </Label>
-          <div className="mt-4 border border-border bg-black px-4 py-3">
+          <div className="mt-4 border border-border border-l-2 border-l-accent bg-black px-4 py-3">
             <p className="overflow-x-auto font-mono text-sm text-foreground">
               {QUICKSTART.line}
             </p>
             <p className="mt-2 font-mono text-xs text-muted">{QUICKSTART.hint}</p>
           </div>
-          <p className="mt-5 font-mono text-xs text-muted">{HERO.meta}</p>
+          <p className="mt-5 font-mono text-xs text-accent/80">{HERO.meta}</p>
         </Container>
       </section>
 
       <Section id="problem">
         <Container>
           <Label as="h2">{PROBLEM.title}</Label>
-          <Display className="mt-4">{PROBLEM.lead}</Display>
-          <div className="mt-6 space-y-3 leading-relaxed text-muted">
+          <Display size="compact" className="mt-3">
+            {PROBLEM.lead}
+          </Display>
+          <div className="mt-5 space-y-3 leading-relaxed text-muted">
             {PROBLEM.lines.map((line) => (
               <p key={line}>{line}</p>
             ))}
@@ -89,8 +92,10 @@ export default function Home() {
       <Section id="how">
         <Container>
           <Label as="h2">{HOW.title}</Label>
-          <Display className="mt-4">{HOW.lead}</Display>
-          <p className="mt-6 leading-relaxed text-muted">
+          <Display size="compact" className="mt-3">
+            {HOW.lead}
+          </Display>
+          <p className="mt-5 leading-relaxed text-muted">
             <MonoBody text={HOW.body} />
           </p>
         </Container>
@@ -99,10 +104,10 @@ export default function Home() {
       <Section id="engine">
         <Container>
           <Label as="h2">{PRODUCT.title}</Label>
-          <Display as="p" size="compact" className="mt-4 font-mono">
+          <Display as="p" size="compact" className="mt-3 font-mono">
             {PRODUCT.lead}
           </Display>
-          <p className="mt-6 leading-relaxed text-muted">
+          <p className="mt-5 leading-relaxed text-muted">
             {PRODUCT.determinism}
           </p>
           <ArchitectureFlow blocks={PRODUCT.blocks} />
@@ -122,7 +127,7 @@ export default function Home() {
       <Section id="demo">
         <Container>
           <Label as="h2">{DEMO_COPY.title}</Label>
-          <Display as="p" size="compact" className="mt-4">
+          <Display as="p" size="compact" className="mt-3">
             {DEMO_COPY.intro}
           </Display>
           <div className="mt-12">
@@ -135,7 +140,9 @@ export default function Home() {
       <Section id="early-access">
         <Container>
           <Label as="h2">{EARLY.title}</Label>
-          <Display className="mt-4">{EARLY.subtitle}</Display>
+          <Display size="compact" className="mt-3">
+            {EARLY.subtitle}
+          </Display>
           <ul className="mt-8 space-y-3 text-muted">
             {EARLY.benefits.map((item) => (
               <li key={item} className="flex gap-3">

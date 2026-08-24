@@ -20,7 +20,7 @@ export function Nav({ active: _active = "home" }: { active?: "home" | "docs" }) 
       >
         <Link
           href="/"
-          className="font-mono text-sm uppercase tracking-[0.28em] text-foreground hover:text-accent"
+          className="font-mono text-sm uppercase tracking-[0.28em] text-accent hover:text-accent-hover"
         >
           Dino
         </Link>
