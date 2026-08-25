@@ -12,6 +12,12 @@ Pipeline drift kept breaking our fraud-scoring runs. Same code, same data, same 
 
 > **Did this run actually change?**
 
+![dino proof index compare — changed: true](docs/assets/cli-compare.png)
+
+<p align="center">
+  <img src="docs/assets/demo-compare.gif" alt="run → diff → done" width="640" />
+</p>
+
 ```text
 $ dino proof index compare ./archive <hash_v1> <hash_v2>
 
@@ -30,7 +36,7 @@ $ dino proof index compare ./archive <hash_v1> <hash_v2>
 }
 ```
 
-*(CLI excerpt from [`tests/simulation/golden`](tests/simulation/golden) — fraud_score v1 vs v2.)*
+*(CLI excerpt from [`tests/simulation/golden`](tests/simulation/golden) — fraud_score v1 vs v2. Capture plan: [`docs/internal/SCREENSHOT_PLAN.md`](docs/internal/SCREENSHOT_PLAN.md).)*
 
 ---
 

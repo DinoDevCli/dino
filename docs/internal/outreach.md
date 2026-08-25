@@ -29,6 +29,16 @@ Wert in einem Satz: deterministischer Diff zwischen zwei Pipeline-Läufen (`chan
 
 ---
 
+## X / Twitter (neutral)
+
+```
+Pipeline drift debugging experiment.
+Compare two runs deterministically.
+https://github.com/DinoDevCli/dino
+```
+
+---
+
 ## A) English Outreach Template
 
 Subject: Dino — deterministic diff between two pipeline runs

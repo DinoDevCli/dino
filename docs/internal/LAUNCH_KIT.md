@@ -83,6 +83,14 @@ Free scan forever · Proof pack via Early Access Team Key · Engine only — das
 ## X (Twitter) — short
 
 ```
+Pipeline drift debugging experiment.
+Compare two runs deterministically.
+https://github.com/DinoDevCli/dino
+```
+
+## X (Twitter) — alternate (CLI)
+
+```
 Shipped: Dino — local-first audit engine for Python pipelines.
 
 Seal runs → export to path/HTTP/S3 → proof_index.json
