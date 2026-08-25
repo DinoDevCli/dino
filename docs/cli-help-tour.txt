@@ -1,0 +1,621 @@
+=== Dino CLI help tour ===
+Generated: 2026-08-25T17:52:52+02:00
+Version: 0.3.2
+Working directory: /home/noahp/DevKit_Collected/devsecops
+PYTHONPATH=.
+
+
+################################################################################
+# dino --help
+################################################################################
+
+usage: dino [-h] [--version] [--json] [--dev]
+            {scan,bundle,flight,verify,map,capsule,proof} ...
+
+Deterministic Proof for Python Decision Pipelines
+
+positional arguments:
+  {scan,bundle,flight,verify,map,capsule,proof}
+    scan                Grammar and leakage scanning
+    bundle              Run bundles and local stores
+    flight              Canary flight summary
+    verify              Attestation verification
+    map                 Import graph mapping and planning
+    capsule             Sealed execution capsules
+    proof               Unique proof chain: capsule + scan + map
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --json                Emit JSON envelopes (also accepted before the domain)
+  --dev                 Developer Mode: relax EMPTY_SCAN_ROOTS (not for
+                        production proofs)
+
+Meta: dino version | packs | status | upgrade --pack proof --key KEY | issue-key --team NAME [--days N] | init-license. Global: --json for machine-readable envelopes. --dev relaxes EMPTY_SCAN_ROOTS (not for production proofs).
+
+Optional features (Proof Pack)
+  - CI compare gate
+  - envelope backends (HTTP / S3)
+  - engine contract stability
+  - team mode
+  - extended doctor checks
+  - upgrade keys
+
+These features are not part of the open-source scan engine.
+Early Access: dinodevcli@gmail.com
+
+################################################################################
+# dino --version
+################################################################################
+
+dino 0.3.2
+
+################################################################################
+# dino version
+################################################################################
+
+0.3.2
+
+################################################################################
+# dino packs
+################################################################################
+
+Dino packs (free + proof)
+
+[*] free       free   forever
+    Free forever — grammar smoke + causal leakage scan for research pipelines.
+    domains: scan
+
+[*] proof      ea     Early Access · free Team Key
+    Proof Pack (Early Access) — capsule, map, bundle, flight, verify, proof chain, export, and index. Request a free Team Key.
+    domains: capsule, map, bundle, flight, verify, proof
+
+Unlock:  dino upgrade --pack proof --key YOUR_TEAM_KEY
+See also: dino --help  (Optional features / Proof Pack)
+Early Access: dinodevcli@gmail.com
+
+################################################################################
+# dino status
+################################################################################
+
+dino 0.3.2
+Active packs: free, proof
+  [ON ] bundle
+  [ON ] capsule
+  [ON ] flight
+  [ON ] map
+  [ON ] proof
+  [ON ] scan
+  [ON ] verify
+
+################################################################################
+# dino upgrade (usage / missing args)
+################################################################################
+
+Usage: dino upgrade --pack proof|free --key KEY
+
+################################################################################
+# dino issue-key (usage / missing args)
+################################################################################
+
+dinoea.v1.eyJleHAiOjE3OTU0NDkxNzQsImlhdCI6MTc4NzY3MzE3NCwicGFjayI6InByb29mIiwidGVhbSI6InRlYW0ifQ.Lbn3U6lIc0wCuylTInqeJlu2VAioDNV1AvQJMG6fY-Q
+# team=team days=90  (set DINO_EA_SIGNING_SECRET for production issuance)
+
+################################################################################
+# dino init-license
+################################################################################
+
+Wrote /home/noahp/.dino/license.json (default pack: free)
+
+################################################################################
+# dino scan --help
+################################################################################
+
+usage: dino scan [-h] {grammar,leakage} ...
+
+positional arguments:
+  {grammar,leakage}
+    grammar          Expression grammar smoke test
+    leakage          Static leakage scan
+
+options:
+  -h, --help         show this help message and exit
+
+################################################################################
+# dino scan grammar --help
+################################################################################
+
+usage: dino scan grammar [-h]
+
+options:
+  -h, --help  show this help message and exit
+
+################################################################################
+# dino scan leakage --help
+################################################################################
+
+usage: dino scan leakage [-h] paths [paths ...]
+
+positional arguments:
+  paths
+
+options:
+  -h, --help  show this help message and exit
+
+################################################################################
+# dino bundle --help
+################################################################################
+
+usage: dino bundle [-h] {create,replay,verify,diff,archive,dedup} ...
+
+positional arguments:
+  {create,replay,verify,diff,archive,dedup}
+    create              Build complete run bundle
+    replay              Compare current dump against replay baseline
+    verify              Alias of replay — official regression gate (exit 1 on
+                        fail)
+    diff                Same comparison as verify, always exit 0 (review)
+    archive             Initialize archive store
+    dedup               Initialize dedup store
+
+options:
+  -h, --help            show this help message and exit
+
+################################################################################
+# dino bundle create --help
+################################################################################
+
+usage: dino bundle create [-h] --rundata RUNDATA --output OUTPUT
+                          [--repo-root REPO_ROOT]
+
+options:
+  -h, --help            show this help message and exit
+  --rundata RUNDATA
+  --output OUTPUT
+  --repo-root REPO_ROOT
+
+################################################################################
+# dino bundle replay --help
+################################################################################
+
+usage: dino bundle replay [-h] --baseline BASELINE --current CURRENT
+                          [--target-id TARGET_ID]
+
+options:
+  -h, --help            show this help message and exit
+  --baseline BASELINE   Baseline JSON path
+  --current CURRENT     Current dump or baseline-shaped JSON
+  --target-id TARGET_ID
+
+################################################################################
+# dino bundle verify --help
+################################################################################
+
+usage: dino bundle verify [-h] --baseline BASELINE --current CURRENT
+                          [--target-id TARGET_ID]
+
+options:
+  -h, --help            show this help message and exit
+  --baseline BASELINE
+  --current CURRENT
+  --target-id TARGET_ID
+
+################################################################################
+# dino bundle diff --help
+################################################################################
+
+usage: dino bundle diff [-h] --baseline BASELINE --current CURRENT
+                        [--target-id TARGET_ID]
+
+options:
+  -h, --help            show this help message and exit
+  --baseline BASELINE
+  --current CURRENT
+  --target-id TARGET_ID
+
+################################################################################
+# dino bundle archive --help
+################################################################################
+
+usage: dino bundle archive [-h] [--path PATH]
+
+options:
+  -h, --help   show this help message and exit
+  --path PATH
+
+################################################################################
+# dino bundle dedup --help
+################################################################################
+
+usage: dino bundle dedup [-h] [--path PATH]
+
+options:
+  -h, --help   show this help message and exit
+  --path PATH
+
+################################################################################
+# dino flight --help
+################################################################################
+
+usage: dino flight [-h] {summary} ...
+
+positional arguments:
+  {summary}
+    summary   Summarize canary artifacts
+
+options:
+  -h, --help  show this help message and exit
+
+################################################################################
+# dino flight summary --help
+################################################################################
+
+usage: dino flight summary [-h] --artifacts-dir ARTIFACTS_DIR --output OUTPUT
+
+options:
+  -h, --help            show this help message and exit
+  --artifacts-dir ARTIFACTS_DIR
+  --output OUTPUT
+
+################################################################################
+# dino verify --help
+################################################################################
+
+usage: dino verify [-h] {attest,binary,drift,supersede} ...
+
+positional arguments:
+  {attest,binary,drift,supersede}
+    attest              Verify attestation document
+    binary              Binary attestation verify
+    drift               Classify attestation drift
+    supersede           Runtime supersession check
+
+options:
+  -h, --help            show this help message and exit
+
+################################################################################
+# dino verify attest --help
+################################################################################
+
+usage: dino verify attest [-h] --trust-anchor TRUST_ANCHOR attest_json
+
+positional arguments:
+  attest_json
+
+options:
+  -h, --help            show this help message and exit
+  --trust-anchor TRUST_ANCHOR
+
+################################################################################
+# dino verify binary --help
+################################################################################
+
+usage: dino verify binary [-h] [--repo REPO] attestation
+
+positional arguments:
+  attestation
+
+options:
+  -h, --help   show this help message and exit
+  --repo REPO
+
+################################################################################
+# dino verify drift --help
+################################################################################
+
+usage: dino verify drift [-h] --distance DISTANCE [--tau TAU]
+                         [--graph-truth GRAPH_TRUTH]
+
+options:
+  -h, --help            show this help message and exit
+  --distance DISTANCE
+  --tau TAU
+  --graph-truth GRAPH_TRUTH
+
+################################################################################
+# dino verify supersede --help
+################################################################################
+
+usage: dino verify supersede [-h] --runtime-verdict RUNTIME_VERDICT
+                             [--release-verdict RELEASE_VERDICT]
+                             [--contract CONTRACT] [--previous PREVIOUS]
+
+options:
+  -h, --help            show this help message and exit
+  --runtime-verdict RUNTIME_VERDICT
+  --release-verdict RELEASE_VERDICT
+  --contract CONTRACT   Contract JSON (optional; demo if omitted)
+  --previous PREVIOUS   Previous contract JSON
+
+################################################################################
+# dino map --help
+################################################################################
+
+usage: dino map [-h] {analyze,verify,plan,drift} ...
+
+positional arguments:
+  {analyze,verify,plan,drift}
+    analyze             Analyze import graph
+    verify              Structural quality verify
+    plan                Topological execution plan
+    drift               Graph drift vs baseline
+
+options:
+  -h, --help            show this help message and exit
+
+################################################################################
+# dino map analyze --help
+################################################################################
+
+usage: dino map analyze [-h] path
+
+positional arguments:
+  path
+
+options:
+  -h, --help  show this help message and exit
+
+################################################################################
+# dino map verify --help
+################################################################################
+
+usage: dino map verify [-h] --repo REPO [--baseline BASELINE]
+
+options:
+  -h, --help           show this help message and exit
+  --repo REPO
+  --baseline BASELINE
+
+################################################################################
+# dino map plan --help
+################################################################################
+
+usage: dino map plan [-h] path
+
+positional arguments:
+  path
+
+options:
+  -h, --help  show this help message and exit
+
+################################################################################
+# dino map drift --help
+################################################################################
+
+usage: dino map drift [-h] --baseline BASELINE [--tau TAU] path
+
+positional arguments:
+  path
+
+options:
+  -h, --help           show this help message and exit
+  --baseline BASELINE
+  --tau TAU
+
+################################################################################
+# dino capsule --help
+################################################################################
+
+usage: dino capsule [-h] {run,replay,doctor} ...
+
+positional arguments:
+  {run,replay,doctor}
+    run                Execute command into capsule
+    replay             Replay capsule
+    doctor             Capsule environment doctor
+
+options:
+  -h, --help           show this help message and exit
+
+################################################################################
+# dino capsule run --help
+################################################################################
+
+usage: dino capsule run [-h] [--output-dir OUTPUT_DIR]
+                        [--command COMMAND [COMMAND ...]]
+
+options:
+  -h, --help            show this help message and exit
+  --output-dir OUTPUT_DIR
+  --command COMMAND [COMMAND ...]
+                        Argv to seal, e.g. echo ok (or one string: "echo ok")
+
+################################################################################
+# dino capsule replay --help
+################################################################################
+
+usage: dino capsule replay [-h] --capsule CAPSULE [--output-dir OUTPUT_DIR]
+
+options:
+  -h, --help            show this help message and exit
+  --capsule CAPSULE
+  --output-dir OUTPUT_DIR
+
+################################################################################
+# dino capsule doctor --help
+################################################################################
+
+usage: dino capsule doctor [-h] [--output-dir OUTPUT_DIR]
+
+options:
+  -h, --help            show this help message and exit
+  --output-dir OUTPUT_DIR
+
+################################################################################
+# dino proof --help
+################################################################################
+
+usage: dino proof [-h] {run,verify,export,index,doctor} ...
+
+positional arguments:
+  {run,verify,export,index,doctor}
+    run                 Seal command + optional scan/map into proof.json
+    verify              Re-verify a proof.json bundle
+    export              Upload an existing proof directory
+    index               Proof index manifest (proof_index.json)
+    doctor              Proof-stack health checks
+
+options:
+  -h, --help            show this help message and exit
+
+################################################################################
+# dino proof run --help
+################################################################################
+
+usage: dino proof run [-h] [--output-dir OUTPUT_DIR]
+                      [--command COMMAND [COMMAND ...]] [--repo REPO]
+                      [--scan [SCAN ...]] [--stdin STDIN] [--export EXPORT]
+                      [--pipeline PIPELINE] [--group GROUP] [--tag TAG]
+
+options:
+  -h, --help            show this help message and exit
+  --output-dir OUTPUT_DIR
+  --command COMMAND [COMMAND ...]
+                        Argv to seal, e.g. echo ok (or one string: "echo ok")
+  --repo REPO           Optional repo for map verify
+  --scan [SCAN ...]     Optional paths for leakage scan
+  --stdin STDIN
+  --export EXPORT       Upload sealed proof: path | http(s)://… |
+                        s3://bucket/prefix
+  --pipeline PIPELINE   Pipeline label for proof_index.json
+  --group GROUP         Group label for proof_index.json
+  --tag TAG             Tag for proof_index.json (repeatable)
+
+Optional features (Proof Pack)
+  - CI compare gate
+  - envelope backends (HTTP / S3)
+  - engine contract stability
+  - team mode
+  - extended doctor checks
+  - upgrade keys
+
+These features are not part of the open-source scan engine.
+Early Access: dinodevcli@gmail.com
+
+################################################################################
+# dino proof verify --help
+################################################################################
+
+usage: dino proof verify [-h] --proof PROOF
+
+options:
+  -h, --help     show this help message and exit
+  --proof PROOF
+
+################################################################################
+# dino proof export --help
+################################################################################
+
+usage: dino proof export [-h] [--proof-dir PROOF_DIR] [--proof PROOF] --to TO
+                         [--pipeline PIPELINE] [--group GROUP] [--tag TAG]
+
+options:
+  -h, --help            show this help message and exit
+  --proof-dir PROOF_DIR
+                        Directory containing proof.json (default: parent of
+                        --proof)
+  --proof PROOF         Path to proof.json (alternative to --proof-dir)
+  --to TO               Destination: path | http(s)://… | s3://bucket/prefix
+  --pipeline PIPELINE   Pipeline label for proof_index.json
+  --group GROUP         Group label for proof_index.json
+  --tag TAG             Tag for proof_index.json (repeatable)
+
+################################################################################
+# dino proof doctor --help
+################################################################################
+
+usage: dino proof doctor [-h] [--output-dir OUTPUT_DIR]
+
+options:
+  -h, --help            show this help message and exit
+  --output-dir OUTPUT_DIR
+
+################################################################################
+# dino proof index --help
+################################################################################
+
+usage: dino proof index [-h] {show,rebuild,compare,metrics,layout} ...
+
+positional arguments:
+  {show,rebuild,compare,metrics,layout}
+    show                Print proof_index.json
+    rebuild             Rebuild index from archive subfolders
+    compare             Compare two proofs by hash/prefix
+    metrics             Aggregate health summary JSON
+    layout              Refresh pipelines/groups/tags browse links
+
+options:
+  -h, --help            show this help message and exit
+
+################################################################################
+# dino proof index show --help
+################################################################################
+
+usage: dino proof index show [-h] archive
+
+positional arguments:
+  archive     Archive directory containing proof_index.json
+
+options:
+  -h, --help  show this help message and exit
+
+################################################################################
+# dino proof index rebuild --help
+################################################################################
+
+usage: dino proof index rebuild [-h] archive
+
+positional arguments:
+  archive     Archive root to scan
+
+options:
+  -h, --help  show this help message and exit
+
+################################################################################
+# dino proof index compare --help
+################################################################################
+
+usage: dino proof index compare [-h] archive hash_a hash_b
+
+positional arguments:
+  archive     Archive directory
+  hash_a      First proof hash (or prefix / path)
+  hash_b      Second proof hash (or prefix / path)
+
+options:
+  -h, --help  show this help message and exit
+
+Optional features (Proof Pack)
+  - CI compare gate
+  - envelope backends (HTTP / S3)
+  - engine contract stability
+  - team mode
+  - extended doctor checks
+  - upgrade keys
+
+These features are not part of the open-source scan engine.
+Early Access: dinodevcli@gmail.com
+
+################################################################################
+# dino proof index metrics --help
+################################################################################
+
+usage: dino proof index metrics [-h] archive
+
+positional arguments:
+  archive     Archive directory
+
+options:
+  -h, --help  show this help message and exit
+
+################################################################################
+# dino proof index layout --help
+################################################################################
+
+usage: dino proof index layout [-h] archive
+
+positional arguments:
+  archive     Archive directory
+
+options:
+  -h, --help  show this help message and exit

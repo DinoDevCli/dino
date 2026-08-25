@@ -1,6 +1,6 @@
 # Outreach sequence (step-by-step)
 
-Internal GTM workflow for open Early Access. Version: v0.3.1.
+Internal GTM workflow for open Early Access. Version: v0.3.2.
 
 **Positioning (must stay consistent):**
 
@@ -46,7 +46,7 @@ Send EMAIL.txt + attach the customer-pack ZIP (KEY.txt, QUICKSTART.md, LICENSE, 
 Activate hint:
 
 ```bash
-pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
+pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"
 dino upgrade --pack proof --key "$(cat KEY.txt)"
 dino proof doctor
 ```

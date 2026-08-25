@@ -2,10 +2,17 @@
 
 ## Unreleased
 
+## 0.3.2
+
+- **CLI help:** documentary `Optional features (Proof Pack)` block on `dino --help`, `dino proof run --help`, and `dino proof index compare --help` (no behavior change)
+- **Packs:** `dino packs` points at `--help` Proof Pack section + Early Access email
+- **Version sync:** `dino.__version__` aligned with `pyproject.toml` (was stale at 0.3.0)
 - **Developer Mode:** `dino --dev` relaxes `EMPTY_SCAN_ROOTS` for local iteration (not for production proofs)
 - **Docs landing:** [`docs/index.md`](docs/index.md)
 - **Codespaces:** `.devcontainer/` — Open in GitHub Codespaces
 - **Dashboard starter:** [`examples/superset/drift_dashboard.yaml`](examples/superset/drift_dashboard.yaml)
+- **Docs / website:** install pins and GitHub Pages copy bumped to v0.3.2
+- **Help tour:** [`docs/cli-help-tour.txt`](docs/cli-help-tour.txt)
 
 ## 0.3.1
 

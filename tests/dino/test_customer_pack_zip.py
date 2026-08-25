@@ -78,7 +78,7 @@ def test_issue_script_writes_customer_pack_zip(tmp_path: Path) -> None:
     assert key in email
     assert key in quick
     assert "acme-risk" in email
-    assert version == "0.3.1"
+    assert version == "0.3.2"
     assert "MIT License" in license_text
     assert index["schema"] == "dino.proof.index.v1"
     assert compare["changed"] is True

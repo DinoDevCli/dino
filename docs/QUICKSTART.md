@@ -1,7 +1,7 @@
 # Quickstart
 
 ```bash
-pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
+pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"
 dino proof run --help
 ```
 

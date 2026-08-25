@@ -8,7 +8,7 @@
 | Proof | Free Team Key via [dinodevcli@gmail.com](mailto:dinodevcli@gmail.com) or [GitHub issue](https://github.com/DinoDevCli/dino/issues/new?title=Early%20Access%20Request) |
 
 ```bash
-pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
+pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"
 dino scan leakage ./tests/e2e/pipe.py          # free forever
 dino upgrade --pack proof --key YOUR_TEAM_KEY  # Early Access
 dino proof doctor

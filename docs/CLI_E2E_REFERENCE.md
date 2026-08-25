@@ -1,6 +1,6 @@
 # Dino CLI — Reference (engine + contracts)
 
-**Version:** 0.3.0 · **Positioning:** local-first audit engine — not a platform  
+**Version:** 0.3.2 · **Positioning:** local-first audit engine — not a platform  
 **Flag:** `--json` (JSON envelope) · **E2E suite:** `tests/e2e/`
 
 Dino seals proofs and emits **export** + **index** contracts for *your* dashboards. No hosted UI. No SaaS.
@@ -28,7 +28,7 @@ Contracts: [`PROOF_EXPORT.md`](PROOF_EXPORT.md) · [`PROOF_INDEX.md`](PROOF_INDE
 
 # Dino CLI — Vollständige Referenz mit E2E-Outputs
 
-**Stand:** 2026-08-22 · **Version:** 0.3.0
+**Stand:** 2026-08-22 · **Version:** 0.3.2
 **Repo:** `devsecops` · **Flag:** `--json` (JSON-Envelope)
 **Artefakte:** `/tmp/dino_cli_e2e/`
 

@@ -2,7 +2,7 @@
 
 Internal planning list — **not** a public waitlist. Early Access is open to any team.
 
-Version: v0.3.1 · Contact: dinodevcli@gmail.com  
+Version: v0.3.2 · Contact: dinodevcli@gmail.com  
 Website: https://dinodevcli.github.io/dino/  
 Codespaces: https://codespaces.new/DinoDevCli/dino
 

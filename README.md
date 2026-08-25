@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
 [![Open in GitHub Codespaces](https://img.shields.io/badge/GitHub-Codespaces-111118?logo=github)](https://codespaces.new/DinoDevCli/dino)
-[![Release](https://img.shields.io/github/v/release/DinoDevCli/dino?label=v0.3.1)](https://github.com/DinoDevCli/dino/releases/tag/v0.3.1)
+[![Release](https://img.shields.io/github/v/release/DinoDevCli/dino?label=v0.3.2)](https://github.com/DinoDevCli/dino/releases/tag/v0.3.2)
 
 **Local-first audit engine for Python pipelines.**
 
@@ -43,7 +43,7 @@ $ dino proof index compare ./archive <hash_v1> <hash_v2>
 ## Install
 
 ```bash
-pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
+pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"
 dino proof run --help
 ```
 
@@ -163,7 +163,7 @@ Not a Dino UI — a mapping you drop into **your** Superset:
 
 ---
 
-## CLI (v0.3.1)
+## CLI (v0.3.2)
 
 | Command | Role |
 |---------|------|
@@ -173,8 +173,9 @@ Not a Dino UI — a mapping you drop into **your** Superset:
 | `dino proof index metrics` | Health summary JSON |
 | `dino proof doctor` | Proof-stack health |
 | `dino --dev …` | Developer Mode — relax `EMPTY_SCAN_ROOTS` only |
+| `dino --help` | Lists Optional features (Proof Pack) — documentary |
 
-Full reference: [`docs/CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md) · Docs landing: [`docs/index.md`](docs/index.md)
+Full reference: [`docs/CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md) · Help tour: [`docs/cli-help-tour.txt`](docs/cli-help-tour.txt) · Docs: [`docs/index.md`](docs/index.md)
 
 ---
 

@@ -1,7 +1,7 @@
 /** Documentary single-page copy — Problem → How → Product → Demo → Early Access */
 
 export const SITE = {
-  version: "0.3.1",
+  version: "0.3.2",
   brand: "Dino",
 };
 
@@ -10,7 +10,7 @@ export const HERO = {
   title: "Local-First Audit Engine for Python Pipelines",
   definition:
     "Dino is a local-first audit engine that produces sealed proofs, export envelopes, and a universal proof index for your dashboards.",
-  meta: "v0.3.1 · Early Access",
+  meta: "v0.3.2 · Early Access",
 };
 
 export const PROBLEM = {
@@ -67,8 +67,8 @@ export const PRODUCT = {
 /** Real install — not on PyPI as `dino` (name collision) */
 export const QUICKSTART = {
   label: "Install",
-  line: `pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"`,
-  hint: "dino proof run --help",
+  line: `pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"`,
+  hint: "dino --help · dino proof run --help",
 };
 
 export const DEMO_COPY = {
@@ -120,7 +120,7 @@ export const SUPPORT =
   "Questions or issues? Open an Issue or Discussion on GitHub.";
 
 export const ROADMAP_DEV =
-  "Roadmap: Developer Mode (--dev) for relaxed scanning during development.";
+  "Shipped: dino --dev relaxes EMPTY_SCAN_ROOTS for local iteration. Production proofs stay fail-closed. CLI --help lists Optional features (Proof Pack).";
 
 /** From tests/simulation/golden/demo_excerpts.json — do not invent */
 export const GOLDEN_PROOF = `{
@@ -212,7 +212,7 @@ export const DEMO_STEPS = [
     id: "fail-closed",
     label: "Fail-closed",
     command: `dino proof run --command "echo ok" --scan ./does_not_exist`,
-    note: "Dino refuses to pass a run with missing scan roots. Roadmap: Developer Mode (--dev) for relaxed scanning during development.",
+    note: "Dino refuses to pass a run with missing scan roots. For local iteration only: dino --dev …",
     artifacts: [{ name: "scan.json", json: FAIL_SNIPPET }],
   },
 ];

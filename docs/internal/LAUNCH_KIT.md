@@ -6,7 +6,7 @@
 > Deterministic proofs, export contracts, and a universal proof index for your dashboards.  
 > Dino is a local audit motor — not a platform. No UI. No SaaS. No cloud.
 
-**Links:** GitHub https://github.com/DinoDevCli/dino · Release https://github.com/DinoDevCli/dino/releases/tag/v0.3.1 · Website https://dinodevcli.github.io/dino/
+**Links:** GitHub https://github.com/DinoDevCli/dino · Release https://github.com/DinoDevCli/dino/releases/tag/v0.3.2 · Website https://dinodevcli.github.io/dino/
 
 ---
 
@@ -14,7 +14,7 @@
 
 | # | Action | Status |
 |---|--------|--------|
-| 01 | GitHub Release v0.3.1 | Done — https://github.com/DinoDevCli/dino/releases/tag/v0.3.1 |
+| 01 | GitHub Release v0.3.2 | Pending — create after push/tag |
 | 02 | Website live | **https://dinodevcli.github.io/dino/** (Vercel optional for custom domain) |
 | 03 | Post X / LinkedIn / Reddit / HN (copy below) | Manual |
 | 04 | Early Access is open — any team can request a key (copy below) | Manual |
@@ -27,7 +27,7 @@
 
 ---
 
-## GitHub Release notes (paste into v0.3.1)
+## GitHub Release notes (paste into v0.3.2)
 
 ~~~~markdown
 ## Early Access
@@ -39,7 +39,7 @@ Team Keys are free. No checkout.
 
 ---
 
-## Dino v0.3.1 — Local-First Audit Engine
+## Dino v0.3.2 — Local-First Audit Engine
 
 **Dino — Local-First Audit Engine for Python Pipelines**  
 Deterministic proofs, export envelopes, and a universal proof index for your dashboards.
@@ -48,20 +48,18 @@ All proof bundles and indexes are deterministic and reproducible (content-addres
 
 Dino outputs audit artifacts — dashboards render them. Engine only.
 
-### What's new since v0.3.0
+### What's new since v0.3.1
 
-- **Export contracts** — path / HTTP / S3 (`dino.proof.export.v1`)
-- **Proof index** — `proof_index.json` (`dino.proof.index.v1`)
-- **Compare / Metrics / Layout** — governance JSON for your dashboards
-- **Archive layout** — `pipelines/` · `groups/` · `tags/` browse links
-- **Full E2E test suite** — `tests/e2e/`
-- **Early Access Team Keys** — free unlock for Proof pack
-- **Determinism** — all proof bundles and indexes are deterministic and reproducible
+- **CLI Proof Pack hint** — `dino --help` / `proof run` / `proof index compare` list Optional features (Proof Pack); Early Access email
+- **Developer Mode** — `dino --dev` relaxes `EMPTY_SCAN_ROOTS` for local iteration
+- **Codespaces + docs landing + Superset starter** — ship with this release
+- **Version sync** — `dino.__version__` matches the release tag
 
 ### Install
 
 ```bash
-pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
+pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"
+dino --help
 dino proof run --help
 ```
 
@@ -141,7 +139,7 @@ Index CLI gives compare/metrics/layout JSON — no Dino UI.
 Stack: Python 3.10+, MIT, ~110 tests including full E2E.
 
 Quickstart:
-  pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
+  pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"
   dino proof run --command echo ok --scan ./pipe.py --export ./archive --pipeline my_pipe
 
 Looking for feedback from risk/fraud/ML teams integrating this into existing tooling.
@@ -213,7 +211,7 @@ Repo: https://github.com/DinoDevCli/dino
 Dino is a local-first audit engine for Python decision pipelines — seals runs, exports `dino.proof.export.v1` envelopes to path/HTTP/S3, and maintains `proof_index.json` with compare/metrics/layout CLI for dashboard consumption. MIT, no hosted UI. https://github.com/DinoDevCli/dino
 
 **TLDR / Console.dev:**  
-Local audit motor for Python ML/risk pipelines: deterministic proofs + export contracts + proof index. Integrates into your stack — not another platform. v0.3.1 on GitHub.
+Local audit motor for Python ML/risk pipelines: deterministic proofs + export contracts + proof index. Integrates into your stack — not another platform. v0.3.2 on GitHub.
 
 **MLOps Community / Data Engineering Weekly:**  
 Teams wire Dino into Airflow/Prefect post-task hooks → S3 archive → Superset/Metabase reads `proof_index.json` metrics. Compare CLI exits non-zero on drift/leakage regression. Docs: INTEGRATION_DASHBOARDS.md

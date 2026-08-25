@@ -3,7 +3,7 @@
 Public contact: dinodevcli@gmail.com  
 Website: https://dinodevcli.github.io/dino/  
 Codespaces: https://codespaces.new/DinoDevCli/dino  
-Version: v0.3.1 · Open Early Access
+Version: v0.3.2 · Open Early Access
 
 Early Access is open. Any team can request a key. 60-day Proof Pack. No “5–10 teams.” No checkout.
 
@@ -59,7 +59,7 @@ Not a dashboard or SaaS. You keep Superset, Airflow, MLflow, or your own UI. Din
 Email your team name to dinodevcli@gmail.com (or open a GitHub issue titled “Early Access Request”). You get KEY.txt + Quickstart.
 
 ```bash
-pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
+pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"
 dino upgrade --pack proof --key YOUR_TEAM_KEY
 dino proof doctor
 ```
@@ -114,7 +114,7 @@ Deterministic, content-addressed diff between two pipeline runs — so CI and au
 Activate:
 
 ```bash
-pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
+pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"
 dino upgrade --pack proof --key YOUR_TEAM_KEY
 dino proof doctor
 ```

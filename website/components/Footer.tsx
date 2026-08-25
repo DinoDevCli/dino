@@ -1,5 +1,5 @@
 import { GITHUB } from "@/lib/site";
-import { SUPPORT } from "@/lib/content";
+import { SITE, SUPPORT } from "@/lib/content";
 
 export function Footer() {
   return (
@@ -25,7 +25,7 @@ export function Footer() {
             Discussion
           </a>
         </p>
-        <p>Early Access · MIT · v0.3.1</p>
+        <p>Early Access · MIT · v{SITE.version}</p>
       </div>
     </footer>
   );

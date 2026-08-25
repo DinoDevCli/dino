@@ -1,6 +1,6 @@
 # Examples
 
-Short commands for Dino 0.3.0 — local audit engine. Live dumps: [`CLI_E2E_REFERENCE.md`](CLI_E2E_REFERENCE.md).
+Short commands for Dino 0.3.2 — local audit engine. Live dumps: [`CLI_E2E_REFERENCE.md`](CLI_E2E_REFERENCE.md).
 
 ## Proof + export + index
 

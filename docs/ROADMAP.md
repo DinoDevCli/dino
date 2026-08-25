@@ -1,6 +1,6 @@
 # Roadmap
 
-Shipped (v0.3.1): local-first proof engine, export contracts, proof index, Early Access Team Keys, fail-closed leakage scan, Codespaces, Superset starter kit.
+Shipped (v0.3.2): local-first proof engine, export contracts, proof index, Early Access Team Keys, fail-closed leakage scan, Codespaces, Superset starter kit, Developer Mode (`--dev`), CLI Proof Pack help hint.
 
 Tracking issues: [#1](https://github.com/DinoDevCli/dino/issues/1) Developer Mode · [#2](https://github.com/DinoDevCli/dino/issues/2) Superset kit · [#3](https://github.com/DinoDevCli/dino/issues/3) contract v2 · [#5](https://github.com/DinoDevCli/dino/issues/5) runners · [#4](https://github.com/DinoDevCli/dino/issues/4) integration examples.
 

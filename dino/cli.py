@@ -11,6 +11,19 @@ from typing import Any
 from dino import __version__
 from dino.common.output import Output
 
+# Documentary only — appears in --help. Free pack = scan; Proof Pack unlocks the rest.
+PROOF_PACK_HELP = """\
+Optional features (Proof Pack)
+  - CI compare gate
+  - envelope backends (HTTP / S3)
+  - engine contract stability
+  - team mode
+  - extended doctor checks
+  - upgrade keys
+
+These features are not part of the open-source scan engine.
+Early Access: dinodevcli@gmail.com"""
+
 
 def _pop_flag(argv: list[str], flag: str) -> tuple[list[str], bool]:
     present = flag in argv
@@ -29,7 +42,8 @@ def build_parser() -> argparse.ArgumentParser:
             "Meta: dino version | packs | status | upgrade --pack proof --key KEY | "
             "issue-key --team NAME [--days N] | init-license. Global: --json for "
             "machine-readable envelopes. --dev relaxes EMPTY_SCAN_ROOTS (not for "
-            "production proofs)."
+            "production proofs).\n\n"
+            f"{PROOF_PACK_HELP}"
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -153,7 +167,12 @@ def _capsule(sub: argparse._SubParsersAction) -> None:
 def _proof(sub: argparse._SubParsersAction) -> None:
     g = _group(sub, "proof", "Unique proof chain: capsule + scan + map")
     s = g.add_subparsers(dest="cmd", required=True)
-    run = s.add_parser("run", help="Seal command + optional scan/map into proof.json")
+    run = s.add_parser(
+        "run",
+        help="Seal command + optional scan/map into proof.json",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=PROOF_PACK_HELP,
+    )
     run.add_argument("--output-dir", default="./proof_output")
     run.add_argument(
         "--command",
@@ -195,7 +214,12 @@ def _proof(sub: argparse._SubParsersAction) -> None:
     idx_show.add_argument("archive", help="Archive directory containing proof_index.json")
     idx_rebuild = idx_sub.add_parser("rebuild", help="Rebuild index from archive subfolders")
     idx_rebuild.add_argument("archive", help="Archive root to scan")
-    idx_cmp = idx_sub.add_parser("compare", help="Compare two proofs by hash/prefix")
+    idx_cmp = idx_sub.add_parser(
+        "compare",
+        help="Compare two proofs by hash/prefix",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=PROOF_PACK_HELP,
+    )
     idx_cmp.add_argument("archive", help="Archive directory")
     idx_cmp.add_argument("hash_a", help="First proof hash (or prefix / path)")
     idx_cmp.add_argument("hash_b", help="Second proof hash (or prefix / path)")
@@ -737,6 +761,8 @@ def _run_meta(argv: list[str], json_mode: bool) -> int:
             sys.stdout.write(f"    {row['description']}\n")
             sys.stdout.write(f"    domains: {', '.join(row['domains'])}\n\n")
         sys.stdout.write("Unlock:  dino upgrade --pack proof --key YOUR_TEAM_KEY\n")
+        sys.stdout.write("See also: dino --help  (Optional features / Proof Pack)\n")
+        sys.stdout.write("Early Access: dinodevcli@gmail.com\n")
         return 0
 
     if cmd == "issue-key":

@@ -4,7 +4,7 @@ Local-first audit engine for Python pipelines — sealed proofs, export contract
 
 **Website:** https://dinodevcli.github.io/dino/  
 **Repo:** https://github.com/DinoDevCli/dino  
-**Version:** v0.3.1 · Early Access
+**Version:** v0.3.2 · Early Access
 
 Same story as the site: Problem → How it works → Engine → Demo → Early Access → Pricing & Licensing.
 
@@ -26,6 +26,8 @@ Dashboards consume artifacts via Path, HTTP, or S3. Dino outputs the data — yo
 Free: `dino scan leakage` forever.  
 Proof Pack: capsule, map, bundle, flight, verify, proof chain + export/index — Early Access Team Key.
 
+CLI lists these as **Optional features (Proof Pack)** under `dino --help` (and `dino proof run --help` / `dino proof index compare --help`). Documentary only — not part of the open-source scan engine. Early Access: dinodevcli@gmail.com.
+
 ## Contracts
 
 | Schema | Role |
@@ -41,7 +43,7 @@ Proof Pack: capsule, map, bundle, flight, verify, proof chain + export/index —
 [`QUICKSTART.md`](QUICKSTART.md) · [Install on GitHub](https://github.com/DinoDevCli/dino#install)
 
 ```bash
-pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.1"
+pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"
 dino proof run --help
 ```
 
