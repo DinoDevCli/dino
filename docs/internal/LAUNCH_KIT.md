@@ -14,7 +14,7 @@
 
 | # | Action | Status |
 |---|--------|--------|
-| 01 | GitHub Release v0.3.2 | Pending — create after push/tag |
+| 01 | GitHub Release v0.3.2 | Done — https://github.com/DinoDevCli/dino/releases/tag/v0.3.2 |
 | 02 | Website live | **https://dinodevcli.github.io/dino/** (Vercel optional for custom domain) |
 | 03 | Post X / LinkedIn / Reddit / HN (copy below) | Manual |
 | 04 | Early Access is open — any team can request a key (copy below) | Manual |

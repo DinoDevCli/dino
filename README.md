@@ -195,7 +195,7 @@ Full reference: [`docs/CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md) · Help
 
 **Open Early Access** — any team can request a key. 60-day Proof Pack. No limited seats.
 
-Email [dinodevcli@gmail.com](mailto:dinodevcli@gmail.com) with your team name · [Open an issue](https://github.com/DinoDevCli/dino/issues/new?title=Early%20Access%20Request)
+For team usage (CI compare gate, envelope backends, engine contract stability), email [dinodevcli@gmail.com](mailto:dinodevcli@gmail.com) with team name / size + use case · [Open an issue](https://github.com/DinoDevCli/dino/issues/new?title=Early%20Access%20Request)
 
 ```bash
 dino upgrade --pack proof --key YOUR_TEAM_KEY
@@ -239,11 +239,6 @@ cd dino && python -m venv .venv && source .venv/bin/activate
 pip install -e '.[dev]'
 pytest tests/dino tests/e2e -q
 ```
-
-## Early Access
-For team usage (CI compare gate, envelope backends, engine contract stability), send a short message with team size + use case to:
-
-**dinodevcli@gmail.com**
 
 ---
 
