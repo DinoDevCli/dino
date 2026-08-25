@@ -13,6 +13,7 @@ dist/customer-packs/
 
 # Test / recorder scratch
 docs/_record_workdir/
+_cli_run_*/
 tests/dino/_work*/
 tests/dino/_work_*.json
 tests/dino/_gap_work/
