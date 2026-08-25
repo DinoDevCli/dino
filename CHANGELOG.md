@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 1.0.0
+
+- **CLI UX v1.0:** grouped `dino --help`, first-class `dino run` alias (trailing `--` form), positional `bundle create`, compare metavars `HASH_A` / `HASH_B`
+- **Docs / website:** install pins, examples, and CLI reference updated for `dino run` + Early Access (Proof Pack) help block
+- **Version:** public release tag `v1.0.0`
+
 ## 0.3.2
 
 - **CLI help:** documentary `Optional features (Proof Pack)` block on `dino --help`, `dino proof run --help`, and `dino proof index compare --help` (no behavior change)

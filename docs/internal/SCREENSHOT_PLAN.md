@@ -9,13 +9,13 @@ Goal: **one** image above the Install section. Not a collage. Not a dashboard.
 ### Commands (real product — do not invent)
 
 ```bash
-dino proof run \
+dino run \
   --command "python pipeline/run.py --seed seed-42" \
   --scan ./pipeline \
   --pipeline fraud_score_v1 \
   --export ./archive
 
-dino proof run \
+dino run \
   --command "python pipeline/run.py --seed seed-123" \
   --scan ./pipeline \
   --pipeline fraud_score_v2 \

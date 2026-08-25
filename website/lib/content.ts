@@ -1,7 +1,7 @@
 /** Documentary single-page copy — Problem → How → Product → Demo → Early Access */
 
 export const SITE = {
-  version: "0.3.2",
+  version: "1.0.0",
   brand: "Dino",
 };
 
@@ -10,7 +10,7 @@ export const HERO = {
   title: "Local-First Audit Engine for Python Pipelines",
   definition:
     "Dino is a local-first audit engine that produces sealed proofs, export envelopes, and a universal proof index for your dashboards.",
-  meta: "v0.3.2 · Early Access",
+  meta: "v1.0.0 · Early Access · CLI v1.0",
 };
 
 export const PROBLEM = {
@@ -67,8 +67,36 @@ export const PRODUCT = {
 /** Real install — not on PyPI as `dino` (name collision) */
 export const QUICKSTART = {
   label: "Install",
-  line: `pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"`,
-  hint: "dino --help · dino proof run --help",
+  line: `pip install "git+https://github.com/DinoDevCli/dino.git@v1.0.0"`,
+  hint: "dino --help · dino run --help",
+};
+
+/** Documentary CLI help epilog — keep wording verbatim */
+export const CLI_EARLY_ACCESS = `---
+Early Access (Proof Pack)
+  CI compare gate · S3/HTTP backends · engine contract stability · team mode
+  These features are not part of the open-source scan engine.
+
+  Details & instructions:
+    https://github.com/DinoDevCli/dino#early-access
+    Contact: dinodevcli@gmail.com`;
+
+export const CLI_GROUPS = {
+  title: "CLI (v1.0)",
+  core: ["dino run — alias for proof run", "dino proof — full proof chain", "dino scan — grammar + leakage"],
+  pipeline: [
+    "dino capsule",
+    "dino bundle",
+    "dino map",
+    "dino verify",
+    "dino flight",
+  ],
+  system: ["dino packs", "dino status", "dino upgrade", "dino version"],
+  forms: [
+    "dino run --scan ./pipeline -- python pipeline/run.py",
+    "dino bundle create RUNDATA_PATH OUTPUT_PATH [--repo-root ROOT]",
+    "dino proof index compare PATH HASH_A HASH_B",
+  ],
 };
 
 export const DEMO_COPY = {
@@ -120,7 +148,7 @@ export const SUPPORT =
   "Questions or issues? Open an Issue or Discussion on GitHub.";
 
 export const ROADMAP_DEV =
-  "Shipped: dino --dev relaxes EMPTY_SCAN_ROOTS for local iteration. Production proofs stay fail-closed. CLI --help lists Optional features (Proof Pack).";
+  "Shipped: dino --dev relaxes EMPTY_SCAN_ROOTS for local iteration. Production proofs stay fail-closed. CLI v1.0: dino run + grouped --help + Early Access (Proof Pack) block.";
 
 /** From tests/simulation/golden/demo_excerpts.json — do not invent */
 export const GOLDEN_PROOF = `{
@@ -182,21 +210,21 @@ export const DEMO_STEPS = [
   {
     id: "run-a",
     label: "Run A — baseline",
-    command: `dino proof run \\
-  --command "python pipeline/run.py --seed seed-42" \\
+    command: `dino run \\
   --scan ./pipeline \\
   --pipeline fraud_score_v1 \\
-  --export ./archive`,
+  --export ./archive \\
+  -- python pipeline/run.py --seed seed-42`,
     artifacts: [{ name: "proof.json", json: GOLDEN_PROOF }],
   },
   {
     id: "run-b",
     label: "Run B — updated",
-    command: `dino proof run \\
-  --command "python pipeline/run.py --seed seed-123" \\
+    command: `dino run \\
   --scan ./pipeline \\
   --pipeline fraud_score_v2 \\
-  --export ./archive`,
+  --export ./archive \\
+  -- python pipeline/run.py --seed seed-123`,
     artifacts: [
       { name: "proof.json", json: GOLDEN_PROOF },
       { name: "proof_index.json", json: GOLDEN_INDEX },
@@ -205,13 +233,13 @@ export const DEMO_STEPS = [
   {
     id: "compare",
     label: "Compare",
-    command: `dino proof index compare ./archive <hash_v1> <hash_v2>`,
+    command: `dino proof index compare ./archive <HASH_A> <HASH_B>`,
     artifacts: [{ name: "compare.json", json: GOLDEN_COMPARE, emphasize: true }],
   },
   {
     id: "fail-closed",
     label: "Fail-closed",
-    command: `dino proof run --command "echo ok" --scan ./does_not_exist`,
+    command: `dino run --scan ./does_not_exist -- echo ok`,
     note: "Dino refuses to pass a run with missing scan roots. For local iteration only: dino --dev …",
     artifacts: [{ name: "scan.json", json: FAIL_SNIPPET }],
   },

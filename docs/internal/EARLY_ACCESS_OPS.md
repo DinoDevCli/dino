@@ -29,7 +29,7 @@ export DINO_EA_SIGNING_SECRET='prod-secret'
 The script issues the key and writes:
 
 ```
-dist/customer-packs/dino-ea-acme-risk-v0.3.2-<stamp>.zip
+dist/customer-packs/dino-ea-acme-risk-v1.0.0-<stamp>.zip
 ```
 
 Inner layout:
@@ -53,7 +53,7 @@ Record: team, days, date, contact email, key prefix (`dinoea.v1.` + first 24 cha
 ## Customer activate
 
 ```bash
-pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"
+pip install "git+https://github.com/DinoDevCli/dino.git@v1.0.0"
 dino upgrade --pack proof --key "$(cat KEY.txt)"
 dino proof doctor
 dino packs

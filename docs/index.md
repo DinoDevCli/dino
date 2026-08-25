@@ -4,7 +4,7 @@ Local-first audit engine for Python pipelines — sealed proofs, export contract
 
 **Website:** https://dinodevcli.github.io/dino/  
 **Repo:** https://github.com/DinoDevCli/dino  
-**Version:** v0.3.2 · Early Access
+**Version:** v1.0.0 · Early Access · CLI v1.0
 
 Same story as the site: Problem → How it works → Engine → Demo → Early Access → Pricing & Licensing.
 
@@ -21,12 +21,46 @@ Dashboards consume artifacts via Path, HTTP, or S3. Dino outputs the data — yo
 - [`PROOF_INDEX.md`](PROOF_INDEX.md) — index / compare / metrics / layout
 - [`CLI_E2E_REFERENCE.md`](CLI_E2E_REFERENCE.md) — CLI reference
 
+## CLI (v1.0)
+
+### Core Workflow
+
+- `dino run` — alias for `proof run` (trailing `--` form)
+- `dino proof` — full proof chain
+- `dino scan` — grammar + leakage scan
+
+### Pipeline Operations
+
+- `dino capsule` · `dino bundle` · `dino map` · `dino verify` · `dino flight`
+
+### System & Packs
+
+- `dino packs` · `dino status` · `dino upgrade` · `dino version`
+
+### Notable forms
+
+```bash
+dino run --scan ./pipeline -- python pipeline/run.py
+dino bundle create RUNDATA_PATH OUTPUT_PATH [--repo-root ROOT]
+dino proof index compare PATH HASH_A HASH_B
+dino map drift PATH --baseline PATH [--tau N]
+```
+
+```text
+---
+Early Access (Proof Pack)
+  CI compare gate · S3/HTTP backends · engine contract stability · team mode
+  These features are not part of the open-source scan engine.
+
+  Details & instructions:
+    https://github.com/DinoDevCli/dino#early-access
+    Contact: dinodevcli@gmail.com
+```
+
 ## Proof Pack
 
 Free: `dino scan leakage` forever.  
 Proof Pack: capsule, map, bundle, flight, verify, proof chain + export/index — Early Access Team Key.
-
-CLI lists these as **Optional features (Proof Pack)** under `dino --help` (and `dino proof run --help` / `dino proof index compare --help`). Documentary only — not part of the open-source scan engine. Early Access: dinodevcli@gmail.com.
 
 ## Contracts
 
@@ -43,8 +77,8 @@ CLI lists these as **Optional features (Proof Pack)** under `dino --help` (and `
 [`QUICKSTART.md`](QUICKSTART.md) · [Install on GitHub](https://github.com/DinoDevCli/dino#install)
 
 ```bash
-pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"
-dino proof run --help
+pip install "git+https://github.com/DinoDevCli/dino.git@v1.0.0"
+dino run --help
 ```
 
 ## Codespaces
@@ -72,7 +106,7 @@ Production is fail-closed: `EMPTY_SCAN_ROOTS` prevents silent passes.
 `dino --dev` relaxes `EMPTY_SCAN_ROOTS` only. Leakage findings remain fail-closed. Do not use `--dev` for production proofs.
 
 ```bash
-dino --dev proof run --command "echo ok" --scan ./does_not_exist
+dino --dev run --scan ./does_not_exist -- echo ok
 ```
 
 [`ROADMAP.md`](ROADMAP.md) · [`QUICKSTART.md`](QUICKSTART.md)

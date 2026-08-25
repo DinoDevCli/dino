@@ -12,17 +12,84 @@ from dino import __version__
 from dino.common.output import Output
 
 # Documentary only — appears in --help. Free pack = scan; Proof Pack unlocks the rest.
-PROOF_PACK_HELP = """\
-Optional features (Proof Pack)
-  - CI compare gate
-  - envelope backends (HTTP / S3)
-  - engine contract stability
-  - team mode
-  - extended doctor checks
-  - upgrade keys
+EARLY_ACCESS_HELP = """\
+---
+Early Access (Proof Pack)
+  CI compare gate · S3/HTTP backends · engine contract stability · team mode
+  These features are not part of the open-source scan engine.
 
-These features are not part of the open-source scan engine.
-Early Access: dinodevcli@gmail.com"""
+  Details & instructions:
+    https://github.com/DinoDevCli/dino#early-access
+    Contact: dinodevcli@gmail.com"""
+
+# Top-level help groups (display only — command names unchanged).
+HELP_GROUPS: list[tuple[str, list[tuple[str, str]]]] = [
+    (
+        "Core Workflow",
+        [
+            ("run", "Alias for `proof run`"),
+            ("proof", "Full proof chain"),
+            ("scan", "Grammar + leakage scan"),
+        ],
+    ),
+    (
+        "Pipeline Operations",
+        [
+            ("capsule", "Capsule run/replay/doctor"),
+            ("bundle", "Bundle create/replay/verify/diff/archive/dedup"),
+            ("map", "Analyze/verify/plan/drift"),
+            ("verify", "Attestation + drift verification"),
+            ("flight", "Canary artifact summary"),
+        ],
+    ),
+    (
+        "System & Packs",
+        [
+            ("packs", "Show active packs"),
+            ("status", "Engine status"),
+            ("upgrade", "Apply team key"),
+            ("version", "Show version"),
+        ],
+    ),
+]
+
+
+class DinoHelpFormatter(argparse.RawDescriptionHelpFormatter):
+    """Preserve epilog newlines; used by subcommand help surfaces."""
+
+
+class DinoArgumentParser(argparse.ArgumentParser):
+    """Root parser with grouped command help (CLI v1.0 layout)."""
+
+    def format_help(self) -> str:
+        prog = self.prog
+        lines: list[str] = [
+            f"usage: {prog} [-h] [--version] [--json] [--dev] <command> ...",
+            "",
+            self.description or "",
+            "",
+        ]
+        for title, entries in HELP_GROUPS:
+            lines.append(f"{title}:")
+            for name, text in entries:
+                lines.append(f"  {name:<13} {text}")
+            lines.append("")
+        lines.extend(
+            [
+                "options:",
+                "  -h, --help            show this help message and exit",
+                "  --version             show program's version number and exit",
+                "  --json                Emit JSON envelopes (also accepted before the domain)",
+                "  --dev                 Developer Mode: relax EMPTY_SCAN_ROOTS (not for",
+                "                        production proofs)",
+                "",
+                "Meta: dino version | packs | status | upgrade --pack proof --key KEY |",
+                "issue-key --team NAME [--days N] | init-license.",
+                "",
+                EARLY_ACCESS_HELP,
+            ]
+        )
+        return "\n".join(lines) + "\n"
 
 
 def _pop_flag(argv: list[str], flag: str) -> tuple[list[str], bool]:
@@ -34,18 +101,90 @@ def _pop_json_flag(argv: list[str]) -> tuple[list[str], bool]:
     return _pop_flag(argv, "--json")
 
 
+def _apply_trailing_command(args: argparse.Namespace) -> None:
+    """If argv used `… -- cmd …`, override --command with the remainder."""
+    trailing = list(getattr(args, "trailing", None) or [])
+    if not trailing:
+        return
+    if trailing[0] == "--":
+        trailing = trailing[1:]
+    if trailing:
+        args.command = trailing
+
+
+def _add_proof_run_arguments(p: argparse.ArgumentParser) -> None:
+    """Shared flags for `proof run` and top-level `run` alias."""
+    p.add_argument(
+        "--output-dir",
+        default="./proof_output",
+        metavar="PATH",
+        help="Output directory for the sealed proof bundle",
+    )
+    p.add_argument(
+        "--command",
+        nargs="+",
+        default=["echo", "ok"],
+        metavar="ARGV",
+        help='Argv to seal, e.g. echo ok (or one string: "echo ok")',
+    )
+    p.add_argument(
+        "--repo",
+        default="",
+        metavar="PATH",
+        help="Optional repository root for map verify",
+    )
+    p.add_argument(
+        "--scan",
+        nargs="*",
+        default=[],
+        metavar="PATH",
+        help="Optional paths for leakage scan",
+    )
+    p.add_argument(
+        "--stdin",
+        default="",
+        metavar="TEXT",
+        help="Optional stdin text sealed into the capsule",
+    )
+    p.add_argument(
+        "--export",
+        default="",
+        metavar="DEST",
+        help="Upload sealed proof: path | http(s)://… | s3://bucket/prefix",
+    )
+    p.add_argument(
+        "--pipeline",
+        default="",
+        metavar="NAME",
+        help="Pipeline label for proof_index.json",
+    )
+    p.add_argument(
+        "--group",
+        default="",
+        metavar="NAME",
+        help="Group label for proof_index.json",
+    )
+    p.add_argument(
+        "--tag",
+        action="append",
+        default=[],
+        metavar="TAG",
+        help="Tag for proof_index.json (repeatable)",
+    )
+    p.add_argument(
+        "trailing",
+        nargs=argparse.REMAINDER,
+        metavar="CMD",
+        help="Command after -- (alternative to --command)",
+    )
+
+
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(
+    p = DinoArgumentParser(
         prog="dino",
         description="Deterministic Proof for Python Decision Pipelines",
-        epilog=(
-            "Meta: dino version | packs | status | upgrade --pack proof --key KEY | "
-            "issue-key --team NAME [--days N] | init-license. Global: --json for "
-            "machine-readable envelopes. --dev relaxes EMPTY_SCAN_ROOTS (not for "
-            "production proofs).\n\n"
-            f"{PROOF_PACK_HELP}"
-        ),
-        formatter_class=argparse.RawDescriptionHelpFormatter,
+        formatter_class=DinoHelpFormatter,
+        epilog=EARLY_ACCESS_HELP,
     )
     p.add_argument("--version", action="version", version=f"dino {__version__}")
     p.add_argument(
@@ -58,9 +197,23 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Developer Mode: relax EMPTY_SCAN_ROOTS (not for production proofs)",
     )
-    sub = p.add_subparsers(dest="domain", required=True)
+    sub = p.add_subparsers(
+        dest="domain",
+        required=True,
+        # Children must not inherit DinoArgumentParser.format_help (root-only groups).
+        parser_class=argparse.ArgumentParser,
+    )
 
-    # Kept product surface only (see packs.py / README)
+    # Core Workflow — `run` is an alias for `proof run` (same flags / handler).
+    run_alias = sub.add_parser(
+        "run",
+        help="Alias for `proof run`",
+        formatter_class=DinoHelpFormatter,
+        epilog=EARLY_ACCESS_HELP,
+    )
+    run_alias.set_defaults(domain="proof", cmd="run")
+    _add_proof_run_arguments(run_alias)
+
     _scan(sub)
     _bundle(sub)
     _flight(sub)
@@ -78,165 +231,401 @@ def _group(sub: argparse._SubParsersAction, name: str, help_text: str) -> argpar
 
 
 def _bundle(sub: argparse._SubParsersAction) -> None:
-    g = _group(sub, "bundle", "Run bundles and local stores")
+    g = _group(sub, "bundle", "Bundle create/replay/verify/diff/archive/dedup")
     s = g.add_subparsers(dest="cmd", required=True)
     b = s.add_parser("create", help="Build complete run bundle")
-    b.add_argument("--rundata", required=True)
-    b.add_argument("--output", required=True)
-    b.add_argument("--repo-root", default="")
+    b.add_argument(
+        "rundata",
+        metavar="RUNDATA_PATH",
+        help="Path to runtime execution payload (JSON)",
+    )
+    b.add_argument(
+        "output",
+        metavar="OUTPUT_PATH",
+        help="Output path for generated bundle JSON",
+    )
+    b.add_argument(
+        "--repo-root",
+        default="",
+        metavar="ROOT",
+        help="Optional repository root for map verify",
+    )
     rp = s.add_parser("replay", help="Compare current dump against replay baseline")
-    rp.add_argument("--baseline", required=True, help="Baseline JSON path")
-    rp.add_argument("--current", required=True, help="Current dump or baseline-shaped JSON")
-    rp.add_argument("--target-id", default="default")
+    rp.add_argument(
+        "--baseline",
+        required=True,
+        metavar="PATH",
+        help="Baseline JSON or proof.json to compare against",
+    )
+    rp.add_argument(
+        "--current",
+        required=True,
+        metavar="PATH",
+        help="Current dump or baseline-shaped JSON",
+    )
+    rp.add_argument(
+        "--target-id",
+        default="default",
+        metavar="ID",
+        help="Target identifier when building baseline from a dump",
+    )
     bv = s.add_parser("verify", help="Alias of replay — official regression gate (exit 1 on fail)")
-    bv.add_argument("--baseline", required=True)
-    bv.add_argument("--current", required=True)
-    bv.add_argument("--target-id", default="default")
+    bv.add_argument(
+        "--baseline",
+        required=True,
+        metavar="PATH",
+        help="Baseline JSON or proof.json to compare against",
+    )
+    bv.add_argument(
+        "--current",
+        required=True,
+        metavar="PATH",
+        help="Current dump or baseline-shaped JSON",
+    )
+    bv.add_argument(
+        "--target-id",
+        default="default",
+        metavar="ID",
+        help="Target identifier when building baseline from a dump",
+    )
     bd = s.add_parser("diff", help="Same comparison as verify, always exit 0 (review)")
-    bd.add_argument("--baseline", required=True)
-    bd.add_argument("--current", required=True)
-    bd.add_argument("--target-id", default="default")
+    bd.add_argument(
+        "--baseline",
+        required=True,
+        metavar="PATH",
+        help="Baseline JSON or proof.json to compare against",
+    )
+    bd.add_argument(
+        "--current",
+        required=True,
+        metavar="PATH",
+        help="Current dump or baseline-shaped JSON",
+    )
+    bd.add_argument(
+        "--target-id",
+        default="default",
+        metavar="ID",
+        help="Target identifier when building baseline from a dump",
+    )
     a = s.add_parser("archive", help="Initialize archive store")
-    a.add_argument("--path", default="./.dino-archive")
+    a.add_argument(
+        "--path",
+        default="./.dino-archive",
+        metavar="PATH",
+        help="Archive store directory",
+    )
     d = s.add_parser("dedup", help="Initialize dedup store")
-    d.add_argument("--path", default="./.dino-dedup.json")
+    d.add_argument(
+        "--path",
+        default="./.dino-dedup.json",
+        metavar="PATH",
+        help="Dedup store JSON path",
+    )
 
 
 def _flight(sub: argparse._SubParsersAction) -> None:
-    g = _group(sub, "flight", "Canary flight summary")
+    g = _group(sub, "flight", "Canary artifact summary")
     s = g.add_subparsers(dest="cmd", required=True)
     sm = s.add_parser("summary", help="Summarize canary artifacts")
-    sm.add_argument("--artifacts-dir", required=True)
-    sm.add_argument("--output", required=True)
+    sm.add_argument(
+        "--artifacts-dir",
+        required=True,
+        metavar="PATH",
+        help="Directory containing canary artifacts",
+    )
+    sm.add_argument(
+        "--output",
+        required=True,
+        metavar="PATH",
+        help="Output path for summary JSON",
+    )
 
 
 def _verify_domain(sub: argparse._SubParsersAction) -> None:
-    g = _group(sub, "verify", "Attestation verification")
+    g = _group(sub, "verify", "Attestation + drift verification")
     s = g.add_subparsers(dest="cmd", required=True)
     v = s.add_parser("attest", help="Verify attestation document")
-    v.add_argument("attest_json")
-    v.add_argument("--trust-anchor", required=True)
+    v.add_argument(
+        "attest_json",
+        metavar="PATH",
+        help="Path to attestation JSON document",
+    )
+    v.add_argument(
+        "--trust-anchor",
+        required=True,
+        metavar="PATH",
+        help="Path to trust-anchor JSON",
+    )
     bv = s.add_parser("binary", help="Binary attestation verify")
-    bv.add_argument("attestation")
-    bv.add_argument("--repo", default=".")
+    bv.add_argument(
+        "attestation",
+        metavar="PATH",
+        help="Path to binary attestation JSON",
+    )
+    bv.add_argument(
+        "--repo",
+        default=".",
+        metavar="PATH",
+        help="Repository root for binary verify",
+    )
     dc = s.add_parser("drift", help="Classify attestation drift")
-    dc.add_argument("--distance", type=int, required=True)
-    dc.add_argument("--tau", type=int, default=5)
-    dc.add_argument("--graph-truth", default="")
+    dc.add_argument(
+        "--distance",
+        type=int,
+        required=True,
+        metavar="N",
+        help="Drift distance metric",
+    )
+    dc.add_argument(
+        "--tau",
+        type=int,
+        default=5,
+        metavar="N",
+        help="Drift tolerance threshold",
+    )
+    dc.add_argument(
+        "--graph-truth",
+        default="",
+        metavar="PATH",
+        help="Ground-truth import graph for drift classification",
+    )
     su = s.add_parser("supersede", help="Runtime supersession check")
-    su.add_argument("--runtime-verdict", required=True)
-    su.add_argument("--release-verdict", default="APPROVED")
-    su.add_argument("--contract", default="", help="Contract JSON (optional; demo if omitted)")
-    su.add_argument("--previous", default="", help="Previous contract JSON")
+    su.add_argument(
+        "--runtime-verdict",
+        required=True,
+        metavar="VERDICT",
+        help="Runtime verdict string",
+    )
+    su.add_argument(
+        "--release-verdict",
+        default="APPROVED",
+        metavar="VERDICT",
+        help="Release verdict string (default: APPROVED)",
+    )
+    su.add_argument(
+        "--contract",
+        default="",
+        metavar="PATH",
+        help="Contract JSON (optional; demo if omitted)",
+    )
+    su.add_argument(
+        "--previous",
+        default="",
+        metavar="PATH",
+        help="Previous contract JSON",
+    )
 
 
 def _map(sub: argparse._SubParsersAction) -> None:
-    g = _group(sub, "map", "Import graph mapping and planning")
+    g = _group(sub, "map", "Analyze/verify/plan/drift")
     s = g.add_subparsers(dest="cmd", required=True)
     a = s.add_parser("analyze", help="Analyze import graph")
-    a.add_argument("path")
+    a.add_argument(
+        "path",
+        metavar="PATH",
+        help="Path to analyze (file or directory)",
+    )
     v = s.add_parser("verify", help="Structural quality verify")
-    v.add_argument("--repo", required=True)
-    v.add_argument("--baseline", default="")
+    v.add_argument(
+        "--repo",
+        required=True,
+        metavar="PATH",
+        help="Repository root to verify",
+    )
+    v.add_argument(
+        "--baseline",
+        default="",
+        metavar="PATH",
+        help="Optional baseline JSON for structural compare",
+    )
     pl = s.add_parser("plan", help="Topological execution plan")
-    pl.add_argument("path")
+    pl.add_argument(
+        "path",
+        metavar="PATH",
+        help="Path to plan (file or directory)",
+    )
     dr = s.add_parser("drift", help="Graph drift vs baseline")
-    dr.add_argument("path")
-    dr.add_argument("--baseline", required=True)
-    dr.add_argument("--tau", type=int, default=5)
+    dr.add_argument(
+        "path",
+        metavar="PATH",
+        help="Current graph path (file or directory)",
+    )
+    dr.add_argument(
+        "--baseline",
+        required=True,
+        metavar="PATH",
+        help="Baseline graph path to compare against",
+    )
+    dr.add_argument(
+        "--tau",
+        type=int,
+        default=5,
+        metavar="N",
+        help="Drift tolerance threshold",
+    )
 
 
 def _capsule(sub: argparse._SubParsersAction) -> None:
-    g = _group(sub, "capsule", "Sealed execution capsules")
+    g = _group(sub, "capsule", "Capsule run/replay/doctor")
     s = g.add_subparsers(dest="cmd", required=True)
     run = s.add_parser("run", help="Execute command into capsule")
-    run.add_argument("--output-dir", default="./capsule_output/run")
+    run.add_argument(
+        "--output-dir",
+        default="./capsule_output/run",
+        metavar="PATH",
+        help="Output directory for capsule artifacts",
+    )
     run.add_argument(
         "--command",
         nargs="+",
         default=["echo", "ok"],
+        metavar="ARGV",
         help='Argv to seal, e.g. echo ok (or one string: "echo ok")',
     )
     rep = s.add_parser("replay", help="Replay capsule")
-    rep.add_argument("--capsule", required=True)
-    rep.add_argument("--output-dir", default="./capsule_output/replay")
+    rep.add_argument(
+        "--capsule",
+        required=True,
+        metavar="PATH",
+        help="Path to capsule.json",
+    )
+    rep.add_argument(
+        "--output-dir",
+        default="./capsule_output/replay",
+        metavar="PATH",
+        help="Output directory for replay artifacts",
+    )
     doc = s.add_parser("doctor", help="Capsule environment doctor")
-    doc.add_argument("--output-dir", default="./capsule_output/doctor")
+    doc.add_argument(
+        "--output-dir",
+        default="./capsule_output/doctor",
+        metavar="PATH",
+        help="Output directory for doctor report",
+    )
 
 
 def _proof(sub: argparse._SubParsersAction) -> None:
-    g = _group(sub, "proof", "Unique proof chain: capsule + scan + map")
+    g = _group(sub, "proof", "Full proof chain")
     s = g.add_subparsers(dest="cmd", required=True)
     run = s.add_parser(
         "run",
         help="Seal command + optional scan/map into proof.json",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog=PROOF_PACK_HELP,
+        formatter_class=DinoHelpFormatter,
+        epilog=EARLY_ACCESS_HELP,
     )
-    run.add_argument("--output-dir", default="./proof_output")
-    run.add_argument(
-        "--command",
-        nargs="+",
-        default=["echo", "ok"],
-        help='Argv to seal, e.g. echo ok (or one string: "echo ok")',
-    )
-    run.add_argument("--repo", default="", help="Optional repo for map verify")
-    run.add_argument("--scan", nargs="*", default=[], help="Optional paths for leakage scan")
-    run.add_argument("--stdin", default="")
-    run.add_argument(
-        "--export",
-        default="",
-        help="Upload sealed proof: path | http(s)://… | s3://bucket/prefix",
-    )
-    run.add_argument("--pipeline", default="", help="Pipeline label for proof_index.json")
-    run.add_argument("--group", default="", help="Group label for proof_index.json")
-    run.add_argument("--tag", action="append", default=[], help="Tag for proof_index.json (repeatable)")
+    _add_proof_run_arguments(run)
     ver = s.add_parser("verify", help="Re-verify a proof.json bundle")
-    ver.add_argument("--proof", required=True)
+    ver.add_argument(
+        "--proof",
+        required=True,
+        metavar="PATH",
+        help="Path to proof.json",
+    )
     exp = s.add_parser("export", help="Upload an existing proof directory")
     exp.add_argument(
         "--proof-dir",
         default="",
+        metavar="PATH",
         help="Directory containing proof.json (default: parent of --proof)",
     )
-    exp.add_argument("--proof", default="", help="Path to proof.json (alternative to --proof-dir)")
+    exp.add_argument(
+        "--proof",
+        default="",
+        metavar="PATH",
+        help="Path to proof.json (alternative to --proof-dir)",
+    )
     exp.add_argument(
         "--to",
         required=True,
+        metavar="DEST",
         help="Destination: path | http(s)://… | s3://bucket/prefix",
     )
-    exp.add_argument("--pipeline", default="", help="Pipeline label for proof_index.json")
-    exp.add_argument("--group", default="", help="Group label for proof_index.json")
-    exp.add_argument("--tag", action="append", default=[], help="Tag for proof_index.json (repeatable)")
+    exp.add_argument(
+        "--pipeline",
+        default="",
+        metavar="NAME",
+        help="Pipeline label for proof_index.json",
+    )
+    exp.add_argument(
+        "--group",
+        default="",
+        metavar="NAME",
+        help="Group label for proof_index.json",
+    )
+    exp.add_argument(
+        "--tag",
+        action="append",
+        default=[],
+        metavar="TAG",
+        help="Tag for proof_index.json (repeatable)",
+    )
     idx = s.add_parser("index", help="Proof index manifest (proof_index.json)")
     idx_sub = idx.add_subparsers(dest="index_cmd", required=True)
     idx_show = idx_sub.add_parser("show", help="Print proof_index.json")
-    idx_show.add_argument("archive", help="Archive directory containing proof_index.json")
+    idx_show.add_argument(
+        "archive",
+        metavar="PATH",
+        help="Archive directory containing proof_index.json",
+    )
     idx_rebuild = idx_sub.add_parser("rebuild", help="Rebuild index from archive subfolders")
-    idx_rebuild.add_argument("archive", help="Archive root to scan")
+    idx_rebuild.add_argument(
+        "archive",
+        metavar="PATH",
+        help="Archive root to scan",
+    )
     idx_cmp = idx_sub.add_parser(
         "compare",
         help="Compare two proofs by hash/prefix",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog=PROOF_PACK_HELP,
+        formatter_class=DinoHelpFormatter,
+        epilog=EARLY_ACCESS_HELP,
     )
-    idx_cmp.add_argument("archive", help="Archive directory")
-    idx_cmp.add_argument("hash_a", help="First proof hash (or prefix / path)")
-    idx_cmp.add_argument("hash_b", help="Second proof hash (or prefix / path)")
+    idx_cmp.add_argument(
+        "archive",
+        metavar="PATH",
+        help="Archive directory",
+    )
+    idx_cmp.add_argument(
+        "hash_a",
+        metavar="HASH_A",
+        help="First proof hash (or prefix / path)",
+    )
+    idx_cmp.add_argument(
+        "hash_b",
+        metavar="HASH_B",
+        help="Second proof hash (or prefix / path)",
+    )
     idx_metrics = idx_sub.add_parser("metrics", help="Aggregate health summary JSON")
-    idx_metrics.add_argument("archive", help="Archive directory")
+    idx_metrics.add_argument(
+        "archive",
+        metavar="PATH",
+        help="Archive directory",
+    )
     idx_layout = idx_sub.add_parser("layout", help="Refresh pipelines/groups/tags browse links")
-    idx_layout.add_argument("archive", help="Archive directory")
+    idx_layout.add_argument(
+        "archive",
+        metavar="PATH",
+        help="Archive directory",
+    )
     doc = s.add_parser("doctor", help="Proof-stack health checks")
-    doc.add_argument("--output-dir", default="")
+    doc.add_argument(
+        "--output-dir",
+        default="",
+        metavar="PATH",
+        help="Optional output directory for doctor artifacts",
+    )
 
 
 def _scan(sub: argparse._SubParsersAction) -> None:
-    g = _group(sub, "scan", "Grammar and leakage scanning")
+    g = _group(sub, "scan", "Grammar + leakage scan")
     s = g.add_subparsers(dest="cmd", required=True)
     s.add_parser("grammar", help="Expression grammar smoke test")
     ls = s.add_parser("leakage", help="Static leakage scan")
-    ls.add_argument("paths", nargs="+")
+    ls.add_argument(
+        "paths",
+        nargs="+",
+        metavar="PATH",
+        help="Paths to scan for causal leakage",
+    )
 
 
 def _out(domain: str, command: str, json_mode: bool) -> Output:
@@ -268,6 +657,8 @@ def dispatch(args: argparse.Namespace, json_mode: bool) -> int:
             f"Domain '{domain}' is locked. Unlock with: dino upgrade --pack {hint}  (see: dino packs)",
             2,
         )
+    if domain == "proof" and cmd == "run":
+        _apply_trailing_command(args)
     handlers = {
         "bundle": _run_bundle,
         "flight": _run_flight,
@@ -282,9 +673,6 @@ def dispatch(args: argparse.Namespace, json_mode: bool) -> int:
         out = _out(domain, cmd or "unknown", json_mode)
         return _fail(out, "unknown_domain", f"unknown domain: {domain}", 2)
     return fn(args, cmd, json_mode)
-
-
-
 
 
 def _bundle_compare(args: argparse.Namespace) -> tuple[int, dict[str, Any] | None, str | None]:
@@ -371,10 +759,6 @@ def _run_bundle(args: argparse.Namespace, cmd: str, json_mode: bool) -> int:
         out.emit_success({"path": args.path, "status": "initialized", "store": "dedup"})
         return 0
     return _fail(out, "unknown_command", f"unknown bundle command: {cmd}", 2)
-
-
-
-
 
 
 def _run_flight(args: argparse.Namespace, cmd: str, json_mode: bool) -> int:
@@ -531,7 +915,6 @@ def _run_capsule(args: argparse.Namespace, cmd: str, json_mode: bool) -> int:
         out.emit_success(report)
         return 0 if report.get("replay_ok") else 1
     return _fail(out, "unknown_command", f"unknown capsule command: {cmd}", 2)
-
 
 
 def _run_scan(args: argparse.Namespace, cmd: str, json_mode: bool) -> int:
@@ -761,7 +1144,7 @@ def _run_meta(argv: list[str], json_mode: bool) -> int:
             sys.stdout.write(f"    {row['description']}\n")
             sys.stdout.write(f"    domains: {', '.join(row['domains'])}\n\n")
         sys.stdout.write("Unlock:  dino upgrade --pack proof --key YOUR_TEAM_KEY\n")
-        sys.stdout.write("See also: dino --help  (Optional features / Proof Pack)\n")
+        sys.stdout.write("See also: dino --help  (Early Access / Proof Pack)\n")
         sys.stdout.write("Early Access: dinodevcli@gmail.com\n")
         return 0
 

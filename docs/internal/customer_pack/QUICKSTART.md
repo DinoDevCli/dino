@@ -19,7 +19,7 @@ Dino outputs artifacts. Your dashboards render them.
 
 ```bash
 pip install "git+https://github.com/DinoDevCli/dino.git@v{VERSION}"
-dino proof run --help
+dino run --help
 ```
 
 Not on PyPI as `dino` (name collision). Install from GitHub.
@@ -41,7 +41,7 @@ dino proof doctor
 ## First seal + compare
 
 ```bash
-dino proof run \
+dino run \
   --command "python your_pipeline.py" \
   --scan ./src \
   --pipeline fraud_score_v1 \

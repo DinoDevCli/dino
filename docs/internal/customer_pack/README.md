@@ -29,9 +29,9 @@ The script issues the key, writes the folder, zips it, and prints the email body
 | Piece | Rule | Example |
 |-------|------|---------|
 | Team slug | lowercase `[a-z0-9-]+` (spaces → `-`) | `acme-risk` |
-| ZIP name | `dino-ea-<slug>-v<version>-<UTC stamp>.zip` | `dino-ea-acme-risk-v0.3.2-20260824T094300Z.zip` |
+| ZIP name | `dino-ea-<slug>-v<version>-<UTC stamp>.zip` | `dino-ea-acme-risk-v1.0.0-20260824T094300Z.zip` |
 | Inner folder | `<slug>/` (exactly one top-level directory) | `acme-risk/` |
-| Version | Dino release from `pyproject.toml` (install pin) | `0.3.2` |
+| Version | Dino release from `pyproject.toml` (install pin) | `1.0.0` |
 
 Re-issuing the same team creates a **new** stamp + ZIP. Do not reuse an old ZIP after a new key.
 
@@ -55,20 +55,20 @@ acme-risk/
 | `QUICKSTART.md` | yes | this folder, `{KEY}` / `{VERSION}` substituted |
 | `EMAIL.txt` | yes | [`EMAIL.txt`](EMAIL.txt) template, substituted |
 | `LICENSE` | yes | repo `LICENSE` |
-| `VERSION` | yes | `pyproject.toml` → `0.3.2` |
+| `VERSION` | yes | `pyproject.toml` → `1.0.0` |
 | `examples/proof_index.json` | optional (included) | this folder |
 | `examples/compare.json` | optional (included) | this folder |
 
 ## Versioning
 
-- **Dino version** (`VERSION`, install URL): the Git tag customers `pip install` (`v0.3.2`).
+- **Dino version** (`VERSION`, install URL): the Git tag customers `pip install` (`v1.0.0`).
 - **Pack layout** (`customer-pack.v1`): this file list and names. Bump to `v2` only if you add/rename/remove ZIP entries.
 - **Key format**: `dinoea.v1.<payload>.<sig>` (independent of pack layout).
 
 Install line in email + quickstart:
 
 ```bash
-pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"
+pip install "git+https://github.com/DinoDevCli/dino.git@v1.0.0"
 dino upgrade --pack proof --key "$(cat KEY.txt)"
 dino proof doctor
 ```

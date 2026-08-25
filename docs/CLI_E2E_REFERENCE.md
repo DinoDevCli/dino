@@ -1,25 +1,44 @@
 # Dino CLI — Reference (engine + contracts)
 
-**Version:** 0.3.2 · **Positioning:** local-first audit engine — not a platform  
+**Version:** 1.0.0 · **CLI UX:** v1.0 · **Positioning:** local-first audit engine — not a platform  
 **Flag:** `--json` (JSON envelope) · **E2E suite:** `tests/e2e/`
 
 Dino seals proofs and emits **export** + **index** contracts for *your* dashboards. No hosted UI. No SaaS.
 
+### CLI groups (v1.0)
+
+**Core Workflow:** `dino run` · `dino proof` · `dino scan`  
+**Pipeline Operations:** `dino capsule` · `dino bundle` · `dino map` · `dino verify` · `dino flight`  
+**System & Packs:** `dino packs` · `dino status` · `dino upgrade` · `dino version`
+
 ### Integration snapshot
 
 ```bash
-dino proof run \
-  --command echo ok \
+dino run \
   --scan ./tests/e2e/pipe.py \
   --output-dir ./proof_out \
   --pipeline fraud_score_v4 \
   --group risk-team \
   --tag prod --tag v4 \
-  --export ./archive
+  --export ./archive \
+  -- echo ok
 
 dino proof index metrics ./archive
-dino proof index compare ./archive <hash_a> <hash_b>
+dino proof index compare ./archive <HASH_A> <HASH_B>
 dino proof index layout ./archive
+
+dino bundle create RUNDATA_PATH OUTPUT_PATH [--repo-root ROOT]
+```
+
+```text
+---
+Early Access (Proof Pack)
+  CI compare gate · S3/HTTP backends · engine contract stability · team mode
+  These features are not part of the open-source scan engine.
+
+  Details & instructions:
+    https://github.com/DinoDevCli/dino#early-access
+    Contact: dinodevcli@gmail.com
 ```
 
 Contracts: [`PROOF_EXPORT.md`](PROOF_EXPORT.md) · [`PROOF_INDEX.md`](PROOF_INDEX.md) · [`PROOF_CONTRACT.md`](PROOF_CONTRACT.md)
@@ -28,9 +47,11 @@ Contracts: [`PROOF_EXPORT.md`](PROOF_EXPORT.md) · [`PROOF_INDEX.md`](PROOF_INDE
 
 # Dino CLI — Vollständige Referenz mit E2E-Outputs
 
-**Stand:** 2026-08-22 · **Version:** 0.3.2
+**Stand:** 2026-08-25 · **Version:** 1.0.0
 **Repo:** `devsecops` · **Flag:** `--json` (JSON-Envelope)
 **Artefakte:** `/tmp/dino_cli_e2e/`
+
+> Historical E2E dumps below may still show older `dino proof run` / `--rundata` invocations; prefer the v1.0 forms above (`dino run`, positional `bundle create`).
 
 ---
 

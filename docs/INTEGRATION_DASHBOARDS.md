@@ -9,14 +9,15 @@ Schemas: [`PROOF_EXPORT.md`](PROOF_EXPORT.md) · [`PROOF_INDEX.md`](PROOF_INDEX.
 ## Pattern (all integrations)
 
 ```bash
-dino proof run \
-  --command echo ok \
+dino run \
   --scan ./your_pipeline.py \
   --output-dir ./proof_out \
   --pipeline YOUR_PIPELINE_NAME \
   --group YOUR_TEAM \
   --tag prod \
-  --export ./archive          # or s3://… or https://…
+  --export ./archive \
+  -- echo ok
+# or: --export s3://… / https://…
 ```
 
 Then consume:
@@ -88,7 +89,7 @@ Schedule `dino proof index metrics /data/dino/archive` on a cron Prefect deploym
 After a run, export proof and log index metrics as tags:
 
 ```bash
-dino proof run ... --export ./mlflow_proofs/$RUN_ID --pipeline $MLFLOW_RUN_NAME
+dino run ... --export ./mlflow_proofs/$RUN_ID --pipeline $MLFLOW_RUN_NAME
 METRICS=$(dino proof index metrics ./mlflow_proofs --json 2>/dev/null || dino --json proof index metrics ./mlflow_proofs)
 # Parse JSON → mlflow.set_tag("dino.proof_hash", …)
 ```
@@ -145,7 +146,7 @@ Merge `index_entry` into your DB. Render history from your schema — Dino never
 
 ```yaml
 - run: |
-    dino proof run --command echo ok --scan ./tests/e2e/pipe.py \
+    dino run -- echo ok --scan ./tests/e2e/pipe.py \
       --export ./archive --pipeline ci --group eng --tag ci
     dino proof index compare ./archive "${{ env.PREV_HASH }}" "$(jq -r '.proofs[0].hash' archive/proof_index.json)"
   env:

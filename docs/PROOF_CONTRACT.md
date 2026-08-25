@@ -132,7 +132,7 @@ Resolving: `Path(output_dir) / artifacts.capsule`.
 | `partial` | true | Capsule sealed; one or more optional parts skipped |
 | `failed` | false | Capsule failed, or a requested part failed |
 
-### 3.2 CLI exit codes (`dino proof run` / `verify`)
+### 3.2 CLI exit codes (`dino run` / `proof run` / `verify`)
 
 | Code | Meaning |
 |------|---------|
@@ -326,13 +326,13 @@ A failed regression means: **the evidence baseline is no longer met**, not that 
 ```bash
 dino upgrade --pack proof
 dino proof doctor
-dino proof run \
-  --command "python3 train.py --seed 0" \
-  --repo . \
+dino run \
   --scan ./src \
-  --output-dir ./proof_out
+  --repo . \
+  --output-dir ./proof_out \
+  -- python3 train.py --seed 0
 # exit 0 + audit.verdict PROOF_PASSED|PROOF_PARTIAL
-# Note: put flags inside one --command string (or argv tokens without leading --).
+# Alias: dino proof run … (same flags; --command form still supported)
 # If --scan paths resolve to zero .py files, scan fails (EMPTY_SCAN_ROOTS).
 # dino --dev relaxes EMPTY_SCAN_ROOTS only (not for production proofs).
 dino proof verify --proof ./proof_out/proof.json

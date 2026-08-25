@@ -1,27 +1,28 @@
 # Examples
 
-Short commands for Dino 0.3.2 — local audit engine. Live dumps: [`CLI_E2E_REFERENCE.md`](CLI_E2E_REFERENCE.md).
+Short commands for Dino 1.0.0 — local audit engine. Live dumps: [`CLI_E2E_REFERENCE.md`](CLI_E2E_REFERENCE.md).
 
 ## Proof + export + index
 
 ```bash
 dino upgrade --pack proof --key YOUR_LICENSE_KEY
 
-dino proof run \
-  --command echo ok \
+# Primary: trailing command form
+dino run \
   --scan ./tests/e2e/pipe.py \
   --output-dir ./proof_out \
   --pipeline fraud_score_v4 \
   --group risk-team \
   --tag prod --tag v4 \
-  --export ./archive
+  --export ./archive \
+  -- echo ok
 
 dino proof verify --proof ./proof_out/proof.json
 dino proof doctor
 
 dino proof index show ./archive
 dino proof index metrics ./archive
-dino proof index compare ./archive <hash_a> <hash_b>
+dino proof index compare ./archive <HASH_A> <HASH_B>
 dino proof index layout ./archive
 dino proof index rebuild ./archive
 ```
@@ -29,14 +30,16 @@ dino proof index rebuild ./archive
 Other export targets (same labels):
 
 ```bash
-dino proof run ... --export https://internal.example/api/proofs \
-  --pipeline fraud_score_v4 --group risk-team --tag prod
+dino run ... --export https://internal.example/api/proofs \
+  --pipeline fraud_score_v4 --group risk-team --tag prod \
+  -- echo ok
 
-dino proof run ... --export s3://team-bucket/proofs \
-  --pipeline fraud_score_v4 --group risk-team --tag prod
+dino run ... --export s3://team-bucket/proofs \
+  --pipeline fraud_score_v4 --group risk-team --tag prod \
+  -- echo ok
 ```
 
-`--command` is argv (`echo ok`). One quoted string also works when the program needs `--flags`.
+`--command ARGV` still works. Trailing `-- cmd …` is the preferred form.
 
 Contracts: [`PROOF_EXPORT.md`](PROOF_EXPORT.md) · [`PROOF_INDEX.md`](PROOF_INDEX.md)
 
@@ -70,6 +73,8 @@ dino map drift ./tests/dino/fixtures/map/repo_small \
 ## Bundle & flight
 
 ```bash
+dino bundle create RUNDATA_PATH OUTPUT_PATH [--repo-root ROOT]
+
 dino bundle verify \
   --baseline ./tests/dino/fixtures/bundle/baseline_counts.json \
   --current ./tests/dino/fixtures/bundle/current_counts.json
@@ -90,4 +95,15 @@ dino verify supersede \
   --previous ./tests/dino/fixtures/verify/contract_previous.json
 dino verify attest ./tests/dino/fixtures/verify/valid_attest.json \
   --trust-anchor ./tests/dino/fixtures/verify/trust_anchor.json
+```
+
+```text
+---
+Early Access (Proof Pack)
+  CI compare gate · S3/HTTP backends · engine contract stability · team mode
+  These features are not part of the open-source scan engine.
+
+  Details & instructions:
+    https://github.com/DinoDevCli/dino#early-access
+    Contact: dinodevcli@gmail.com
 ```

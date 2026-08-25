@@ -6,7 +6,7 @@
 > Deterministic proofs, export contracts, and a universal proof index for your dashboards.  
 > Dino is a local audit motor — not a platform. No UI. No SaaS. No cloud.
 
-**Links:** GitHub https://github.com/DinoDevCli/dino · Release https://github.com/DinoDevCli/dino/releases/tag/v0.3.2 · Website https://dinodevcli.github.io/dino/
+**Links:** GitHub https://github.com/DinoDevCli/dino · Release https://github.com/DinoDevCli/dino/releases/tag/v1.0.0 · Website https://dinodevcli.github.io/dino/
 
 ---
 
@@ -14,7 +14,7 @@
 
 | # | Action | Status |
 |---|--------|--------|
-| 01 | GitHub Release v0.3.2 | Done — https://github.com/DinoDevCli/dino/releases/tag/v0.3.2 |
+| 01 | GitHub Release v1.0.0 | Done — https://github.com/DinoDevCli/dino/releases/tag/v1.0.0 |
 | 02 | Website live | **https://dinodevcli.github.io/dino/** (Vercel optional for custom domain) |
 | 03 | Post X / LinkedIn / Reddit / HN (copy below) | Manual |
 | 04 | Early Access is open — any team can request a key (copy below) | Manual |
@@ -27,7 +27,7 @@
 
 ---
 
-## GitHub Release notes (paste into v0.3.2)
+## GitHub Release notes (paste into v1.0.0)
 
 ~~~~markdown
 ## Early Access
@@ -39,7 +39,7 @@ Team Keys are free. No checkout.
 
 ---
 
-## Dino v0.3.2 — Local-First Audit Engine
+## Dino v1.0.0 — Local-First Audit Engine
 
 **Dino — Local-First Audit Engine for Python Pipelines**  
 Deterministic proofs, export envelopes, and a universal proof index for your dashboards.
@@ -58,9 +58,9 @@ Dino outputs audit artifacts — dashboards render them. Engine only.
 ### Install
 
 ```bash
-pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"
+pip install "git+https://github.com/DinoDevCli/dino.git@v1.0.0"
 dino --help
-dino proof run --help
+dino run --help
 ```
 
 ### Docs
@@ -139,8 +139,8 @@ Index CLI gives compare/metrics/layout JSON — no Dino UI.
 Stack: Python 3.10+, MIT, ~110 tests including full E2E.
 
 Quickstart:
-  pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"
-  dino proof run --command echo ok --scan ./pipe.py --export ./archive --pipeline my_pipe
+  pip install "git+https://github.com/DinoDevCli/dino.git@v1.0.0"
+  dino run --scan ./pipe.py --export ./archive --pipeline my_pipe -- echo ok
 
 Looking for feedback from risk/fraud/ML teams integrating this into existing tooling.
 
@@ -211,7 +211,7 @@ Repo: https://github.com/DinoDevCli/dino
 Dino is a local-first audit engine for Python decision pipelines — seals runs, exports `dino.proof.export.v1` envelopes to path/HTTP/S3, and maintains `proof_index.json` with compare/metrics/layout CLI for dashboard consumption. MIT, no hosted UI. https://github.com/DinoDevCli/dino
 
 **TLDR / Console.dev:**  
-Local audit motor for Python ML/risk pipelines: deterministic proofs + export contracts + proof index. Integrates into your stack — not another platform. v0.3.2 on GitHub.
+Local audit motor for Python ML/risk pipelines: deterministic proofs + export contracts + proof index. Integrates into your stack — not another platform. v1.0.0 on GitHub.
 
 **MLOps Community / Data Engineering Weekly:**  
 Teams wire Dino into Airflow/Prefect post-task hooks → S3 archive → Superset/Metabase reads `proof_index.json` metrics. Compare CLI exits non-zero on drift/leakage regression. Docs: INTEGRATION_DASHBOARDS.md

@@ -12,7 +12,7 @@ Dino ist ein **verkaufbares Proof-CLI**: es versiegelt Ausführung, prüft Logic
 
 | Frage | Antwort |
 |-------|---------|
-| Was ist das Produkt? | `dino proof run` → Capsule + optional Scan + Map → `proof.json` |
+| Was ist das Produkt? | `dino run` → Capsule + optional Scan + Map → `proof.json` |
 | Was ist neu am Markt? | Eine CLI, die **Execution-Seal + Causal Leakage + Structural Drift** in einem Audit-Objekt bindet |
 | Technischer Stand | Capsule sealed (re-exec), Bundle-Regression, Supersession-Verträge, Proof-Doctor, Contract-Doku |
 | Nächster Engpass | **Markt-Validierung** — offizieller ICP-Test [`internal/ICP_TEST.md`](internal/ICP_TEST.md) (Quant + Fraud) |
@@ -149,7 +149,7 @@ Einziger historischer Env-Fail (`which dino`) → Fallback auf Modul-`version`.
 pip install -e '.[dev]'
 dino upgrade --pack proof
 dino proof doctor
-dino proof run \
+dino run \
   --command echo market_unique \
   --repo dino/common \
   --scan tests/dino/fixtures/scan/clean_code.py \

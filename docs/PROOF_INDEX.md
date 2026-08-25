@@ -32,18 +32,18 @@ Engine contract for listing, comparing, tagging, grouping, and historizing proof
 ## CLI (engine → consumer)
 
 ```bash
-dino proof run \
-  --command echo ok \
+dino run \
   --scan ./tests/e2e/pipe.py \
   --output-dir ./proof_out \
   --pipeline fraud_score_v4 \
   --group risk-team \
   --tag prod --tag v4 \
-  --export ./archive
+  --export ./archive \
+  -- echo ok
 
 dino proof index show ./archive
 dino proof index metrics ./archive
-dino proof index compare ./archive <hash_a> <hash_b>
+dino proof index compare ./archive <HASH_A> <HASH_B>
 dino proof index layout ./archive
 dino proof index rebuild ./archive
 ```

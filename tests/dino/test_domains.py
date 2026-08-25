@@ -115,7 +115,7 @@ class ProofCompanionTests(unittest.TestCase):
         if not rundata.is_file():
             self.skipTest("fixture missing")
         work = Path(__file__).resolve().parent / "_work_bundle.json"
-        argv = ["bundle", "create", "--rundata", str(rundata), "--output", str(work)]
+        argv = ["bundle", "create", str(rundata), str(work)]
         code, out, _ = run(argv)
         self.assertEqual(code, 0)
         self.assertEqual(json.loads(out)["status"], "ok")

@@ -1,8 +1,8 @@
 # Quickstart
 
 ```bash
-pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"
-dino proof run --help
+pip install "git+https://github.com/DinoDevCli/dino.git@v1.0.0"
+dino run --help
 ```
 
 Not on PyPI as `dino` (name collision). Install from GitHub.
@@ -11,18 +11,27 @@ No local Python? [Open in GitHub Codespaces](https://codespaces.new/DinoDevCli/d
 
 ## First seal
 
+Trailing command form (primary):
+
 ```bash
-dino proof run \
-  --command "python your_pipeline.py" \
+# Basic
+dino run -- python your_pipeline.py
+
+# With scan
+dino run --scan ./src -- python your_pipeline.py
+
+# With export
+dino run \
   --scan ./src \
   --pipeline fraud_score_v1 \
-  --export ./archive
+  --export ./archive \
+  -- python your_pipeline.py
 ```
 
 Compare two runs:
 
 ```bash
-dino proof index compare ./archive <hash_a> <hash_b>
+dino proof index compare ./archive <HASH_A> <HASH_B>
 ```
 
 Leakage scan is free forever (no key):
@@ -40,6 +49,17 @@ dino proof doctor
 
 Email [dinodevcli@gmail.com](mailto:dinodevcli@gmail.com) with your team name.
 
+```text
+---
+Early Access (Proof Pack)
+  CI compare gate · S3/HTTP backends · engine contract stability · team mode
+  These features are not part of the open-source scan engine.
+
+  Details & instructions:
+    https://github.com/DinoDevCli/dino#early-access
+    Contact: dinodevcli@gmail.com
+```
+
 ## Developer Mode
 
 Production is fail-closed: missing scan roots (`EMPTY_SCAN_ROOTS`) fail the run.
@@ -47,7 +67,7 @@ Production is fail-closed: missing scan roots (`EMPTY_SCAN_ROOTS`) fail the run.
 During local iteration:
 
 ```bash
-dino --dev proof run --command "echo ok" --scan ./does_not_exist
+dino --dev run --scan ./does_not_exist -- echo ok
 ```
 
 `--dev` relaxes `EMPTY_SCAN_ROOTS` only. Real leakage findings still fail. Do not use for production proofs.

@@ -4,6 +4,8 @@ import { Container, Display, Label, Section } from "@/components/Layout";
 import { Nav } from "@/components/Nav";
 import { ArchitectureFlow } from "@/components/Tiles";
 import {
+  CLI_EARLY_ACCESS,
+  CLI_GROUPS,
   CODESPACES,
   DEMO_COPY,
   DEMO_STEPS,
@@ -76,6 +78,38 @@ export default function Home() {
             </p>
             <p className="mt-2 font-mono text-xs text-muted">{QUICKSTART.hint}</p>
           </div>
+          <Label as="h2" className="mt-12">
+            {CLI_GROUPS.title}
+          </Label>
+          <div className="mt-4 space-y-4 font-mono text-xs leading-relaxed text-muted">
+            <div>
+              <p className="text-foreground">Core Workflow</p>
+              {CLI_GROUPS.core.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
+            </div>
+            <div>
+              <p className="text-foreground">Pipeline Operations</p>
+              {CLI_GROUPS.pipeline.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
+            </div>
+            <div>
+              <p className="text-foreground">System & Packs</p>
+              {CLI_GROUPS.system.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
+            </div>
+            <div>
+              <p className="text-foreground">Notable forms</p>
+              {CLI_GROUPS.forms.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
+            </div>
+          </div>
+          <pre className="mt-8 overflow-x-auto border border-border bg-black px-4 py-3 font-mono text-xs leading-relaxed text-muted whitespace-pre-wrap">
+            {CLI_EARLY_ACCESS}
+          </pre>
           <p className="mt-5 font-mono text-xs text-accent/80">{HERO.meta}</p>
         </Container>
       </section>

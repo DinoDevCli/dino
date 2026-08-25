@@ -11,20 +11,22 @@ Schema: **`dino.proof.export.v1`**
 Always pair export with index labels:
 
 ```bash
-dino proof run \
-  --command echo ok \
+dino run \
   --scan ./tests/e2e/pipe.py \
   --output-dir ./proof_out \
   --pipeline fraud_score_v4 \
   --group risk-team \
   --tag prod --tag v4 \
-  --export ./archive
+  --export ./archive \
+  -- echo ok
 
-dino proof run ... --export https://internal-dashboard/api/proofs \
-  --pipeline fraud_score_v4 --group risk-team --tag prod
+dino run ... --export https://internal-dashboard/api/proofs \
+  --pipeline fraud_score_v4 --group risk-team --tag prod \
+  -- echo ok
 
-dino proof run ... --export s3://team-bucket/proofs \
-  --pipeline fraud_score_v4 --group risk-team --tag prod
+dino run ... --export s3://team-bucket/proofs \
+  --pipeline fraud_score_v4 --group risk-team --tag prod \
+  -- echo ok
 
 dino proof export --proof-dir ./proof_out --to ./archive \
   --pipeline fraud_score_v4 --group risk-team --tag prod

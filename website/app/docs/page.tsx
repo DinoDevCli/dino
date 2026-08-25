@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Footer } from "@/components/Footer";
 import { Container, Display, Label } from "@/components/Layout";
 import { Nav } from "@/components/Nav";
-import { DOC_LINKS, SUPPORT } from "@/lib/content";
+import { CLI_EARLY_ACCESS, CLI_GROUPS, DOC_LINKS, SUPPORT } from "@/lib/content";
 import { GITHUB } from "@/lib/site";
 
 export default function DocsPage() {
@@ -28,6 +28,39 @@ export default function DocsPage() {
             </a>
             .
           </p>
+
+          <Label as="h2" className="mt-12">
+            {CLI_GROUPS.title}
+          </Label>
+          <div className="mt-4 space-y-4 font-mono text-xs leading-relaxed text-muted">
+            <div>
+              <p className="text-foreground">Core Workflow</p>
+              {CLI_GROUPS.core.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
+            </div>
+            <div>
+              <p className="text-foreground">Pipeline Operations</p>
+              {CLI_GROUPS.pipeline.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
+            </div>
+            <div>
+              <p className="text-foreground">System & Packs</p>
+              {CLI_GROUPS.system.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
+            </div>
+            <div>
+              <p className="text-foreground">Notable forms</p>
+              {CLI_GROUPS.forms.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
+            </div>
+          </div>
+          <pre className="mt-8 overflow-x-auto border border-border bg-black px-4 py-3 font-mono text-xs leading-relaxed text-muted whitespace-pre-wrap">
+            {CLI_EARLY_ACCESS}
+          </pre>
 
           <ul className="mt-12 border-t border-border">
             {DOC_LINKS.map((doc) => (

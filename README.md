@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
 [![Open in GitHub Codespaces](https://img.shields.io/badge/GitHub-Codespaces-111118?logo=github)](https://codespaces.new/DinoDevCli/dino)
-[![Release](https://img.shields.io/github/v/release/DinoDevCli/dino?label=v0.3.2)](https://github.com/DinoDevCli/dino/releases/tag/v0.3.2)
+[![Release](https://img.shields.io/github/v/release/DinoDevCli/dino?label=v1.0.0)](https://github.com/DinoDevCli/dino/releases/tag/v1.0.0)
 
 **Local-first audit engine for Python pipelines.**
 
@@ -12,14 +12,13 @@ Pipeline drift kept breaking our fraud-scoring runs. Same code, same data, same 
 
 > **Did this run actually change?**
 
+> **Demo (5s GIF)**  
+> _Recorded via vhs. Shows: dino run → proof.json → compare._
+
 ![dino proof index compare — changed: true](docs/assets/cli-compare.png)
 
-<p align="center">
-  <img src="docs/assets/demo-compare.gif" alt="run → diff → done" width="640" />
-</p>
-
 ```text
-$ dino proof index compare ./archive <hash_v1> <hash_v2>
+$ dino proof index compare ./archive <HASH_A> <HASH_B>
 
 {
   "schema": "dino.proof.index.compare.v1",
@@ -43,8 +42,9 @@ $ dino proof index compare ./archive <hash_v1> <hash_v2>
 ## Install
 
 ```bash
-pip install "git+https://github.com/DinoDevCli/dino.git@v0.3.2"
-dino proof run --help
+pip install "git+https://github.com/DinoDevCli/dino.git@v1.0.0"
+dino --help
+dino run --help
 ```
 
 > Not on PyPI as `dino` / `dino-cli` (name collision). Install from GitHub only.
@@ -79,23 +79,31 @@ All proof bundles and indexes are **deterministic and reproducible** (content-ad
 
 ## Quick demo
 
+Trailing command form (primary):
+
 ```bash
-# Seal run A
-dino proof run \
-  --command "python pipeline/run.py --seed seed-42" \
+# Basic
+dino run -- python pipeline/run.py
+
+# With scan
+dino run --scan ./pipeline -- python pipeline/run.py
+
+# Seal run A (scan + export)
+dino run \
   --scan ./pipeline \
   --pipeline fraud_score_v1 \
-  --export ./archive
+  --export ./archive \
+  -- python pipeline/run.py --seed seed-42
 
 # Seal run B
-dino proof run \
-  --command "python pipeline/run.py --seed seed-123" \
+dino run \
   --scan ./pipeline \
   --pipeline fraud_score_v2 \
-  --export ./archive
+  --export ./archive \
+  -- python pipeline/run.py --seed seed-123
 
 # Diff
-dino proof index compare ./archive <hash_v1> <hash_v2>
+dino proof index compare ./archive <HASH_A> <HASH_B>
 ```
 
 Reproduce the website walkthrough:
@@ -136,7 +144,7 @@ Normative contract: [`docs/PROOF_CONTRACT.md`](docs/PROOF_CONTRACT.md)
 ## Example: compare
 
 ```bash
-dino proof index compare ./archive <hash_v1> <hash_v2>
+dino proof index compare ./archive <HASH_A> <HASH_B>
 ```
 
 ```json
@@ -163,17 +171,54 @@ Not a Dino UI — a mapping you drop into **your** Superset:
 
 ---
 
-## CLI (v0.3.2)
+## CLI (v1.0.0)
+
+### Core Workflow
 
 | Command | Role |
 |---------|------|
-| `dino scan leakage` | Free forever — causal leakage scan |
-| `dino proof run` | Seal pipeline + optional scan → proof + export |
-| `dino proof index compare` | Diff two proofs |
-| `dino proof index metrics` | Health summary JSON |
-| `dino proof doctor` | Proof-stack health |
-| `dino --dev …` | Developer Mode — relax `EMPTY_SCAN_ROOTS` only |
-| `dino --help` | Lists Optional features (Proof Pack) — documentary |
+| `dino run` | Alias for `proof run` — seal pipeline (trailing `--` form) |
+| `dino proof` | Full proof chain (`run` / `verify` / `export` / `index` / `doctor`) |
+| `dino scan` | Grammar + leakage scan |
+
+### Pipeline Operations
+
+| Command | Role |
+|---------|------|
+| `dino capsule` | Capsule run / replay / doctor |
+| `dino bundle` | Bundle create / replay / verify / diff / archive / dedup |
+| `dino map` | Analyze / verify / plan / drift |
+| `dino verify` | Attestation + drift verification |
+| `dino flight` | Canary artifact summary |
+
+### System & Packs
+
+| Command | Role |
+|---------|------|
+| `dino packs` | Show active packs |
+| `dino status` | Engine status |
+| `dino upgrade` | Apply team key |
+| `dino version` | Show version |
+
+### Notable forms
+
+```bash
+dino run --scan ./pipeline -- python pipeline/run.py
+dino bundle create RUNDATA_PATH OUTPUT_PATH [--repo-root ROOT]
+dino proof index compare PATH HASH_A HASH_B
+dino --dev …   # Developer Mode — relax EMPTY_SCAN_ROOTS only
+```
+
+```text
+---
+Early Access (Proof Pack)
+  CI compare gate · S3/HTTP backends · engine contract stability · team mode
+  These features are not part of the open-source scan engine.
+
+  Details & instructions:
+    https://github.com/DinoDevCli/dino#early-access
+    Contact: dinodevcli@gmail.com
+```
 
 Full reference: [`docs/CLI_E2E_REFERENCE.md`](docs/CLI_E2E_REFERENCE.md) · Help tour: [`docs/cli-help-tour.txt`](docs/cli-help-tour.txt) · Docs: [`docs/index.md`](docs/index.md)
 
