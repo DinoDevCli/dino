@@ -239,6 +239,11 @@ pip install -e '.[dev]'
 pytest tests/dino tests/e2e -q
 ```
 
+## Early Access
+For team usage (CI compare gate, envelope backends, engine contract stability), send a short message with team size + use case to:
+
+**dinodevcli@gmail.com**
+
 ---
 
 ## License
