@@ -14,7 +14,7 @@ export function CodePanel({
   return (
     <div>
       <p className="mb-3 font-body text-sm font-medium text-text">{label}</p>
-      <div className="relative border border-border bg-surface">
+      <div className="code-shell relative">
         <div className="absolute right-2 top-2 z-10">
           <CopyButton text={code} />
         </div>
