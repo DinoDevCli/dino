@@ -94,17 +94,39 @@ dino proof export --proof-dir ./proof_out --to s3://my-bucket/proofs`,
 
 export const WHY = {
   title: "Why Dino?",
-  intro:
-    "Python pipelines drift even when code is identical, data is identical, and the environment is identical. Dino shows you exactly why.",
-  seals: [
-    "Imports",
-    "AST structure",
-    "Data access",
-    "Environment state",
-    "Artifacts",
-    "Runtime metadata",
+  intro: [
+    "Python pipelines drift even when code, data, and the environment are identical.",
+    "Dino seals each run and shows exactly what changed.",
   ],
-  close: "And compares runs with deterministic deltas.",
+  captureLabel: "It captures:",
+  items: [
+    {
+      label: "Imports",
+      detail: "which modules were loaded",
+    },
+    {
+      label: "AST structure",
+      detail: "how the code was parsed",
+    },
+    {
+      label: "Data access",
+      detail: "which files and inputs were touched",
+    },
+    {
+      label: "Environment state",
+      detail: "variables, versions, runtime context",
+    },
+    {
+      label: "Artifacts",
+      detail: "outputs produced by the run",
+    },
+    {
+      label: "Runtime metadata",
+      detail: "timing, seeds, execution details",
+    },
+  ],
+  close:
+    "Dino compares sealed runs with deterministic deltas — so you can see why two runs differ, not just that they differ.",
 };
 
 export const EARLY = {

@@ -189,17 +189,29 @@ export default function Home() {
       <section className="section-y border-b border-border">
         <Container className="max-w-content">
           <h2 className="display text-3xl md:text-4xl">{WHY.title}</h2>
-          <p className="mt-5 text-base leading-relaxed text-text-muted sm:text-lg">
-            {WHY.intro}
-          </p>
-          <ul className="mt-8 grid gap-x-8 gap-y-3 sm:grid-cols-2">
-            {WHY.seals.map((item) => (
-              <li key={item} className="border-l-2 border-seal/50 pl-3 text-text">
-                {item}
-              </li>
+          <div className="section-rule" aria-hidden />
+          <div className="mt-6 space-y-3 text-base leading-relaxed text-text-muted sm:text-lg">
+            {WHY.intro.map((line) => (
+              <p key={line}>{line}</p>
             ))}
-          </ul>
-          <p className="mt-8 text-text-muted">{WHY.close}</p>
+          </div>
+
+          <p className="eyebrow mt-10">{WHY.captureLabel}</p>
+          <dl className="why-grid mt-5">
+            {WHY.items.map((item, i) => (
+              <div key={item.label} className="why-item">
+                <dt>
+                  <span className="why-item__num" aria-hidden>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="why-item__label">{item.label}</span>
+                </dt>
+                <dd>{item.detail}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <p className="why-close mt-10">{WHY.close}</p>
         </Container>
       </section>
 
