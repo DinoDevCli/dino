@@ -1,31 +1,32 @@
-"""Dino packs — free scan forever + Proof via Early Access Team Key."""
+"""Dino packs — Free Snapshot Mode + Proof Pack System Mode."""
 
 from __future__ import annotations
 
 from typing import Any
 
 # Product surface after competitive cut:
-#   KEEP free:  scan          (causal leakage / grammar — no real competitor)
-#   KEEP proof: capsule, map, bundle, flight, verify
+#   KEEP free:  scan, proof (local run), capsule (run/replay)
+#   KEEP proof: map, bundle, flight, verify + proof system features
 #   CUT:        trace, audit, guard, fence, pulse, gate, auditx
 #               (lose to Burp/httpx, Evidently, gitleaks, curl, syft, custom scripts)
 
 PACKS: dict[str, dict[str, Any]] = {
     "free": {
         "tier": "free",
-        "price_hint": "forever",
-        "domains": ["scan"],
+        "price_hint": "forever · Snapshot Mode",
+        "domains": ["scan", "proof", "capsule"],
         "description": (
-            "Free forever — grammar smoke + causal leakage scan for research pipelines."
+            "Free Snapshot Mode — local scan, local proof run (no export), "
+            "and local capsule run/replay."
         ),
     },
     "proof": {
         "tier": "ea",
-        "price_hint": "Early Access · free Team Key",
+        "price_hint": "Proof Pack · Team Key",
         "domains": ["capsule", "map", "bundle", "flight", "verify", "proof"],
         "description": (
-            "Proof Pack (Early Access) — capsule, map, bundle, flight, verify, "
-            "proof chain, export, and index. Request a free Team Key."
+            "Proof Pack (System Mode) — history, comparison, CI gates, "
+            "export (Path/HTTP/S3), team metadata, map, bundle, verify, flight."
         ),
     },
 }

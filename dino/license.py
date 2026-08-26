@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -22,6 +23,15 @@ BUY_HINT = (
     "Early Access: request a free Team Key → dinodevcli@gmail.com\n"
     "  (or GitHub issue: Early Access Request), then:\n"
     "  dino upgrade --pack proof --key YOUR_TEAM_KEY"
+)
+
+# Runtime gate message (not help text). Friendly; callers exit 0 when this returns False.
+PROOF_PACK_GATE_MESSAGE = (
+    "This feature requires the Dino Proof Pack (history, comparison, automation).\n"
+    "Upgrade: https://dino.dev/upgrade\n"
+    "\n"
+    "Dino Free covers local snapshots.\n"
+    "Dino Proof Pack adds history, comparison, CI gates, export, team metadata.\n"
 )
 
 
@@ -127,6 +137,23 @@ def get_active_packs() -> list[str]:
 
 def is_pack_active(pack: str) -> bool:
     return resolve_pack_name(pack) in get_active_packs()
+
+
+def has_proof_pack() -> bool:
+    """True when Proof Pack (System Mode) is unlocked with a valid key."""
+    return is_pack_active("proof")
+
+
+def ensure_proof_pack() -> bool:
+    """Unified Proof Pack gate for System Mode commands.
+
+    Returns True when unlocked. When locked, prints a friendly message and
+    returns False — callers must exit 0 (do not raise / pack_locked).
+    """
+    if has_proof_pack():
+        return True
+    sys.stdout.write(PROOF_PACK_GATE_MESSAGE)
+    return False
 
 
 def is_domain_active(domain: str) -> bool:

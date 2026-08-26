@@ -356,7 +356,8 @@ class TestEarlyAccessKeys:
             activate_pack("proof", key=key)
 
         assert "proof" not in get_active_packs()
-        assert is_domain_active("proof") is False
+        assert is_domain_active("proof") is True  # Snapshot Mode via free pack
+        assert is_domain_active("map") is False
         assert is_domain_active("scan") is True
 
         code, out, err = run(
@@ -371,13 +372,31 @@ class TestEarlyAccessKeys:
                 str(sim_home["proof_out"]),
             ]
         )
-        assert code == 2
-        err_payload = json.loads(out) if out.strip().startswith("{") else {}
-        assert err_payload.get("type") == "pack_locked" or "locked" in err.lower() or "locked" in out.lower()
+        # Free Snapshot Mode: local proof run still works without Proof Pack
+        assert code == 0, err
 
         # Free scan still works
         code, out, err = run(["scan", "leakage", str(PIPE_DIR / "model.py")])
         assert code == 0, err
+
+        # System Mode (export) is gated — friendly message, exit 0
+        code, out, err = run(
+            [
+                "proof",
+                "run",
+                "--command",
+                "echo ok",
+                "--scan",
+                str(PIPE_DIR),
+                "--output-dir",
+                str(sim_home["proof_out"]),
+                "--export",
+                str(sim_home["archive"]),
+            ],
+            json_mode=False,
+        )
+        assert code == 0
+        assert "dino.dev/upgrade" in (out + err).lower() or "Proof Pack" in (out + err)
 
     def test_active_key_expires_later_auto_deactivates(self, sim_home, monkeypatch) -> None:
         import time
@@ -398,7 +417,8 @@ class TestEarlyAccessKeys:
         monkeypatch.setattr(ea, "verify_key", past_expiry)
         packs = lic.get_active_packs()
         assert "proof" not in packs
-        assert is_domain_active("proof") is False
+        assert is_domain_active("proof") is True  # free Snapshot Mode
+        assert is_domain_active("map") is False
         assert is_domain_active("scan") is True
 
 
@@ -408,7 +428,7 @@ class TestEarlyAccessKeys:
 
 
 class TestFreeMode:
-    def test_free_mode_scan_only_no_proof_index_export(self, sim_home) -> None:
+    def test_free_mode_snapshot_ok_system_gated(self, sim_home) -> None:
         # Default license is free only
         assert get_active_packs() == ["free"]
 
@@ -417,6 +437,22 @@ class TestFreeMode:
         scan = json.loads(out)
         assert scan.get("ok") is True or "findings" in scan or "schema" in scan
 
+        # Local proof run (Snapshot Mode) works without key
+        code, out, err = run(
+            [
+                "proof",
+                "run",
+                "--command",
+                "echo ok",
+                "--scan",
+                str(PIPE_DIR),
+                "--output-dir",
+                str(sim_home["proof_out"]),
+            ]
+        )
+        assert code == 0, err
+
+        # Export is System Mode — friendly gate, exit 0
         code, out, err = run(
             [
                 "proof",
@@ -429,13 +465,19 @@ class TestFreeMode:
                 str(sim_home["proof_out"]),
                 "--export",
                 str(sim_home["archive"]),
-            ]
+            ],
+            json_mode=False,
         )
-        assert code == 2
+        assert code == 0
+        assert "Proof Pack" in (out + err) or "dino.dev/upgrade" in (out + err)
         assert not (sim_home["archive"] / "proof_index.json").exists()
 
-        code, out, err = run(["proof", "index", "metrics", str(sim_home["archive"])])
-        assert code == 2
+        code, out, err = run(
+            ["proof", "index", "metrics", str(sim_home["archive"])],
+            json_mode=False,
+        )
+        assert code == 0
+        assert "Proof Pack" in (out + err) or "dino.dev/upgrade" in (out + err)
 
 
 # ---------------------------------------------------------------------------

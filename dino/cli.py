@@ -643,22 +643,53 @@ def _dev_warn() -> None:
     )
 
 
+def _is_system_mode(args: argparse.Namespace) -> bool:
+    """True for Proof Pack (System Mode) commands / flag combinations.
+
+    Free Snapshot Mode (never gated): scan; proof run without export/team metadata;
+    proof verify; capsule run/replay.
+    """
+    domain = getattr(args, "domain", None)
+    cmd = getattr(args, "cmd", None)
+
+    if domain in {"map", "bundle", "flight", "verify"}:
+        return True
+
+    if domain == "capsule":
+        return cmd not in {"run", "replay"}
+
+    if domain == "proof":
+        if cmd in {"index", "export", "doctor"}:
+            return True
+        if cmd == "run":
+            export = (getattr(args, "export", "") or "").strip()
+            pipeline = (getattr(args, "pipeline", "") or "").strip()
+            group = (getattr(args, "group", "") or "").strip()
+            tags = list(getattr(args, "tag", None) or [])
+            return bool(export or pipeline or group or tags)
+        return False
+
+    return False
+
+
 def dispatch(args: argparse.Namespace, json_mode: bool) -> int:
     domain, cmd = args.domain, args.cmd
-    from dino.license import is_domain_active, required_packs_for_domain
+    from dino.license import ensure_proof_pack, is_domain_active
 
-    if not is_domain_active(domain):
-        need = required_packs_for_domain(domain)
-        hint = need[0] if need else "proof"
-        out = _out(domain, cmd or "unknown", json_mode)
-        return _fail(
-            out,
-            "pack_locked",
-            f"Domain '{domain}' is locked. Unlock with: dino upgrade --pack {hint}  (see: dino packs)",
-            2,
-        )
     if domain == "proof" and cmd == "run":
         _apply_trailing_command(args)
+
+    # Unified Proof Pack gate for System Mode (friendly message, exit 0).
+    if _is_system_mode(args):
+        if not ensure_proof_pack():
+            return 0
+
+    # Domains only on Proof Pack (map/bundle/flight/verify) when free-only:
+    # surface the same friendly gate instead of pack_locked errors.
+    if not is_domain_active(domain):
+        if not ensure_proof_pack():
+            return 0
+
     handlers = {
         "bundle": _run_bundle,
         "flight": _run_flight,
