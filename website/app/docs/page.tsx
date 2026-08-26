@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
 import { Nav } from "@/components/Nav";
-import { Seal } from "@/components/Seal";
 import { DOC_LINKS, TIERS } from "@/lib/content";
 import { earlyAccessMailto, GITHUB } from "@/lib/site";
 
@@ -11,9 +10,10 @@ export default function DocsPage() {
       <Nav active="docs" />
 
       <main className="section-y">
-        <div className="mx-auto max-w-page px-gutter">
+        <div className="mx-auto w-full max-w-page px-gutter">
           <p className="eyebrow">Documentation</p>
-          <h1 className="display mt-4 text-3xl md:text-4xl">
+          <div className="section-rule" aria-hidden />
+          <h1 className="display mt-5 text-3xl md:text-4xl">
             Engine, Proof Pack, contracts
           </h1>
           <p className="mt-5 max-w-content leading-relaxed text-text-muted">
@@ -31,25 +31,30 @@ export default function DocsPage() {
 
           <h2 className="display mt-14 text-2xl">{TIERS.title}</h2>
           <div className="mt-8 grid gap-8 md:grid-cols-2">
-            <div>
+            <div className="tier-col">
               <h3 className="font-display text-xl">{TIERS.free.header}</h3>
               <p className="mt-2 text-sm text-text-muted">{TIERS.free.subhead}</p>
               <ul className="mt-4 space-y-2 text-sm text-text">
                 {TIERS.free.items.map((item) => (
-                  <li key={item} className="flex gap-2">
-                    <Seal size={14} className="mt-1 shrink-0" muted />
+                  <li key={item} className="flex gap-3 leading-relaxed">
+                    <span
+                      className="mt-2 h-1 w-1 shrink-0 bg-text-muted"
+                      aria-hidden
+                    />
                     <span>{item.replace(/`/g, "")}</span>
                   </li>
                 ))}
               </ul>
             </div>
-            <div>
-              <h3 className="font-display text-xl text-seal">{TIERS.pack.header}</h3>
+            <div className="tier-col tier-col--pack">
+              <h3 className="font-display text-xl text-seal">
+                {TIERS.pack.header}
+              </h3>
               <p className="mt-2 text-sm text-text-muted">{TIERS.pack.subhead}</p>
               <ul className="mt-4 space-y-2 text-sm text-text">
                 {TIERS.pack.items.map((item) => (
-                  <li key={item} className="flex gap-2">
-                    <Seal size={14} className="mt-1 shrink-0" />
+                  <li key={item} className="flex gap-3 leading-relaxed">
+                    <span className="mt-2 h-1 w-1 shrink-0 bg-seal" aria-hidden />
                     <span>{item.replace(/`/g, "")}</span>
                   </li>
                 ))}
@@ -69,10 +74,12 @@ export default function DocsPage() {
                   href={`${GITHUB.base}/blob/main/${doc.path}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-baseline justify-between gap-6 py-5 hover:text-seal"
+                  className="flex flex-col gap-1 py-5 hover:text-seal sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
                 >
                   <span className="font-medium">{doc.label}</span>
-                  <span className="font-mono text-xs text-text-muted">{doc.path}</span>
+                  <span className="break-all font-mono text-xs text-text-muted">
+                    {doc.path}
+                  </span>
                 </a>
               </li>
             ))}

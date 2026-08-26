@@ -71,7 +71,7 @@ export const TIERS = {
     footer:
       "Proof Pack turns Dino from a snapshot tool into a pipeline stability system.",
   },
-  requestKey: "Request a Team Key: dinodevcli@gmail.com",
+  requestKey: "Request a Team Key",
 };
 
 export const QUICKSTART = {
@@ -110,7 +110,7 @@ export const WHY = {
 export const EARLY = {
   title: "Request a Team Key",
   line: "Start your 60-day Proof Pack trial. Email your team name to dinodevcli@gmail.com.",
-  button: "Email dinodevcli@gmail.com",
+  button: "Email for a Team Key",
   note: "Leakage scan stays free forever. Engine only — dashboards are external.",
 };
 

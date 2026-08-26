@@ -1,5 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <circle cx="16" cy="16" r="13" stroke="#C9962C" stroke-width="2"/>
-  <circle cx="16" cy="16" r="8" stroke="#C9962C" stroke-width="1.5"/>
-  <path d="M16 8v8l5 3" stroke="#C9962C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect width="32" height="32" fill="#0C0F12"/>
+  <text
+    x="16"
+    y="23"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="20"
+    font-weight="700"
+    fill="#C9962C"
+  >D</text>
 </svg>

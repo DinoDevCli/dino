@@ -1,7 +1,6 @@
 import { CodePanel } from "@/components/CodePanel";
 import { Footer } from "@/components/Footer";
 import { Nav } from "@/components/Nav";
-import { Seal } from "@/components/Seal";
 import { TerminalCard } from "@/components/TerminalCard";
 import {
   EARLY,
@@ -22,7 +21,9 @@ function Container({
   className?: string;
 }) {
   return (
-    <div className={`mx-auto max-w-page px-gutter ${className}`}>{children}</div>
+    <div className={`mx-auto w-full max-w-page px-gutter ${className}`}>
+      {children}
+    </div>
   );
 }
 
@@ -49,18 +50,17 @@ export default function Home() {
     <div className="min-h-screen bg-ink text-text">
       <Nav />
 
-      {/* Hero */}
-      <section className="hero-field section-y border-b border-border pt-10 md:pt-16">
+      <section className="hero-field section-y border-b border-border pt-8 md:pt-14">
         <Container>
           <p className="eyebrow">{HERO.eyebrow}</p>
           <div className="section-rule" aria-hidden />
-          <h1 className="display mt-5 max-w-[22ch] text-[2.15rem] sm:text-5xl md:text-[3.35rem]">
+          <h1 className="display mt-5 max-w-[20ch] text-[2rem] leading-[1.15] sm:text-5xl md:text-[3.25rem]">
             {HERO.title}
           </h1>
-          <p className="mt-6 max-w-[38rem] text-lg leading-relaxed text-text-muted">
+          <p className="mt-6 max-w-[36rem] text-base leading-relaxed text-text-muted sm:text-lg">
             {HERO.subhead}
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a href={siteHash("quickstart")} className="btn-primary">
               {HERO.primaryCta}
             </a>
@@ -74,16 +74,15 @@ export default function Home() {
             </a>
           </div>
 
-          <div id="demo" className="mt-14 scroll-mt-24">
+          <div id="demo" className="mt-12 scroll-mt-24 md:mt-16">
             <TerminalCard />
           </div>
         </Container>
       </section>
 
-      {/* Problem */}
       <section className="section-y border-b border-border">
         <Container className="max-w-content">
-          <div className="space-y-4 text-lg leading-relaxed text-text-muted">
+          <div className="space-y-5 text-base leading-relaxed text-text-muted sm:text-lg">
             {PROBLEM.paragraphs.map((p) => (
               <p key={p}>{p}</p>
             ))}
@@ -91,65 +90,73 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* How it works */}
       <section className="section-y border-b border-border">
         <Container>
           <h2 className="display text-3xl md:text-4xl">{HOW.title}</h2>
-          <ol className="mt-12 grid gap-8 md:grid-cols-4 md:gap-4">
+          <ol className="mt-10 grid gap-0 sm:grid-cols-2 lg:grid-cols-4">
             {HOW.steps.map((step, i) => (
-              <li key={step.label} className="relative">
-                <div className="flex items-center gap-2">
-                  <Seal size={20} muted />
-                  <span className="font-display text-xl text-text">{step.label}</span>
-                </div>
-                <p className="mt-3 text-sm leading-relaxed text-text-muted">
+              <li
+                key={step.label}
+                className="border-t border-border py-6 pr-0 sm:border-t-0 sm:border-l sm:py-0 sm:pl-5 sm:pr-4 first:sm:border-l-0 first:sm:pl-0"
+              >
+                <p className="font-mono text-xs tracking-wider text-seal">
+                  {String(i + 1).padStart(2, "0")}
+                </p>
+                <h3 className="mt-2 font-display text-xl text-text">
+                  {step.label}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-text-muted">
                   <InlineCodeBits text={step.detail} />
                 </p>
-                {i < HOW.steps.length - 1 ? (
-                  <span
-                    className="absolute right-0 top-2 hidden text-text-muted md:block"
-                    aria-hidden
-                  >
-                    →
-                  </span>
-                ) : null}
               </li>
             ))}
           </ol>
         </Container>
       </section>
 
-      {/* Free vs Proof Pack */}
-      <section id="tiers" className="section-y border-b border-border scroll-mt-24">
+      <section
+        id="tiers"
+        className="section-y border-b border-border scroll-mt-24"
+      >
         <Container>
           <h2 className="display text-3xl md:text-4xl">{TIERS.title}</h2>
-          <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-12">
+          <div className="mt-10 grid gap-8 md:grid-cols-2 md:gap-10">
             <div className="tier-col">
-              <h3 className="font-display text-2xl text-text">{TIERS.free.header}</h3>
+              <h3 className="font-display text-2xl text-text">
+                {TIERS.free.header}
+              </h3>
               <p className="mt-3 text-text-muted">{TIERS.free.subhead}</p>
               <ul className="mt-6 space-y-3 text-text">
                 {TIERS.free.items.map((item) => (
-                  <li key={item} className="leading-relaxed">
-                    <InlineCodeBits text={item} />
+                  <li key={item} className="flex gap-3 leading-relaxed">
+                    <span className="mt-2 h-1 w-1 shrink-0 bg-text-muted" aria-hidden />
+                    <span>
+                      <InlineCodeBits text={item} />
+                    </span>
                   </li>
                 ))}
               </ul>
               <p className="mt-8 text-sm text-text-muted">{TIERS.free.footer}</p>
             </div>
             <div className="tier-col tier-col--pack">
-              <h3 className="font-display text-2xl text-seal">{TIERS.pack.header}</h3>
+              <h3 className="font-display text-2xl text-seal">
+                {TIERS.pack.header}
+              </h3>
               <p className="mt-3 text-text-muted">{TIERS.pack.subhead}</p>
               <ul className="mt-6 space-y-3 text-text">
                 {TIERS.pack.items.map((item) => (
-                  <li key={item} className="leading-relaxed">
-                    <InlineCodeBits text={item} />
+                  <li key={item} className="flex gap-3 leading-relaxed">
+                    <span className="mt-2 h-1 w-1 shrink-0 bg-seal" aria-hidden />
+                    <span>
+                      <InlineCodeBits text={item} />
+                    </span>
                   </li>
                 ))}
               </ul>
               <p className="mt-8 text-sm text-text-muted">{TIERS.pack.footer}</p>
             </div>
           </div>
-          <div className="mt-12 flex justify-center">
+          <div className="mt-10">
             <a href={earlyAccessMailto()} className="btn-ghost">
               {TIERS.requestKey}
             </a>
@@ -157,11 +164,13 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Quickstart */}
-      <section id="quickstart" className="section-y border-b border-border scroll-mt-24">
+      <section
+        id="quickstart"
+        className="section-y border-b border-border scroll-mt-24"
+      >
         <Container>
           <h2 className="display text-3xl md:text-4xl">{QUICKSTART.title}</h2>
-          <div className="mt-10 grid gap-8 md:grid-cols-2">
+          <div className="mt-10 grid gap-6 md:grid-cols-2 md:gap-8">
             <CodePanel
               label={QUICKSTART.free.label}
               code={QUICKSTART.free.code}
@@ -177,16 +186,16 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Why Dino */}
       <section className="section-y border-b border-border">
         <Container className="max-w-content">
           <h2 className="display text-3xl md:text-4xl">{WHY.title}</h2>
-          <p className="mt-5 text-lg leading-relaxed text-text-muted">{WHY.intro}</p>
-          <ul className="mt-8 space-y-3">
+          <p className="mt-5 text-base leading-relaxed text-text-muted sm:text-lg">
+            {WHY.intro}
+          </p>
+          <ul className="mt-8 grid gap-x-8 gap-y-3 sm:grid-cols-2">
             {WHY.seals.map((item) => (
-              <li key={item} className="flex items-start gap-3 text-text">
-                <Seal size={18} className="mt-1 shrink-0" />
-                <span>{item}</span>
+              <li key={item} className="border-l-2 border-seal/50 pl-3 text-text">
+                {item}
               </li>
             ))}
           </ul>
@@ -194,15 +203,16 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Early Access CTA */}
       <section id="early-access" className="section-y scroll-mt-24">
         <Container>
-          <div className="mx-auto max-w-content border border-seal/40 bg-surface px-6 py-12 text-center md:px-12">
+          <div className="border border-seal/35 bg-surface px-5 py-10 sm:px-10 md:px-14 md:py-12">
             <h2 className="display text-3xl text-text">{EARLY.title}</h2>
-            <p className="mt-4 text-text-muted">{EARLY.line}</p>
-            <a href={earlyAccessMailto()} className="btn-primary mt-8">
-              {EARLY.button}
-            </a>
+            <p className="mt-4 max-w-xl text-text-muted">{EARLY.line}</p>
+            <div className="mt-8">
+              <a href={earlyAccessMailto()} className="btn-primary">
+                {EARLY.button}
+              </a>
+            </div>
             <p className="mt-6 text-sm text-text-muted">{EARLY.note}</p>
           </div>
         </Container>

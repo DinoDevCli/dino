@@ -23,9 +23,9 @@ module.exports = {
         accent: "var(--seal)",
       },
       maxWidth: {
-        content: "44rem",
-        page: "56rem",
-        narrow: "44rem",
+        content: "40rem",
+        page: "64rem",
+        narrow: "40rem",
       },
       fontFamily: {
         display: ["var(--font-display)", "ui-serif", "Georgia", "serif"],
