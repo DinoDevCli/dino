@@ -1,50 +1,41 @@
-import { DemoWalkthrough } from "@/components/DemoWalkthrough";
+import { CodePanel } from "@/components/CodePanel";
 import { Footer } from "@/components/Footer";
-import { Container, Display, Label, Section } from "@/components/Layout";
 import { Nav } from "@/components/Nav";
-import { ArchitectureFlow } from "@/components/Tiles";
+import { Seal } from "@/components/Seal";
+import { TerminalCard } from "@/components/TerminalCard";
 import {
-  CLI_EARLY_ACCESS,
-  CLI_GROUPS,
-  CODESPACES,
-  DEMO_COPY,
-  DEMO_STEPS,
   EARLY,
   HERO,
   HOW,
-  LICENSING,
   PROBLEM,
-  PRODUCT,
   QUICKSTART,
-  ROADMAP_DEV,
+  TIERS,
+  WHY,
 } from "@/lib/content";
-import { earlyAccessMailto, GITHUB } from "@/lib/site";
+import { earlyAccessMailto, GITHUB, siteHash } from "@/lib/site";
 
-function MonoBody({ text }: { text: string }) {
-  const parts = text.split(
-    /(\bproof_index\.json\b|\bcompare\.json\b|\bproof\.json\b|\bexport\.v1\b|\bchanged: true\/false\b|\bchanged: true\b|\bPath \/ HTTP \/ S3\b|\btests\/simulation\/golden\b|\bexamples\/superset\/drift_dashboard\.yaml\b|\b--dev\b)/g,
+function Container({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={`mx-auto max-w-page px-gutter ${className}`}>{children}</div>
   );
+}
+
+function InlineCodeBits({ text }: { text: string }) {
+  const parts = text.split(/(`[^`]+`)/g);
   return (
     <>
       {parts.map((part, i) => {
-        if (
-          [
-            "proof_index.json",
-            "compare.json",
-            "proof.json",
-            "export.v1",
-            "changed: true/false",
-            "changed: true",
-            "Path / HTTP / S3",
-            "tests/simulation/golden",
-            "examples/superset/drift_dashboard.yaml",
-            "--dev",
-          ].includes(part)
-        ) {
+        if (part.startsWith("`") && part.endsWith("`")) {
           return (
-            <span key={i} className="font-mono text-foreground">
-              {part}
-            </span>
+            <code key={i} className="font-mono text-[0.92em] text-text">
+              {part.slice(1, -1)}
+            </code>
           );
         }
         return <span key={i}>{part}</span>;
@@ -55,184 +46,166 @@ function MonoBody({ text }: { text: string }) {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-ink text-text">
       <Nav />
 
-      <section className="relative isolate overflow-hidden border-b border-border">
-        <div className="hero-grid absolute inset-0 -z-10" aria-hidden />
-        <Container className="flex min-h-[48vh] flex-col justify-center py-24 md:py-28">
-          <Label>{HERO.kicker}</Label>
-          <div className="hero-rule mt-4" aria-hidden />
-          <Display as="h1" size="hero" className="mt-5">
+      {/* Hero */}
+      <section className="section-y border-b border-border pt-10 md:pt-16">
+        <Container>
+          <p className="eyebrow">{HERO.eyebrow}</p>
+          <h1 className="display mt-5 max-w-[22ch] text-[2.15rem] sm:text-5xl md:text-[3.35rem]">
             {HERO.title}
-          </Display>
-          <p className="mt-6 max-w-[36rem] leading-relaxed text-muted">
-            <MonoBody text={HERO.definition} />
+          </h1>
+          <p className="mt-6 max-w-[38rem] text-lg leading-relaxed text-text-muted">
+            {HERO.subhead}
           </p>
-          <Label as="h2" className="mt-14">
-            {QUICKSTART.label}
-          </Label>
-          <div className="mt-4 border border-border border-l-2 border-l-accent bg-black px-4 py-3">
-            <p className="overflow-x-auto font-mono text-sm text-foreground">
-              {QUICKSTART.line}
-            </p>
-            <p className="mt-2 font-mono text-xs text-muted">{QUICKSTART.hint}</p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a href={siteHash("quickstart")} className="btn-primary">
+              {HERO.primaryCta}
+            </a>
+            <a
+              href={GITHUB.base}
+              className="btn-ghost"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {HERO.secondaryCta}
+            </a>
           </div>
-          <Label as="h2" className="mt-12">
-            {CLI_GROUPS.title}
-          </Label>
-          <div className="mt-4 space-y-4 font-mono text-xs leading-relaxed text-muted">
-            <div>
-              <p className="text-foreground">Core Workflow</p>
-              {CLI_GROUPS.core.map((line) => (
-                <p key={line}>{line}</p>
-              ))}
-            </div>
-            <div>
-              <p className="text-foreground">Pipeline Operations</p>
-              {CLI_GROUPS.pipeline.map((line) => (
-                <p key={line}>{line}</p>
-              ))}
-            </div>
-            <div>
-              <p className="text-foreground">System & Packs</p>
-              {CLI_GROUPS.system.map((line) => (
-                <p key={line}>{line}</p>
-              ))}
-            </div>
-            <div>
-              <p className="text-foreground">Notable forms</p>
-              {CLI_GROUPS.forms.map((line) => (
-                <p key={line}>{line}</p>
-              ))}
-            </div>
+
+          <div id="demo" className="mt-14 scroll-mt-24">
+            <TerminalCard />
           </div>
-          <pre className="mt-8 overflow-x-auto border border-border bg-black px-4 py-3 font-mono text-xs leading-relaxed text-muted whitespace-pre-wrap">
-            {CLI_EARLY_ACCESS}
-          </pre>
-          <p className="mt-5 font-mono text-xs text-accent/80">{HERO.meta}</p>
         </Container>
       </section>
 
-      <Section id="problem">
-        <Container>
-          <Label as="h2">{PROBLEM.title}</Label>
-          <Display size="compact" className="mt-3">
-            {PROBLEM.lead}
-          </Display>
-          <div className="mt-5 space-y-3 leading-relaxed text-muted">
-            {PROBLEM.lines.map((line) => (
-              <p key={line}>{line}</p>
+      {/* Problem */}
+      <section className="section-y border-b border-border">
+        <Container className="max-w-content">
+          <div className="space-y-4 text-lg leading-relaxed text-text-muted">
+            {PROBLEM.paragraphs.map((p) => (
+              <p key={p}>{p}</p>
             ))}
           </div>
         </Container>
-      </Section>
+      </section>
 
-      <Section id="how">
+      {/* How it works */}
+      <section className="section-y border-b border-border">
         <Container>
-          <Label as="h2">{HOW.title}</Label>
-          <Display size="compact" className="mt-3">
-            {HOW.lead}
-          </Display>
-          <p className="mt-5 leading-relaxed text-muted">
-            <MonoBody text={HOW.body} />
-          </p>
-        </Container>
-      </Section>
-
-      <Section id="engine">
-        <Container>
-          <Label as="h2">{PRODUCT.title}</Label>
-          <Display as="p" size="compact" className="mt-3 font-mono">
-            {PRODUCT.lead}
-          </Display>
-          <p className="mt-5 leading-relaxed text-muted">
-            {PRODUCT.determinism}
-          </p>
-          <ArchitectureFlow blocks={PRODUCT.blocks} />
-          <Label as="h3" className="mt-12">
-            {PRODUCT.wiringTitle}
-          </Label>
-          <div className="mt-4 space-y-2 leading-relaxed text-muted">
-            {PRODUCT.wiring.map((line) => (
-              <p key={line}>
-                <MonoBody text={line} />
-              </p>
+          <h2 className="display text-3xl md:text-4xl">{HOW.title}</h2>
+          <ol className="mt-12 grid gap-8 md:grid-cols-4 md:gap-4">
+            {HOW.steps.map((step, i) => (
+              <li key={step.label} className="relative">
+                <div className="flex items-center gap-2">
+                  <Seal size={20} muted />
+                  <span className="font-display text-xl text-text">{step.label}</span>
+                </div>
+                <p className="mt-3 text-sm leading-relaxed text-text-muted">
+                  <InlineCodeBits text={step.detail} />
+                </p>
+                {i < HOW.steps.length - 1 ? (
+                  <span
+                    className="absolute right-0 top-2 hidden text-text-muted md:block"
+                    aria-hidden
+                  >
+                    →
+                  </span>
+                ) : null}
+              </li>
             ))}
-          </div>
+          </ol>
         </Container>
-      </Section>
+      </section>
 
-      <Section id="demo">
+      {/* Free vs Proof Pack */}
+      <section id="tiers" className="section-y border-b border-border scroll-mt-24">
         <Container>
-          <Label as="h2">{DEMO_COPY.title}</Label>
-          <Display as="p" size="compact" className="mt-3">
-            {DEMO_COPY.intro}
-          </Display>
-          <a
-            href={GITHUB.codespaces}
-            className="codespaces-btn mt-8"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {CODESPACES.cta}
-          </a>
-          <p className="mt-4 max-w-[36rem] text-sm leading-relaxed text-muted">
-            {CODESPACES.body}
-          </p>
-          <div className="mt-12">
-            <DemoWalkthrough steps={DEMO_STEPS} />
+          <h2 className="display text-3xl md:text-4xl">{TIERS.title}</h2>
+          <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-12">
+            <div>
+              <h3 className="font-display text-2xl text-text">{TIERS.free.header}</h3>
+              <p className="mt-3 text-text-muted">{TIERS.free.subhead}</p>
+              <ul className="mt-6 space-y-3 text-text">
+                {TIERS.free.items.map((item) => (
+                  <li key={item} className="leading-relaxed">
+                    <InlineCodeBits text={item} />
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-8 text-sm text-text-muted">{TIERS.free.footer}</p>
+            </div>
+            <div>
+              <h3 className="font-display text-2xl text-seal">{TIERS.pack.header}</h3>
+              <p className="mt-3 text-text-muted">{TIERS.pack.subhead}</p>
+              <ul className="mt-6 space-y-3 text-text">
+                {TIERS.pack.items.map((item) => (
+                  <li key={item} className="leading-relaxed">
+                    <InlineCodeBits text={item} />
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-8 text-sm text-text-muted">{TIERS.pack.footer}</p>
+            </div>
           </div>
-          <p className="mt-8 text-sm leading-relaxed text-muted">
-            <MonoBody text={ROADMAP_DEV} />
-          </p>
-          <p className="mt-12 font-mono text-xs text-muted">{DEMO_COPY.source}</p>
-        </Container>
-      </Section>
-
-      <Section id="early-access">
-        <Container>
-          <div className="cta-panel">
-            <Label as="h2">{EARLY.title}</Label>
-            <Display size="compact" className="mt-3">
-              {EARLY.subtitle}
-            </Display>
-            <p className="mt-5 leading-relaxed text-muted">{EARLY.flow}</p>
-            <ol className="mt-6 space-y-2 text-sm leading-relaxed text-muted">
-              {EARLY.steps.map((step, i) => (
-                <li key={step} className="flex gap-3">
-                  <span className="font-mono text-accent">{i + 1}.</span>
-                  <span>{step}</span>
-                </li>
-              ))}
-            </ol>
-            <a href={earlyAccessMailto()} className="mailto-cta mt-10">
-              <span className="cta-label">{EARLY.cta}</span>
-              <span className="cta-email">{EARLY.email}</span>
+          <div className="mt-12 flex justify-center">
+            <a href={earlyAccessMailto()} className="btn-ghost">
+              {TIERS.requestKey}
             </a>
-            <ul className="mt-8 space-y-2 text-sm text-muted">
-              {EARLY.benefits.map((item) => (
-                <li key={item}>— {item}</li>
-              ))}
-            </ul>
-            <p className="mt-6 text-sm leading-relaxed text-muted">{EARLY.note}</p>
           </div>
         </Container>
-      </Section>
+      </section>
 
-      <Section id="licensing">
+      {/* Quickstart */}
+      <section id="quickstart" className="section-y border-b border-border scroll-mt-24">
         <Container>
-          <Label as="h2">{LICENSING.title}</Label>
-          <Display size="compact" className="mt-3">
-            {LICENSING.lead}
-          </Display>
-          <div className="mt-5 space-y-3 leading-relaxed text-muted">
-            {LICENSING.lines.map((line) => (
-              <p key={line}>{line}</p>
-            ))}
+          <h2 className="display text-3xl md:text-4xl">{QUICKSTART.title}</h2>
+          <div className="mt-10 grid gap-8 md:grid-cols-2">
+            <CodePanel
+              label={QUICKSTART.free.label}
+              code={QUICKSTART.free.code}
+              note={QUICKSTART.free.note}
+            />
+            <CodePanel
+              label={QUICKSTART.pack.label}
+              code={QUICKSTART.pack.code}
+              note="Request a Team Key:"
+              noteHref="dinodevcli@gmail.com"
+            />
           </div>
         </Container>
-      </Section>
+      </section>
+
+      {/* Why Dino */}
+      <section className="section-y border-b border-border">
+        <Container className="max-w-content">
+          <h2 className="display text-3xl md:text-4xl">{WHY.title}</h2>
+          <p className="mt-5 text-lg leading-relaxed text-text-muted">{WHY.intro}</p>
+          <ul className="mt-8 space-y-3">
+            {WHY.seals.map((item) => (
+              <li key={item} className="flex items-start gap-3 text-text">
+                <Seal size={18} className="mt-1 shrink-0" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-8 text-text-muted">{WHY.close}</p>
+        </Container>
+      </section>
+
+      {/* Early Access CTA */}
+      <section id="early-access" className="section-y scroll-mt-24">
+        <Container>
+          <div className="mx-auto max-w-content border border-seal/40 bg-surface px-6 py-12 text-center md:px-12">
+            <h2 className="display text-3xl text-text">{EARLY.title}</h2>
+            <p className="mt-4 text-text-muted">{EARLY.line}</p>
+            <a href={earlyAccessMailto()} className="btn-primary mt-8">
+              {EARLY.button}
+            </a>
+            <p className="mt-6 text-sm text-text-muted">{EARLY.note}</p>
+          </div>
+        </Container>
+      </section>
 
       <Footer />
     </div>

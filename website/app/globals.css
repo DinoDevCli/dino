@@ -1,152 +1,165 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
-  --background: #0a0a0f;
-  --surface: #111118;
-  --surface-2: #16161e;
-  --border: #1e1e26;
-  --border-strong: #2a2a32;
-  --hover: #282830;
-  --foreground: #f4f1ec;
-  --muted: #a0a0b0;
-  --accent: #ff6b00;
-  --accent-hover: #e55f00;
-  --accent-dim: color-mix(in srgb, #ff6b00 22%, transparent);
-  --code-bg: #000000;
-  --json-bg: #111118;
+  --ink: #0c0f12;
+  --surface: #14181d;
+  --text: #e9e6dd;
+  --text-muted: #8b9199;
+  --seal: #c9962c;
+  --seal-hover: #d4a63d;
+  --drift: #c4573b;
+  --aligned: #4fa68c;
+  --border: color-mix(in srgb, var(--text-muted) 22%, transparent);
+  --focus: var(--seal);
 
-  --content-max: 800px;
-  --narrow-max: 800px;
-  --grid-gutter: 1.5rem;
+  /* Legacy aliases used by leftover utilities */
+  --background: var(--ink);
+  --foreground: var(--text);
+  --muted: var(--text-muted);
+  --accent: var(--seal);
+  --accent-hover: var(--seal-hover);
+  --border-strong: color-mix(in srgb, var(--text-muted) 40%, transparent);
+  --code-bg: var(--surface);
 }
 
 html {
   color-scheme: dark;
   scroll-behavior: smooth;
-  scroll-padding-top: 4.5rem;
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--ink);
+  color: var(--text);
   line-height: 1.7;
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--accent) 40%, transparent);
-  color: var(--foreground);
+  background: color-mix(in srgb, var(--seal) 35%, transparent);
+  color: var(--text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
 }
 
 a {
-  transition:
-    color 0.15s ease,
-    border-color 0.15s ease,
-    background-color 0.15s ease;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
 }
 
-/* Hero field — stronger accent wash so the top stands out */
-.hero-grid {
-  background-color: var(--background);
-  background-image:
-    radial-gradient(
-      ellipse 90% 70% at 0% 0%,
-      var(--accent-dim),
-      transparent 60%
-    ),
-    linear-gradient(
-      to right,
-      color-mix(in srgb, var(--border) 55%, transparent) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--border) 55%, transparent) 1px,
-      transparent 1px
-    );
-  background-size:
-    auto,
-    40px 40px,
-    40px 40px;
+.section-y {
+  padding-block: 3.5rem;
 }
 
-.hero-rule {
-  width: 3rem;
-  height: 2px;
-  background: var(--accent);
+@media (min-width: 768px) {
+  .section-y {
+    padding-block: 6rem;
+  }
 }
 
-pre.code-panel {
-  background: var(--code-bg);
-  border: 1px solid var(--border);
-}
-
-pre.json-panel {
-  background: var(--json-bg);
-  border: 1px solid var(--border);
-}
-
-.mailto-cta {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.45rem;
-  padding: 1.15rem 1.75rem;
-  background: var(--accent);
-  color: #0a0a0f;
-  border: 1px solid var(--accent);
-  text-decoration: none;
-  transition: background-color 0.15s ease;
-}
-
-.mailto-cta:hover {
-  background: var(--accent-hover);
-}
-
-.mailto-cta .cta-label {
-  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  text-transform: none;
-  opacity: 1;
-}
-
-.mailto-cta .cta-email {
-  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
-  font-size: 0.75rem;
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  opacity: 0.8;
-}
-
-.cta-panel {
-  border: 1px solid var(--border);
-  border-left: 2px solid var(--accent);
-  background: color-mix(in srgb, var(--accent) 7%, var(--background));
-  padding: 2rem 1.5rem;
-}
-
-.codespaces-btn {
+.btn-primary {
   display: inline-flex;
   align-items: center;
-  padding: 0.85rem 1.25rem;
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
-  font-size: 0.8rem;
-  letter-spacing: 0.04em;
+  justify-content: center;
+  padding: 0.85rem 1.35rem;
+  background: var(--seal);
+  color: var(--ink);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
   text-decoration: none;
+  border: 1px solid var(--seal);
 }
 
-.codespaces-btn:hover {
-  background: var(--accent);
-  color: #0a0a0f;
+.btn-primary:hover {
+  background: var(--seal-hover);
+  border-color: var(--seal-hover);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.35rem;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: 1px solid var(--border);
+}
+
+.btn-ghost:hover {
+  border-color: var(--seal);
+  color: var(--seal);
+}
+
+.certificate-frame {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--text) 6%, transparent),
+    0 18px 40px color-mix(in srgb, #000 45%, transparent);
+  border-radius: 0.35rem;
+  padding: 0.75rem;
+}
+
+.certificate-frame__inner {
+  border: 1px solid color-mix(in srgb, var(--seal) 28%, transparent);
+  border-radius: 0.2rem;
+  overflow: hidden;
+  background: #07090b;
+  aspect-ratio: 16 / 10;
+  position: relative;
+}
+
+.eyebrow {
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--seal);
+}
+
+.display {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--text);
+}
+
+.seal-stamp {
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .seal-stamp.is-inview {
+    animation: seal-stamp 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+}
+
+@keyframes seal-stamp {
+  0% {
+    transform: translateY(-10px) scale(1.15);
+    opacity: 0;
+  }
+  55% {
+    transform: translateY(1px) scale(0.96);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .seal-stamp {
+    animation: none !important;
   }
 }

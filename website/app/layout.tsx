@@ -1,23 +1,35 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Fraunces, IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const display = Fraunces({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-inter",
+  weight: ["600", "700"],
+  variable: "--font-display",
+  display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const body = Inter({
   subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-jetbrains-mono",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const mono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-mono",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Dino — Local-First Audit Engine for Python Pipelines",
+  title: "Dino — Deterministic Python Runs",
   description:
-    "Deterministic proofs, export contracts, and a universal proof index. No SaaS. No cloud. Only proofs.",
+    "Same code, same data, same environment — different outputs? Dino seals every Python pipeline run into a proof and tells you whether anything actually changed.",
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+  },
 };
 
 export default function RootLayout({
@@ -28,9 +40,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`bg-background ${inter.variable} ${jetbrainsMono.variable}`}
+      className={`bg-ink ${display.variable} ${body.variable} ${mono.variable}`}
     >
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-body antialiased text-text">{children}</body>
     </html>
   );
 }

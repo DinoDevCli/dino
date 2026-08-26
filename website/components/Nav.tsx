@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Seal } from "@/components/Seal";
 import { GITHUB, siteHash } from "@/lib/site";
 
 type NavItem =
@@ -8,32 +12,48 @@ type NavItem =
 
 const LINKS: NavItem[] = [
   { kind: "hash", href: siteHash("demo"), label: "Demo" },
-  { kind: "hash", href: siteHash("early-access"), label: "Early Access" },
+  { kind: "hash", href: siteHash("tiers"), label: "Free vs Proof Pack" },
   { kind: "internal", href: "/docs", label: "Docs" },
   { kind: "external", href: GITHUB.base, label: "GitHub" },
 ];
 
 export function Nav({ active: _active = "home" }: { active?: "home" | "docs" }) {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
+    <header
+      className={`sticky top-0 z-50 transition-colors ${
+        scrolled
+          ? "border-b border-border bg-surface/95 backdrop-blur-sm"
+          : "border-b border-transparent bg-transparent"
+      }`}
+    >
       <nav
-        className="mx-auto flex max-w-narrow items-center justify-between px-gutter py-4"
+        className="mx-auto flex max-w-page items-center justify-between px-gutter py-4"
         aria-label="Primary"
       >
         <Link
           href="/"
-          className="font-mono text-sm uppercase tracking-[0.28em] text-accent hover:text-accent-hover"
+          className="flex items-center gap-2 text-text hover:text-seal"
         >
-          Dino
+          <Seal size={22} />
+          <span className="font-display text-lg tracking-tight">Dino</span>
         </Link>
-        <ul className="flex items-center gap-1 sm:gap-6">
+        <ul className="flex flex-wrap items-center justify-end gap-1 sm:gap-5">
           {LINKS.map((item) => {
             const className =
-              "px-2 py-1 font-mono text-xs uppercase tracking-wider text-muted hover:text-foreground sm:text-sm";
+              "px-2 py-1 font-body text-sm text-text-muted hover:text-text";
 
             if (item.kind === "external") {
               return (
-                <li key={item.href}>
+                <li key={item.label}>
                   <a
                     href={item.href}
                     className={className}
@@ -48,7 +68,7 @@ export function Nav({ active: _active = "home" }: { active?: "home" | "docs" }) 
 
             if (item.kind === "internal") {
               return (
-                <li key={item.href}>
+                <li key={item.label}>
                   <Link href={item.href} className={className}>
                     {item.label}
                   </Link>
@@ -57,7 +77,7 @@ export function Nav({ active: _active = "home" }: { active?: "home" | "docs" }) 
             }
 
             return (
-              <li key={item.href}>
+              <li key={item.label}>
                 <a href={item.href} className={className}>
                   {item.label}
                 </a>

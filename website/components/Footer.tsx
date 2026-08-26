@@ -1,31 +1,26 @@
+import Link from "next/link";
 import { GITHUB } from "@/lib/site";
-import { SITE, SUPPORT } from "@/lib/content";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border py-12">
-      <div className="mx-auto max-w-narrow space-y-4 px-gutter text-center font-mono text-xs text-muted">
-        <p>
-          {SUPPORT}{" "}
-          <a
-            href={GITHUB.issuesNew}
-            className="text-foreground hover:text-accent"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Issue
-          </a>
-          {" · "}
-          <a
-            href={GITHUB.discussions}
-            className="text-foreground hover:text-accent"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Discussion
-          </a>
-        </p>
-        <p>Early Access · MIT · v{SITE.version}</p>
+    <footer className="border-t border-border py-10">
+      <div className="mx-auto flex max-w-page flex-wrap items-center justify-center gap-x-4 gap-y-2 px-gutter font-mono text-xs text-text-muted">
+        <span>MIT</span>
+        <span aria-hidden>·</span>
+        <span>Dino</span>
+        <span aria-hidden>·</span>
+        <a
+          href={GITHUB.base}
+          className="hover:text-seal"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+        <span aria-hidden>·</span>
+        <Link href="/docs" className="hover:text-seal">
+          Docs
+        </Link>
       </div>
     </footer>
   );

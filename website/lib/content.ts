@@ -1,4 +1,4 @@
-/** Documentary single-page copy — Problem → How → Product → Demo → Early Access */
+/** Documentary landing copy — aligned with README Free vs Proof Pack. */
 
 export const SITE = {
   version: "1.0.0",
@@ -6,254 +6,131 @@ export const SITE = {
 };
 
 export const HERO = {
-  kicker: "Version",
-  title: "Local-First Audit Engine for Python Pipelines",
-  definition:
-    "Dino is a local-first audit engine that produces sealed proofs, export envelopes, and a universal proof index for your dashboards.",
-  meta: "v1.0.0 · Early Access · CLI v1.0",
+  eyebrow: "EARLY ACCESS · v1.0.0",
+  title: "Same code, same data, same environment — different outputs?",
+  subhead:
+    "Dino seals every Python pipeline run into a proof, then tells you — deterministically — whether anything actually changed.",
+  primaryCta: "Get started free",
+  secondaryCta: "View on GitHub",
 };
 
 export const PROBLEM = {
-  title: "Problem",
-  lead: "Two fraud-score runs — v1 and v2.",
-  lines: [
-    "You do not know what differs. Drift is invisible: no sealed artifacts, no machine-readable delta.",
-    "CI cannot decide if a run changed. Audits stay manual and inconsistent.",
+  paragraphs: [
+    "Two runs of the same pipeline. Same code, same data, same environment. Different outputs — and no way to prove why.",
+    'Logs drift. Snapshots drift. Nobody can answer "did this actually change?" without re-reading everything by hand.',
   ],
 };
 
 export const HOW = {
-  title: "How it works",
-  lead: "Seal. Export. Index. Compare.",
-  body: "Dino seals each run into a proof bundle (capsule + scan + hash), exports the bundle (Path / HTTP / S3), builds a proof index (proof_index.json), and compares two proofs deterministically. The verdict is changed: true/false.",
-};
-
-export const PRODUCT = {
-  title: "Engine",
-  lead: "pipeline → seal → export → index → compare → dashboard",
-  determinism:
-    "All proof bundles and indexes are deterministic and reproducible (content-addressed).",
-  flow: "pipeline → seal → export → index → compare → dashboard",
-  blocks: [
+  title: "Seal. Export. Compare.",
+  steps: [
     {
-      step: "Seal",
-      title: "proof.json",
-      detail: "capsule + scan + hash",
+      label: "Seal",
+      detail: "`dino run` produces a content-addressed `proof.json`.",
     },
     {
-      step: "Export",
-      title: "Path / HTTP / S3",
-      detail: "export.v1 envelope",
+      label: "Export",
+      detail: "send it to Path, HTTP, or S3.",
     },
     {
-      step: "Index",
-      title: "proof_index.json",
-      detail: "metadata · metrics · layout",
+      label: "Index",
+      detail: "`proof_index.json` tracks every proof over time.",
     },
     {
-      step: "Compare",
-      title: "changed: true",
-      detail: "pipeline_version_diff",
+      label: "Compare",
+      detail: "`changed: true` or `false`. Deterministic, CI-friendly.",
     },
-  ],
-  wiringTitle: "Dashboard integration",
-  wiring: [
-    "Dashboards consume Dino's artifacts (proof_index.json, compare.json) via Path, HTTP, or S3.",
-    "Superset, Airflow, MLflow, or your own UI can render drift, verdicts, and metrics.",
-    "Dino outputs the data — you choose the visualization. Starter kit: examples/superset/drift_dashboard.yaml.",
   ],
 };
 
-/** Real install — not on PyPI as `dino` (name collision) */
+export const TIERS = {
+  title: "Free vs Proof Pack",
+  free: {
+    header: "Free — Snapshot Mode",
+    subhead: "Everything that runs locally, once, without history.",
+    items: [
+      "Run a sealed proof locally (`dino run`, `dino proof run`)",
+      "Scan your code for leakage (`dino scan`)",
+      "Replay a capsule locally (`dino capsule run`, `dino capsule replay`)",
+    ],
+    footer: "Free is for testing whether Dino detects drift in your pipeline.",
+  },
+  pack: {
+    header: "Proof Pack — System Mode",
+    subhead:
+      "Everything that requires history, comparison, export, CI, or team metadata.",
+    items: [
+      "Proof index (compare, rebuild, metrics, layout)",
+      "CI compare gate (exit 1 on drift)",
+      "Export (Path + HTTP + S3)",
+      "Bundle replay / verify / diff",
+      "Map analyze / plan / drift / verify",
+      "Team metadata (`--pipeline`, `--group`, `--tag`)",
+      "Retention beyond 30 days",
+    ],
+    footer:
+      "Proof Pack turns Dino from a snapshot tool into a pipeline stability system.",
+  },
+  requestKey: "Request a Team Key: dinodevcli@gmail.com",
+};
+
 export const QUICKSTART = {
-  label: "Install",
-  line: `pip install "git+https://github.com/DinoDevCli/dino.git@v1.0.0"`,
-  hint: "dino --help · dino run --help",
+  title: "Quickstart",
+  free: {
+    label: "Free (Snapshot Mode)",
+    code: `pip install "git+https://github.com/DinoDevCli/dino.git@v1.0.0"
+dino scan .
+dino run -- python my_pipeline.py`,
+    note: "Not on PyPI as dino / dino-cli (name collision). Install from GitHub only.",
+  },
+  pack: {
+    label: "Proof Pack (System Mode)",
+    code: `dino upgrade --pack proof --key YOUR_KEY
+dino proof index compare ./archive <HASH_A> <HASH_B>
+dino proof export --proof-dir ./proof_out --to s3://my-bucket/proofs`,
+    note: "Request a Team Key: dinodevcli@gmail.com",
+  },
 };
 
-/** Documentary CLI help epilog — keep wording verbatim */
-export const CLI_EARLY_ACCESS = `---
-Early Access (Proof Pack)
-  CI compare gate · S3/HTTP backends · engine contract stability · team mode
-  These features are not part of the open-source scan engine.
-
-  Details & instructions:
-    https://github.com/DinoDevCli/dino#early-access
-    Contact: dinodevcli@gmail.com`;
-
-export const CLI_GROUPS = {
-  title: "CLI (v1.0)",
-  core: ["dino run — alias for proof run", "dino proof — full proof chain", "dino scan — grammar + leakage"],
-  pipeline: [
-    "dino capsule",
-    "dino bundle",
-    "dino map",
-    "dino verify",
-    "dino flight",
-  ],
-  system: ["dino packs", "dino status", "dino upgrade", "dino version"],
-  forms: [
-    "dino run --scan ./pipeline -- python pipeline/run.py",
-    "dino bundle create RUNDATA_PATH OUTPUT_PATH [--repo-root ROOT]",
-    "dino proof index compare PATH HASH_A HASH_B",
-  ],
-};
-
-export const DEMO_COPY = {
-  title: "Demo: Audit Log",
+export const WHY = {
+  title: "Why Dino?",
   intro:
-    "We audit a fraud-score pipeline. Two runs — v1 and v2. Dino seals both, exports them, builds a proof index, and compares them. The walkthrough shows the exact diff.",
-  source:
-    "All demo artifacts come from tests/simulation/golden in the GitHub repository.",
+    "Python pipelines drift even when code is identical, data is identical, and the environment is identical. Dino shows you exactly why.",
+  seals: [
+    "Imports",
+    "AST structure",
+    "Data access",
+    "Environment state",
+    "Artifacts",
+    "Runtime metadata",
+  ],
+  close: "And compares runs with deterministic deltas.",
 };
 
 export const EARLY = {
-  title: "Early Access",
-  subtitle: "Request a Team Key — Start your 60-day Proof Pack trial.",
-  steps: [
-    "Email your team name to dinodevcli@gmail.com.",
-    "Receive KEY.txt, Quickstart, and examples.",
-    "dino upgrade --pack proof --key …",
-  ],
-  benefits: [
-    "Leakage scan — free forever",
-    "Proof pack — free Team Key, 60 days",
-  ],
-  note: "Engine only — dashboards are external.",
-  cta: "Request a Team Key",
-  email: "dinodevcli@gmail.com",
-  flow: "Email your team name to dinodevcli@gmail.com.",
+  title: "Request a Team Key",
+  line: "Start your 60-day Proof Pack trial. Email your team name to dinodevcli@gmail.com.",
+  button: "Email dinodevcli@gmail.com",
+  note: "Leakage scan stays free forever. Engine only — dashboards are external.",
 };
 
-export const LICENSING = {
-  title: "Pricing & Licensing",
-  lead: "MIT core. Proof Pack license after Early Access.",
-  lines: [
-    "Dino is MIT-licensed.",
-    "The core engine is free.",
-    "Advanced audit features (Proof Pack) require a license.",
-    "After Early Access, Proof Pack will be available as a one-time purchase per seat or team.",
-    "No subscriptions. No cloud fees.",
-  ],
-};
-
-export const CODESPACES = {
-  label: "Try it",
-  title: "Open in GitHub Codespaces",
-  body: "Clones the repo, installs Python and Dino, and opens a terminal. Then: cd tests/simulation && make demo",
-  cta: "Open in GitHub Codespaces",
+export const DEMO = {
+  alt: "Terminal recording: dino run seals a pipeline run, then dino proof index compare shows changed: true",
+  caption: "Recorded via vhs · tests/simulation/golden",
+  gifSrc: "/assets/cli-compare.gif",
+  posterSrc: "/assets/cli-compare-poster.png",
 };
 
 export const SUPPORT =
   "Questions or issues? Open an Issue or Discussion on GitHub.";
 
-export const ROADMAP_DEV =
-  "Shipped: dino --dev relaxes EMPTY_SCAN_ROOTS for local iteration. Production proofs stay fail-closed. CLI v1.0: dino run + grouped --help + Early Access (Proof Pack) block.";
-
-/** From tests/simulation/golden/demo_excerpts.json — do not invent */
-export const GOLDEN_PROOF = `{
-  "audit": {
-    "reasons": [
-      "capsule_sealed",
-      "scan_clean",
-      "map_skipped"
-    ],
-    "summary": "Capsule sealed; one or more optional parts were skipped.",
-    "verdict": "PROOF_PARTIAL"
-  },
-  "parts": {
-    "capsule_replay_ok": true,
-    "drift_bucket": "aligned",
-    "scan_ok": true
-  },
-  "schema": "dino.proof.bundle.v1",
-  "status": "partial"
-}`;
-
-export const GOLDEN_INDEX = `{
-  "pipelines": [
-    "fraud_score_v1",
-    "fraud_score_v2"
-  ],
-  "proof_count": 2,
-  "schema": "dino.proof.index.v1"
-}`;
-
-export const GOLDEN_COMPARE = `{
-  "changed": true,
-  "drift_delta": {
-    "from": "none",
-    "to": "none"
-  },
-  "pipeline_version_diff": {
-    "from": "fraud_score_v1",
-    "to": "fraud_score_v2"
-  },
-  "schema": "dino.proof.index.compare.v1",
-  "verdict_diff": {
-    "from": "PROOF_PARTIAL",
-    "to": "PROOF_PARTIAL"
-  }
-}`;
-
-export const FAIL_SNIPPET = `{
-  "ok": false,
-  "files_scanned": 0,
-  "findings": [{
-    "rule": "EMPTY_SCAN_ROOTS",
-    "detail": "no .py files under scan roots",
-    "severity": "FAIL"
-  }]
-}`;
-
-export const DEMO_STEPS = [
-  {
-    id: "run-a",
-    label: "Run A — baseline",
-    command: `dino run \\
-  --scan ./pipeline \\
-  --pipeline fraud_score_v1 \\
-  --export ./archive \\
-  -- python pipeline/run.py --seed seed-42`,
-    artifacts: [{ name: "proof.json", json: GOLDEN_PROOF }],
-  },
-  {
-    id: "run-b",
-    label: "Run B — updated",
-    command: `dino run \\
-  --scan ./pipeline \\
-  --pipeline fraud_score_v2 \\
-  --export ./archive \\
-  -- python pipeline/run.py --seed seed-123`,
-    artifacts: [
-      { name: "proof.json", json: GOLDEN_PROOF },
-      { name: "proof_index.json", json: GOLDEN_INDEX },
-    ],
-  },
-  {
-    id: "compare",
-    label: "Compare",
-    command: `dino proof index compare ./archive <HASH_A> <HASH_B>`,
-    artifacts: [{ name: "compare.json", json: GOLDEN_COMPARE, emphasize: true }],
-  },
-  {
-    id: "fail-closed",
-    label: "Fail-closed",
-    command: `dino run --scan ./does_not_exist -- echo ok`,
-    note: "Dino refuses to pass a run with missing scan roots. For local iteration only: dino --dev …",
-    artifacts: [{ name: "scan.json", json: FAIL_SNIPPET }],
-  },
-];
-
 export const DOC_LINKS = [
-  { label: "Engine", path: "docs/PROOF_CONTRACT.md" },
-  { label: "Proof Pack", path: "docs/index.md#proof-pack" },
-  { label: "Contracts", path: "docs/PROOF_INDEX.md" },
+  { label: "Docs landing", path: "docs/index.md" },
+  { label: "Engine contract", path: "docs/PROOF_CONTRACT.md" },
+  { label: "Proof index", path: "docs/PROOF_INDEX.md" },
+  { label: "Export envelopes", path: "docs/PROOF_EXPORT.md" },
   { label: "Quickstart", path: "docs/QUICKSTART.md" },
   { label: "Examples", path: "docs/EXAMPLES.md" },
-  { label: "Early Access", path: "docs/index.md#early-access" },
-  { label: "Pricing & Licensing", path: "docs/LICENSING.md" },
-  { label: "Roadmap", path: "docs/ROADMAP.md" },
-  { label: "Dashboard Integration", path: "docs/INTEGRATION_DASHBOARDS.md" },
-  { label: "CLI Reference", path: "docs/CLI_E2E_REFERENCE.md" },
+  { label: "CLI reference", path: "docs/CLI_E2E_REFERENCE.md" },
+  { label: "Licensing", path: "docs/LICENSING.md" },
 ];

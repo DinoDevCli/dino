@@ -1,19 +1,23 @@
 # Website
 
-Documentary landing page for Dino — aligned with the root [README](../README.md).
+Landing page for Dino — notarization/seal visual language, Free vs Proof Pack aligned with the root README.
 
-**Story:** local-first audit engine · Free scan forever · Proof pack via Early Access ·  
-Early Access is open — any team can request a key · `dinodevcli@gmail.com` · no checkout · dashboards external.
+**CTAs:** mailto `dinodevcli@gmail.com` or GitHub Early Access — never `dino.dev`.
 
 ## Local
 
 ```bash
-cp .env.example .env.local
 npm install
 npm run dev
 ```
 
 → http://localhost:3000
+
+With Pages base path locally:
+
+```bash
+NEXT_PUBLIC_BASE_PATH=/dino npm run build && npx serve out
+```
 
 ## Env
 
@@ -28,11 +32,8 @@ NEXT_PUBLIC_CONTACT_EMAIL=dinodevcli@gmail.com
 Push to `main` → [Deploy website](../../.github/workflows/deploy-website.yml) →  
 **https://dinodevcli.github.io/dino/**
 
-Uses `NEXT_PUBLIC_BASE_PATH=/dino` in CI only.
+## Assets
 
-## Copy
-
-| File | Role |
-|------|------|
-| `lib/content.ts` | Documentary copy + Early Access |
-| `lib/site.ts` | GitHub URLs, `dinodevcli@gmail.com` mailto |
+- `public/assets/cli-compare.gif` — vhs demo
+- `public/assets/cli-compare-poster.png` — reduced-motion / poster frame
+- `public/favicon.svg` — seal glyph
