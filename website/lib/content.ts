@@ -115,10 +115,8 @@ export const EARLY = {
 };
 
 export const DEMO = {
-  alt: "Terminal recording: dino run seals a pipeline run, then dino proof index compare shows changed: true",
-  caption: "Recorded via vhs · tests/simulation/golden",
-  gifSrc: "/assets/cli-compare.gif",
-  posterSrc: "/assets/cli-compare-poster.png",
+  alt: "Static CLI captures: seal, compare (changed: true), and index metrics from golden fraud_score runs",
+  caption: "Static captures · tests/simulation/golden · fraud_score v1 → v2",
 };
 
 export const SUPPORT =

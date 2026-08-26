@@ -34,6 +34,6 @@ Push to `main` → [Deploy website](../../.github/workflows/deploy-website.yml) 
 
 ## Assets
 
-- `public/assets/cli-compare.gif` — vhs demo
-- `public/assets/cli-compare-poster.png` — reduced-motion / poster frame
-- `public/favicon.svg` — seal glyph
+- Hero demo is static CLI shots (`components/CliShots.tsx`, golden excerpts) — no GIF / typing loop
+- `public/assets/cli-compare.png` — optional static compare capture (also in `docs/assets/`)
+- `public/favicon.svg` — lettermark D

@@ -1,7 +1,7 @@
 import { CodePanel } from "@/components/CodePanel";
 import { Footer } from "@/components/Footer";
 import { Nav } from "@/components/Nav";
-import { TerminalCard } from "@/components/TerminalCard";
+import { CliShots } from "@/components/CliShots";
 import {
   EARLY,
   HERO,
@@ -75,7 +75,7 @@ export default function Home() {
           </div>
 
           <div id="demo" className="mt-12 scroll-mt-24 md:mt-16">
-            <TerminalCard />
+            <CliShots />
           </div>
         </Container>
       </section>

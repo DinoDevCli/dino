@@ -146,6 +146,15 @@ a {
   padding: 0.85rem;
 }
 
+/* Document / seal plate — no browser traffic-light chrome */
+.certificate-frame__doc {
+  border: 1px solid color-mix(in srgb, var(--seal) 32%, transparent);
+  border-radius: 1px;
+  overflow: hidden;
+  background: #07090b;
+  min-height: 16rem;
+}
+
 .certificate-frame__inner {
   border: 1px solid color-mix(in srgb, var(--seal) 32%, transparent);
   border-radius: 1px;
