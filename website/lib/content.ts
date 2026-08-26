@@ -114,11 +114,6 @@ export const EARLY = {
   note: "Leakage scan stays free forever. Engine only — dashboards are external.",
 };
 
-export const DEMO = {
-  alt: "Static CLI captures: seal, compare (changed: true), and index metrics from golden fraud_score runs",
-  caption: "Static captures · tests/simulation/golden · fraud_score v1 → v2",
-};
-
 export const SUPPORT =
   "Questions or issues? Open an Issue or Discussion on GitHub.";
 
